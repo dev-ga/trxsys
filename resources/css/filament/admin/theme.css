@@ -21,3 +21,11 @@
 /* .fi-btn {
     @apply bg-[#F26513] !important;
 } */
+
+.fi-sidebar-item-icon {
+    @apply dark:text-[#42708C] !important;
+}
+
+.fi-sidebar-item-label {
+    @apply dark:text-[#fc760f] !important;
+}
