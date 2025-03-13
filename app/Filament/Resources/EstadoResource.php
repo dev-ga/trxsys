@@ -18,7 +18,7 @@ class EstadoResource extends Resource
 {
     protected static ?string $model = Estado::class;
 
-    protected static ?string $navigationIcon = 'heroicon-c-globe-americas';
+    protected static ?string $navigationIcon = 'heroicon-o-globe-americas';
 
     public static function form(Form $form): Form
     {
@@ -26,14 +26,14 @@ class EstadoResource extends Resource
             ->schema([
                 Section::make('Estado')
                 ->description('Formulario para la carga de los estados. Campos Requeridos(*)')
-                ->icon('heroicon-c-globe-americas')
+                ->icon('heroicon-o-globe-americas')
                 ->schema([
                     Forms\Components\TextInput::make('descripcion')
                         ->label('Descripción')
                         ->prefixIcon('heroicon-s-pencil')
                         ->required()
                         ->maxLength(255),
-                    
+
                 ])
             ]);
     }

@@ -65,7 +65,7 @@ class GastoResource extends Resource
                                 }
                                 return '000' . $parte_entera + 1;
                             }),
-                            
+
                         Forms\Components\TextInput::make('descripcion')
                             ->label('Descripción del gasto')
                             ->prefixIcon('heroicon-s-pencil')
@@ -136,7 +136,7 @@ class GastoResource extends Resource
                             ->label('Nro. Factura/Nota de Entrega')
                             ->prefixIcon('heroicon-c-tag')
                             ->required(),
-                            
+
                         Forms\Components\TextInput::make('nro_control')
                             ->label('Nro. de Control')
                             ->prefixIcon('heroicon-c-tag')
@@ -199,7 +199,7 @@ class GastoResource extends Resource
 
                 Forms\Components\Section::make('COSTOS:')
                     ->description('Formulario de gastos')
-                    ->icon('heroicon-m-arrow-trending-down')
+                    ->icon('heroicon-c-arrow-trending-down')
                     ->schema([
 
                         ToggleButtons::make('feedback')
@@ -275,7 +275,7 @@ class GastoResource extends Resource
                             ->afterStateUpdated(function (Get $get, Set $set) {
                                 self::updateTotales($get, $set);
                             }),
-                            
+
 
                         Forms\Components\TextInput::make('iva')
                             ->label('IVA(%)')
@@ -343,54 +343,72 @@ class GastoResource extends Resource
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('empresaContratante.nombre')
+                    ->icon('heroicon-s-home')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nro_contrato')
                     ->label('Nro Contrato')
+                    ->badge()
+                    ->color('marronClaro')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('proveedor.nombre')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('responsable')
+                    ->icon('heroicon-c-user-circle')
                     ->searchable(),
-                
                 Tables\Columns\TextColumn::make('monto_bsd')
                     ->label('Monto Bs.')
                     ->alignRight()
                     ->numeric()
+                    ->badge()
+                    ->color('success')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('iva')
                     ->label('IVA(%)')
                     ->alignRight()
                     ->numeric()
+                    ->badge()
+                    ->color('success')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('conversion_a_usd')
                     ->numeric()
                     ->alignRight()
+                    ->badge()
+                    ->color('success')
                     ->sortable()
+                    ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('total_gasto_bsd')
                     ->label('Total Gasto Bs.')
                     ->alignRight()
                     ->numeric()
+                    ->badge()
+                    ->color('success')
                     ->sortable()
+                    ->searchable()
                     ->summarize(Sum::make()
                         ->label('Total(Bs.)')),
                 Tables\Columns\TextColumn::make('monto_usd')
                     ->label('Monto USD($)')
                     ->alignRight()
                     ->numeric()
+                    ->badge()
+                    ->color('success')
                     ->sortable()
+                    ->searchable()
                     ->summarize(Sum::make()
                         ->label('Total(USD)')),
                 Tables\Columns\TextColumn::make('tasa_bcv')
                     ->numeric()
                     ->alignRight()
                     ->sortable()
+                    ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('observaciones')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -400,13 +418,14 @@ class GastoResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+
             ->filters([
                 //
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),
                 ActionGroup::make([
-                    
+
                     Action::make('detalle')
                         ->color('negro')
                         ->icon('heroicon-m-eye')
@@ -425,16 +444,16 @@ class GastoResource extends Resource
                                                 ->readOnly()
                                                 ->default(function (Gasto $record) {
                                                     return $record->nro_factura;
-                                                }), 
+                                                }),
                                             //codigo de requisicion
                                             TextInput::make('empresa_contratante_id')
                                                 ->label('Empresa Contratante')
                                                 ->prefixIcon('heroicon-c-users')
                                                 ->readOnly()
                                                 ->default(function (Gasto $record) {
-                                                    return $record->empresaContratante->nombre;       
+                                                    return $record->empresaContratante->nombre;
                                                 }),
-                                                
+
                                             TextInput::make('nro_contrato')
                                                 ->label('Nro. Contrato')
                                                 ->prefixIcon('heroicon-c-users')
@@ -500,7 +519,7 @@ class GastoResource extends Resource
             ], position: ActionsPosition::BeforeCells)
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    
+
                     //Asignar a valuacion
                     Tables\Actions\BulkAction::make('asignacion_valuacion')
                         ->label('Asignar a Valuacion')
@@ -527,7 +546,7 @@ class GastoResource extends Resource
                                 //Actualizar el id de la valuacion en la tabla de gastos
                                 $record->valuacion_id = $data['valuacion_id'];
                                 $record->save();
-                                
+
                                 //Actualizar el id de la valuacion en la tabla de gastos detalles
                                 foreach ($record->detalleGastos as $detalle) {
                                     $detalle->valuacion_id = $data['valuacion_id'];
@@ -535,10 +554,10 @@ class GastoResource extends Resource
                                 }
                             }
                         }),
-                        
+
                     //Eliminar
                     Tables\Actions\DeleteBulkAction::make(),
-                    
+
                 ]),
             ]);
     }

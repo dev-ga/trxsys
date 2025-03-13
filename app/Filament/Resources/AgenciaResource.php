@@ -20,7 +20,7 @@ class AgenciaResource extends Resource
 {
     protected static ?string $model = Agencia::class;
 
-    protected static ?string $navigationIcon = 'heroicon-s-home'; //heroicon-s-home
+    protected static ?string $navigationIcon = 'heroicon-o-home'; //heroicon-s-home
 
     public static function form(Form $form): Form
     {
@@ -29,7 +29,7 @@ class AgenciaResource extends Resource
 
             Forms\Components\Section::make('AGENCIAS')
                 ->description('Formulario para la carga de agencias.')
-                ->icon('heroicon-s-home')
+                ->icon('heroicon-o-home')
                 ->schema([
 
                     Forms\Components\TextInput::make('codigo')

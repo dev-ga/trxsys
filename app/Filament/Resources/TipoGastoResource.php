@@ -18,7 +18,7 @@ class TipoGastoResource extends Resource
 {
     protected static ?string $model = TipoGasto::class;
 
-    protected static ?string $navigationIcon = 'heroicon-s-swatch';
+    protected static ?string $navigationIcon = 'heroicon-o-swatch';
 
     public static function form(Form $form): Form
     {
@@ -26,7 +26,7 @@ class TipoGastoResource extends Resource
             ->schema([
                 Section::make('Tipo de Gasto')
                 ->description('Formulario para la carga de tipos de gastos. Campos Requeridos(*)')
-                ->icon('heroicon-s-swatch')
+                ->icon('heroicon-o-swatch')
                 ->schema([
                     Forms\Components\TextInput::make('descripcion')
                         ->required()
@@ -34,7 +34,7 @@ class TipoGastoResource extends Resource
                     Forms\Components\TextInput::make('slug')
                         ->required()
                         ->maxLength(255),
-                    
+
                 ])
             ]);
     }

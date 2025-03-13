@@ -21,7 +21,7 @@ class EmpresaContratanteResource extends Resource
 {
     protected static ?string $model = EmpresaContratante::class;
 
-    protected static ?string $navigationIcon = 'heroicon-s-building-library';
+    protected static ?string $navigationIcon = 'heroicon-o-building-library';
 
     public static function form(Form $form): Form
     {
@@ -29,9 +29,9 @@ class EmpresaContratanteResource extends Resource
             ->schema([
                 Section::make('Empresa Contratante')
                 ->description('Formulario para la carga de empresas contratantes. Campos Requeridos(*)')
-                ->icon('heroicon-s-building-library')
+                ->icon('heroicon-o-building-library')
                 ->schema([
-                    
+
                     Forms\Components\TextInput::make('codigo')
                         ->label('Codigo')
                         ->prefixIcon('heroicon-c-tag')
@@ -61,9 +61,9 @@ class EmpresaContratanteResource extends Resource
                         ->disabled()
                         ->dehydrated()
                         ->default(Auth::user()->name),
-                        
+
                 ])->columns(4)
-                
+
             ]);
     }
 
@@ -76,7 +76,7 @@ class EmpresaContratanteResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nombre')
                     ->badge()
-                    ->color('naranja')
+                    ->color('marronClaro')
                     ->label('Nombre/Razon Social')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('ci_rif')
@@ -127,7 +127,7 @@ class EmpresaContratanteResource extends Resource
     {
 
         if ($get('monto_mante_prev_usd') != 0 && $get('monto_mante_correc_usd') != 0) {
-            
+
         }
 
         if ($get('feedback') == false && $get('forma_pago') == 'dolares') {

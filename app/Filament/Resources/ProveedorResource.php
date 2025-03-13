@@ -19,7 +19,7 @@ class ProveedorResource extends Resource
 {
     protected static ?string $model = Proveedor::class;
 
-    protected static ?string $navigationIcon = 'heroicon-m-truck';
+    protected static ?string $navigationIcon = 'heroicon-o-truck';
 
     public static function form(Form $form): Form
     {
@@ -27,7 +27,7 @@ class ProveedorResource extends Resource
             ->schema([
                 Section::make('Proveedor')
                 ->description('Formulario para la carga de proveedores. Campos Requeridos(*)')
-                ->icon('heroicon-m-truck')
+                ->icon('heroicon-o-truck')
                 ->schema([
                     Forms\Components\TextInput::make('codigo')
                         ->default(function () {
@@ -77,7 +77,7 @@ class ProveedorResource extends Resource
                         ->dehydrated()
                         ->default(Auth::user()->name),
                 ])->columns(3),
-                
+
             ]);
     }
 
@@ -115,6 +115,7 @@ class ProveedorResource extends Resource
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('responsable')
+                    ->icon('heroicon-c-user-circle')
                     ->label('Cargado por:')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')

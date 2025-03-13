@@ -23,7 +23,7 @@ class BitacoraResource extends Resource
 {
     protected static ?string $model = Bitacora::class;
 
-    protected static ?string $navigationIcon = 'heroicon-c-chat-bubble-bottom-center-text';
+    protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-bottom-center-text';
 
     public static function table(Table $table): Table
     {
@@ -31,6 +31,7 @@ class BitacoraResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('agencia.nombre')
                 ->searchable()
+                ->icon('heroicon-s-home')
                 ->label('Agencia'),
                 Tables\Columns\TextColumn::make('empresaContratante.nombre')
                 ->searchable()
