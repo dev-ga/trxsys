@@ -1,0 +1,23 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+@config 'tailwind.config.js';
+
+.fi-logo {
+    @apply h-[5rem] !important;
+}
+
+.fi-simple-header .fi-logo {
+    @apply h-[8rem] !important;
+}
+
+.fi-sidebar-item-label {
+    @apply text-[#F26513] !important;
+}
+
+.fi-sidebar-item-icon {
+    @apply text-[#40403F] !important;
+}
+
+/* .fi-btn {
+    @apply bg-[#F26513] !important;
+} */
