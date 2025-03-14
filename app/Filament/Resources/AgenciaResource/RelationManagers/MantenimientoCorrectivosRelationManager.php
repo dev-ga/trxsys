@@ -4,6 +4,9 @@ namespace App\Filament\Resources\AgenciaResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Tables;
+use App\Models\Equipo;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Forms\Components\Grid;
@@ -22,66 +25,79 @@ class MantenimientoCorrectivosRelationManager extends RelationManager
     {
         return $form
             ->schema([
-            Section::make('Equipo')
-                ->description('Formulario para la carga de mantenimientos preventivos. Campos Requeridos(*)')
-                ->icon('heroicon-m-server-stack')
-                ->schema([
+                Section::make('Equipo')
+                    ->description('Formulario para la carga de mantenimientos preventivos. Campos Requeridos(*)')
+                    ->icon('heroicon-m-server-stack')
+                    ->schema([
 
                     Forms\Components\Select::make('agencia_id')
                         ->label('Agencia')
                         ->relationship('agencia', 'nombre')
                         ->preload()
                         ->default(function (RelationManager $livewire) {
-                            return $livewire->ownerRecord->agencia_id;
+                            return $livewire->ownerRecord->id;
                         })
                         ->disabled()
                         ->dehydrated(),
+
+
+                    Forms\Components\Select::make('equipo_id')
+                        ->label('Equipo')
+                        ->options(function (RelationManager $livewire) {
+                            return Equipo::where('agencia_id', $livewire->ownerRecord->id)->get()->pluck('codigo', 'id');
+                        })
+                        ->searchable()
+                        ->live()
+                        ->afterStateUpdated(function (Get $get, Set $set, RelationManager $livewire) {
+
+                            $codigo = Equipo::where('agencia_id', $livewire->ownerRecord->id)
+                                ->where('id', $get('equipo_id'))
+                                ->first()->codigo;
+
+                            $set('codigo_equipo', $codigo);
+                        })
+                        ->preload(),
 
 
                     Forms\Components\TextInput::make('codigo_equipo')
                         ->prefixIcon('heroicon-s-pencil')
-                        ->label('Codigo')
-                        ->default(function (RelationManager $livewire) {
-                            return $livewire->ownerRecord->codigo;
-                        })
-                        ->disabled()
-                        ->dehydrated(),
+                        ->label('Codigo'),
 
-                    Forms\Components\TextInput::make('nro_presupuesto')
-                        ->prefixIcon('heroicon-s-pencil')
-                        ->label('Nro. Presupuesto')
-                        ->required(),
-
-                    Forms\Components\TextInput::make('monto_presupuesto_usd')
-                        ->prefixIcon('heroicon-s-currency-dollar')
-                        ->numeric()
-                        ->label('Monto Presupuesto(USD)')
-                        ->required(),
-
-                    Forms\Components\TextInput::make('responsable')
-                        ->prefixIcon('heroicon-c-user-circle')
-                        ->label('Cargado por:')
-                        ->disabled()
-                        ->dehydrated()
-                        ->default(Auth::user()->name),
-
-                    Grid::make('columnSpanFull')->schema([
-                        Forms\Components\Textarea::make('detalles')
-                            ->label('Detalles de la actividad')
-                            ->placeholder('Escriba aqui la informacion detalla de la actividad')
+                        Forms\Components\TextInput::make('nro_presupuesto')
+                            ->prefixIcon('heroicon-s-pencil')
+                            ->label('Nro. Presupuesto')
                             ->required(),
 
-                    ]),
-
-                    Grid::make('columnSpanFull')->schema([
-                        FileUpload::make('doc_pdf')
-                            ->label('Adjuntar Documento')
-                            // ->acceptedFileTypes(['application/pdf'])
+                        Forms\Components\TextInput::make('monto_presupuesto_usd')
+                            ->prefixIcon('heroicon-s-currency-dollar')
+                            ->numeric()
+                            ->label('Monto Presupuesto(USD)')
                             ->required(),
 
-                    ])
+                        Forms\Components\TextInput::make('responsable')
+                            ->prefixIcon('heroicon-c-user-circle')
+                            ->label('Cargado por:')
+                            ->disabled()
+                            ->dehydrated()
+                            ->default(Auth::user()->name),
 
-                ])->columns(3),
+                        Grid::make('columnSpanFull')->schema([
+                            Forms\Components\Textarea::make('detalles')
+                                ->label('Detalles de la actividad')
+                                ->placeholder('Escriba aqui la informacion detalla de la actividad')
+                                ->required(),
+
+                        ]),
+
+                        Grid::make('columnSpanFull')->schema([
+                            FileUpload::make('doc_pdf')
+                                ->label('Adjuntar Documento')
+                                // ->acceptedFileTypes(['application/pdf'])
+                                ->required(),
+
+                        ])
+
+                    ])->columns(3),
             ]);
     }
 
@@ -122,7 +138,7 @@ class MantenimientoCorrectivosRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                // Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make(),
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),
