@@ -97,6 +97,7 @@ class AgenciaResource extends Resource
                 Tables\Columns\TextColumn::make('estado.descripcion')
                     ->badge()
                     ->color('azul')
+                    ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('direccion')
                     ->label('Dirección')
