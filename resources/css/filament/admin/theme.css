@@ -18,14 +18,44 @@
     @apply text-[#40403F] !important;
 }
 
-/* .fi-btn {
-    @apply bg-[#F26513] !important;
-} */
+.fi-section-header-icon {
+    @apply text-[#40403F] !important;
+}
+
+.fi-ac a {
+    @apply bg-[#42708C] !important;
+}
+
+.fi-ac button:nth-child(1) {
+    @apply bg-[#42708C] !important;
+}
 
 .fi-sidebar-item-icon {
     @apply dark:text-[#42708C] !important;
 }
 
+.fi-section-header-icon {
+    @apply dark:text-[#42708C] !important;
+}
+
 .fi-sidebar-item-label {
     @apply dark:text-[#fc760f] !important;
+}
+
+.fi-ta-table th {
+    @apply bg-[#42708C] !important;
+}
+
+.fi-ta-header-cell-label {
+    @apply text-[#FFF] !important;
+}
+
+.dark\:\[\&\:not\(\:has\(\.fi-ac-action\:focus\)\)\]\:focus-within\:ring-primary-500:focus-within:not(:has(.fi-ac-action:focus)):is(.dark *) {
+    --tw-ring-opacity: 1;
+    --tw-ring-color: rgb(66 112 140);
+}
+
+.\[\&\:not\(\:has\(\.fi-ac-action\:focus\)\)\]\:focus-within\:ring-primary-600:focus-within:not(:has(.fi-ac-action:focus)) {
+    --tw-ring-opacity: 1;
+    --tw-ring-color: #8C4014;
 }

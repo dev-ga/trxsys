@@ -25,7 +25,7 @@ class ValuacionResource extends Resource
 {
     protected static ?string $model = Valuacion::class;
 
-    protected static ?string $navigationIcon = 'heroicon-m-document-currency-dollar';
+    protected static ?string $navigationIcon = 'heroicon-o-document-currency-dollar';
 
     public static function form(Form $form): Form
     {
@@ -34,9 +34,9 @@ class ValuacionResource extends Resource
 
                 Forms\Components\Section::make('INFORMACION PRINCIPAL PARA LA CARGA DE LAS VALUACIONES')
                     ->description('Formulario para la carga de las valuaciones. Campos Requeridos(*)')
-                    ->icon('heroicon-m-document-currency-dollar')
+                    ->icon('heroicon-o-document-currency-dollar')
                     ->schema([
-                        
+
                         Forms\Components\TextInput::make('codigo')
                         ->label('Codigo')
                         ->prefixIcon('heroicon-c-tag')
@@ -96,7 +96,7 @@ class ValuacionResource extends Resource
                         ->acceptedFileTypes(['application/pdf'])
                         ->required(),
 
-                        
+
                         Forms\Components\TextInput::make('responsable')
                         ->prefixIcon('heroicon-c-user-circle')
                         ->label('Cargado por:')
@@ -104,7 +104,7 @@ class ValuacionResource extends Resource
                         ->dehydrated()
                         ->default(Auth::user()->name),
 
-                            
+
                     ])->columns(3),
             ]);
     }
@@ -128,18 +128,22 @@ class ValuacionResource extends Resource
                 Tables\Columns\TextColumn::make('nro_contrato')
                     ->label('Nro Contrato')
                     ->badge()
-                    ->color('marronClaro')
+                    ->color('naranja')
                     ->searchable(),
-
                 Tables\Columns\TextColumn::make('doc_pdf')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('monto_usd')
+                    ->badge()
                     ->color('success')
                     ->numeric()
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('monto_bsd')
+                    ->badge()
+                    ->color('success')
                     ->numeric()
                     ->sortable()
+                    ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('tasa_bcv')
                     ->numeric()
@@ -148,9 +152,9 @@ class ValuacionResource extends Resource
                 Tables\Columns\TextColumn::make('mantenimiento.descripcion')
                     ->badge()
                     ->color('naranja')
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('responsable')
+                    ->searchable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

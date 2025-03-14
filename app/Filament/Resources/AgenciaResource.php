@@ -20,7 +20,7 @@ class AgenciaResource extends Resource
 {
     protected static ?string $model = Agencia::class;
 
-    protected static ?string $navigationIcon = 'heroicon-s-home'; //heroicon-s-home
+    protected static ?string $navigationIcon = 'heroicon-o-home'; //heroicon-s-home
 
     public static function form(Form $form): Form
     {
@@ -29,11 +29,11 @@ class AgenciaResource extends Resource
 
             Forms\Components\Section::make('AGENCIAS')
                 ->description('Formulario para la carga de agencias.')
-                ->icon('heroicon-s-home')
+                ->icon('heroicon-o-home')
                 ->schema([
 
                     Forms\Components\TextInput::make('codigo')
-                        ->label('Codigo')
+                        ->label('Código de agencia')
                         ->prefixIcon('heroicon-c-tag')
                         ->required(),
 
@@ -59,7 +59,7 @@ class AgenciaResource extends Resource
                         ->required(),
 
                     Forms\Components\TextInput::make('direccion')
-                        ->label('Direccion')
+                        ->label('Dirección')
                         ->prefixIcon('heroicon-s-pencil')
                         ->required()
                         ->maxLength(255),
@@ -86,19 +86,20 @@ class AgenciaResource extends Resource
                     ->color('naranja')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('codigo')
-                    ->label('Codigo')
+                    ->label('Código de agencia')
                     ->badge()
                     ->color('marronClaro')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nombre')
-                    ->label('Nombre/Razon Social')
+                    ->label('Nombre/Razón Social')
                     ->icon('heroicon-s-home')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('estado.descripcion')
                     ->badge()
-                    ->color('marronClaro')
+                    ->color('azul')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('direccion')
+                    ->label('Dirección')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('empresaContratante.nombre')
@@ -109,12 +110,13 @@ class AgenciaResource extends Resource
                     ->icon('heroicon-c-user-circle')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label('Fecha de Registro')
                     ->sortable()
+                    ->dateTime('d-m-Y')
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
                     ->sortable()
+                    ->dateTime('d-m-Y')
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([

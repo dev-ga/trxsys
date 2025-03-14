@@ -18,23 +18,23 @@ class ConfiguracionResource extends Resource
 {
     protected static ?string $model = Configuracion::class;
 
-    protected static ?string $navigationIcon = 'heroicon-c-cog-8-tooth';
+    protected static ?string $navigationIcon = 'heroicon-o-cog-8-tooth';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                
+
                 Section::make('Configuraciones')
-                ->description('Canfiguracion y valores del sistema. Campos Requeridos(*)')
-                ->icon('heroicon-c-cog-8-tooth')
+                ->description('Canfiguración y valores del sistema. Campos Requeridos(*)')
+                ->icon('heroicon-o-cog-8-tooth')
                 ->schema([
                     Forms\Components\TextInput::make('iva')
                     ->label('IVA')
                         ->numeric()
                         ->default(0.00),
                     Forms\Components\TextInput::make('iva_nomina')
-                    ->label('IVA Nomina')
+                        ->label('IVA Nómina')
                         ->numeric()
                         ->default(0.00),
                     Forms\Components\TextInput::make('isrl')
@@ -47,9 +47,8 @@ class ConfiguracionResource extends Resource
                         ->default(0.00),
                     Forms\Components\TextInput::make('anio_curso')
                     ->label('Año Curso')
-                        ->numeric()
-                        ->default(0.00),
-                    
+                        ->numeric(),
+
                 ])->columns(5)
             ]);
     }
@@ -76,7 +75,8 @@ class ConfiguracionResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('anio_curso')
                     ->label('Año Curso')
-                    ->numeric()
+                    ->badge()
+                    ->color('naranja')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
