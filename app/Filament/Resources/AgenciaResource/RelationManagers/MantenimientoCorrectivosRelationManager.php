@@ -52,9 +52,15 @@ class MantenimientoCorrectivosRelationManager extends RelationManager
 
                             $codigo = Equipo::where('agencia_id', $livewire->ownerRecord->id)
                                 ->where('id', $get('equipo_id'))
-                                ->first()->codigo;
+                                ->first();
 
-                            $set('codigo_equipo', $codigo);
+                            if (!$codigo) {
+                                $set('codigo_equipo', null);
+                                return;
+                            } else {
+                                $set('codigo_equipo', $codigo->codigo);
+                            }
+                            
                         })
                         ->preload(),
 
