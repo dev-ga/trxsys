@@ -48,6 +48,7 @@ class EstadoResource extends Resource
                     ->color('naranja')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('Fecha de Registro')
                     ->dateTime('d-m-Y')
                     ->sortable(),
             ])

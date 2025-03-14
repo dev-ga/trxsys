@@ -10,6 +10,8 @@ class ListConfiguracions extends ListRecords
 {
     protected static string $resource = ConfiguracionResource::class;
 
+    protected ?string $heading = 'Configuración';
+
     protected function getHeaderActions(): array
     {
         return [

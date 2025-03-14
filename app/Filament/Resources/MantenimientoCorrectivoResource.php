@@ -30,6 +30,7 @@ class MantenimientoCorrectivoResource extends Resource
                     ->color('naranja')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('codigo_equipo')
+                    ->label('Código de equipo')
                     ->searchable()
                     ->badge()
                     ->color('marronClaro'),
@@ -47,9 +48,11 @@ class MantenimientoCorrectivoResource extends Resource
                     ->money('USD')
                     ->badge()
                     ->color('success')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('detalles'),
-                Tables\Columns\TextColumn::make('doc_pdf'),
+                Tables\Columns\TextColumn::make('doc_pdf')
+                    ->label('Doc PDF'),
                 Tables\Columns\TextColumn::make('responsable')
                     ->searchable()
                     ->icon('heroicon-c-user-circle'),

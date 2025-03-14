@@ -55,7 +55,7 @@ class GastoResource extends Resource
                     ->schema([
 
                         Forms\Components\TextInput::make('codigo')
-                            ->label('Codigo')
+                            ->label('Código')
                             ->prefixIcon('heroicon-c-tag')
                             ->default(function () {
                                 if (Gasto::max('id') == null) {
@@ -119,7 +119,7 @@ class GastoResource extends Resource
 
                         Forms\Components\Select::make('metodo_pago_id')
                             ->prefixIcon('heroicon-s-truck')
-                            ->label('Metodo de Pago')
+                            ->label('Método de Pago')
                             ->required()
                             ->options(function (Get $get) {
                                 if ($get('forma_pago') == 'dolares') {
@@ -179,7 +179,7 @@ class GastoResource extends Resource
 
                         Forms\Components\TextInput::make('valuacion_id')
                             ->prefixIcon('heroicon-s-home')
-                            ->label('Nro. de Valuacion')
+                            ->label('Nro. de Valuación')
                             ->numeric()
                             ->placeholder('Solo numeros enteros, Ejemplo: 1, 2, 3'),
 
@@ -193,7 +193,7 @@ class GastoResource extends Resource
                         Forms\Components\Section::make()
                             ->schema([
                                 Forms\Components\Textarea::make('observaciones')
-                                    ->label('Observaciones Relevante'),
+                                    ->label('Observaciones Relevantes'),
                             ]),
                     ])->columns(3),
 
@@ -332,12 +332,13 @@ class GastoResource extends Resource
                     ->color('marronClaro')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('metodo_pago.descripcion')
+                    ->label('Método de Pago')
                     ->badge()
                     ->color('naranja')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nro_factura')
                     ->badge()
-                    ->color('marronClaro')
+                    ->color('azul')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nro_control')
                     ->badge()
@@ -414,11 +415,12 @@ class GastoResource extends Resource
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label('Fecha de Registro')
+                    ->dateTime('d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->dateTime('d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

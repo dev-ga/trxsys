@@ -29,6 +29,7 @@ class TipoGastoResource extends Resource
                 ->icon('heroicon-o-swatch')
                 ->schema([
                     Forms\Components\TextInput::make('descripcion')
+                        ->label('Descripción')
                         ->required()
                         ->maxLength(255),
                     Forms\Components\TextInput::make('slug')
@@ -49,13 +50,15 @@ class TipoGastoResource extends Resource
                     ->color('naranja')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('descripcion')
+                    ->label('Descripción')
                     ->badge()
                     ->color('marronClaro')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('slug')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label('Fecha de Registro')
+                    ->dateTime('d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
