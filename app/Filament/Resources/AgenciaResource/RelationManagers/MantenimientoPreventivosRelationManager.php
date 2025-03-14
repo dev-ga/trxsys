@@ -47,14 +47,29 @@ class MantenimientoPreventivosRelationManager extends RelationManager
                                 return Equipo::where('agencia_id', $livewire->ownerRecord->id)->get()->pluck('codigo', 'id');
                             })
                             ->searchable()
-                            ->live()
+                            ->live(onBlur: true)
                              ->afterStateUpdated(function (Get $get, Set $set, RelationManager $livewire) {
                                 
                                 $codigo = Equipo::where('agencia_id', $livewire->ownerRecord->id)
                                 ->where('id', $get('equipo_id'))
-                                ->first()->codigo;
+                                ->first();
+
+                                if (!$codigo) {
+                                    $set('codigo_equipo', null);
+                                    $set('toneladas', null);
+                                    $set('calculo_x_tonelada', null);
+                                    return;
+                                    
+                                }else{
+                                    $set('codigo_equipo', $codigo->codigo);
+                                    $set('toneladas', $codigo->toneladas);
+    
+                                    $costo = Configuracion::all()->first()->costo_tonelada_usd;
+                                    $set('calculo_x_tonelada', $codigo->toneladas * $costo);
+                                    
+                                }
                                 
-                                $set('codigo_equipo', $codigo);
+                                
                             })
                             ->preload(),
 
@@ -66,10 +81,10 @@ class MantenimientoPreventivosRelationManager extends RelationManager
                         Forms\Components\TextInput::make('toneladas')
                             ->prefixIcon('heroicon-s-pencil')
                             ->label('Toneladas')
-                            ->default(function (RelationManager $livewire) {
-                                $equipo = Equipo::where('agencia_id', $livewire->ownerRecord->id)->first();
-                                return $equipo->toneladas;
-                            })
+                            // ->default(function (RelationManager $livewire) {
+                            //     $equipo = Equipo::where('agencia_id', $livewire->ownerRecord->id)->first();
+                            //     return $equipo->toneladas;
+                            // })
                             ->disabled()
                             ->dehydrated(),
 
@@ -77,11 +92,11 @@ class MantenimientoPreventivosRelationManager extends RelationManager
                             ->prefixIcon('heroicon-s-currency-dollar')
                             ->numeric()
                             ->label('Costo por Tonelada(USD)')
-                            ->default(function (Get $get, RelationManager $livewire) {
-                                $tonelada = $get('toneladas');
-                                $costo = Configuracion::all()->first()->costo_tonelada_usd;
-                                return $tonelada * $costo;
-                            })
+                            // ->default(function (Get $get, RelationManager $livewire) {
+                            //     $tonelada = $get('toneladas');
+                            //     $costo = Configuracion::all()->first()->costo_tonelada_usd;
+                            //     return $tonelada * $costo;
+                            // })
                             ->disabled()
                             ->dehydrated(),
 
