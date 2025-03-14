@@ -10,6 +10,8 @@ class ListProveedors extends ListRecords
 {
     protected static string $resource = ProveedorResource::class;
 
+    protected ?string $heading = 'Proveedores';
+
     protected function getHeaderActions(): array
     {
         return [

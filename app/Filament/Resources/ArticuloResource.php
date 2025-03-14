@@ -39,46 +39,47 @@ class ArticuloResource extends Resource
         return $form
             ->schema([
                 Section::make('Articulo')
-                ->description('Formulario para la carga de articulos. Campos Requeridos(*)')
-                ->icon('heroicon-o-view-columns')
-                ->schema([
-                Forms\Components\TextInput::make('codigo')
-                    ->label('Codigo')
-                    ->prefixIcon('heroicon-c-tag')
-                    ->default(function () {
-                        if (Articulo::max('id') == null) {
-                            $parte_entera = 0;
-                        } else {
-                            $parte_entera = Articulo::max('id');
-                        }
-                        return 'TRX-ART-000' . $parte_entera + 1;
-                    })
-                    ->disabled()
-                    ->dehydrated(),
-                    Forms\Components\TextInput::make('descripcion')
-                        ->required()
-                        ->maxLength(255),
-                //select Categoprias
-                    Select::make('categoria_id')
-                        ->label('Categoria del Articulo')
-                        ->prefixIcon('heroicon-m-list-bullet')
-                        ->options(function () {
-                            return Categoria::all()->pluck('descripcion', 'id'); 
-                        })
-                        ->searchable()
-                        ->required()
-                        ->live(),
-                    Forms\Components\TextInput::make('precio_unitario')
-                        ->required()
-                        ->numeric()
-                        ->placeholder('0.00'),
-                    Forms\Components\TextInput::make('responsable')
-                        ->prefixIcon('heroicon-s-home')
-                        ->label('Cargado por:')
-                        ->disabled()
-                        ->dehydrated()
-                        ->default(Auth::user()->name),
-                    
+                    ->description('Formulario para la carga de articulos. Campos Requeridos(*)')
+                    ->icon('heroicon-o-view-columns')
+                    ->schema([
+                        Forms\Components\TextInput::make('codigo')
+                            ->label('Código')
+                            ->prefixIcon('heroicon-c-tag')
+                            ->default(function () {
+                                if (Articulo::max('id') == null) {
+                                    $parte_entera = 0;
+                                } else {
+                                    $parte_entera = Articulo::max('id');
+                                }
+                                return 'TRX-ART-000' . $parte_entera + 1;
+                            })
+                            ->disabled()
+                            ->dehydrated(),
+                        Forms\Components\TextInput::make('descripcion')
+                            ->label('Descripción')
+                            ->required()
+                            ->maxLength(255),
+                        //select Categoprias
+                        Select::make('categoria_id')
+                            ->label('Categoría del Articulo')
+                            ->prefixIcon('heroicon-m-list-bullet')
+                            ->options(function () {
+                                return Categoria::all()->pluck('descripcion', 'id');
+                            })
+                            ->searchable()
+                            ->required()
+                            ->live(),
+                        Forms\Components\TextInput::make('precio_unitario')
+                            ->required()
+                            ->numeric()
+                            ->placeholder('0.00'),
+                        Forms\Components\TextInput::make('responsable')
+                            ->prefixIcon('heroicon-c-user-circle')
+                            ->label('Cargado por:')
+                            ->disabled()
+                            ->dehydrated()
+                            ->default(Auth::user()->name),
+
                 ])->columns(2)
             ]);
     }
@@ -88,20 +89,28 @@ class ArticuloResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('codigo')
+                    ->label('Código')
+                    ->badge()
+                    ->color('naranja')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('descripcion')
+                    ->label('Descripción')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('precio_unitario')
-                    ->numeric()
+                    ->money('USD')
+                    ->badge()
+                    ->color('success')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('responsable')
+                    ->icon('heroicon-c-user-circle')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label('Fecha de Registro')
+                    ->dateTime('d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->dateTime('d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
@@ -149,21 +158,21 @@ class ArticuloResource extends Resource
                                                         ->label('Cantida entrante')
                                                         ->prefixIcon('heroicon-c-tag')
                                                         ->required(),
-        
+
                                                     Forms\Components\TextInput::make('nro_factura')
                                                         ->label('Nro. Factura/Nota de Entrega')
                                                         ->prefixIcon('heroicon-c-tag'),
-        
+
                                                     Forms\Components\TextInput::make('responsable')
                                                         ->prefixIcon('heroicon-s-home')
                                                         ->label('Cargado por:')
                                                         ->disabled()
                                                         ->dehydrated()
                                                         ->default(Auth::user()->name),
-                                                    
+
                                                 ])
 
-              
+
                                         ])->columns(2),
                                 ]),
                         ])

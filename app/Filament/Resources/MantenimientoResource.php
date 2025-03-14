@@ -29,6 +29,7 @@ class MantenimientoResource extends Resource
                 ->icon('heroicon-o-wrench-screwdriver')
                 ->schema([
                     Forms\Components\TextInput::make('descripcion')
+                        ->label('Descripción')
                         ->required()
                         ->maxLength(255),
 
@@ -41,13 +42,14 @@ class MantenimientoResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('descripcion')
-                ->label('Descripción')
-                ->badge()
-                ->color('naranja')
-                ->searchable(),
+                    ->label('Descripción')
+                    ->badge()
+                    ->color('naranja')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
-                ->dateTime()
-                ->sortable(),
+                    ->label('Fecha de Registro')
+                    ->dateTime('d-m-Y')
+                    ->sortable(),
             ])
             ->filters([
                 //

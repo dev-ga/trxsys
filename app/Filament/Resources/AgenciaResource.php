@@ -97,6 +97,7 @@ class AgenciaResource extends Resource
                 Tables\Columns\TextColumn::make('estado.descripcion')
                     ->badge()
                     ->color('azul')
+                    ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('direccion')
                     ->label('Dirección')
@@ -111,8 +112,8 @@ class AgenciaResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Fecha de Registro')
-                    ->sortable()
                     ->dateTime('d-m-Y')
+                    ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->sortable()
