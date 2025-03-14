@@ -94,7 +94,7 @@ class ProveedorResource extends Resource
                 Tables\Columns\TextColumn::make('ci_rif')
                     ->label('CI/RIF')
                     ->badge()
-                    ->color('naranja')
+                    ->color('azul')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nombre')
                     ->label('Nombre/Razón Social')
@@ -122,11 +122,12 @@ class ProveedorResource extends Resource
                     ->label('Cargado por:')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label('Fecha de Registro')
+                    ->dateTime('d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->dateTime('d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

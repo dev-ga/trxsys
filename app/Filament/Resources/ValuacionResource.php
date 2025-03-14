@@ -25,7 +25,10 @@ class ValuacionResource extends Resource
 {
     protected static ?string $model = Valuacion::class;
 
+    protected static ?string $navigationLabel = 'Valuaciones';
+
     protected static ?string $navigationIcon = 'heroicon-o-document-currency-dollar';
+
 
     public static function form(Form $form): Form
     {
@@ -135,7 +138,7 @@ class ValuacionResource extends Resource
                 Tables\Columns\TextColumn::make('monto_usd')
                     ->badge()
                     ->color('success')
-                    ->numeric()
+                    ->money('USD')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('monto_bsd')
@@ -154,14 +157,16 @@ class ValuacionResource extends Resource
                     ->color('naranja')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('responsable')
+                    ->icon('heroicon-c-user-circle')
                     ->searchable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label('Fecha de Registro')
+                    ->dateTime('d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->dateTime('d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

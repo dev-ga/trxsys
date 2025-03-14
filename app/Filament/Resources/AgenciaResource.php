@@ -111,8 +111,8 @@ class AgenciaResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Fecha de Registro')
-                    ->sortable()
                     ->dateTime('d-m-Y')
+                    ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->sortable()

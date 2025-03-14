@@ -35,6 +35,7 @@ class InventarioResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('codigo')
+                ->label('Código')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('articulo_id')
@@ -58,22 +59,30 @@ class InventarioResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('codigo')
+                ->label('Código')
+                    ->badge()
+                    ->color('naranja')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('articulo.descripcion')
+                    ->label('Descripción')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('almacen.descripcion')
+                    ->badge()
+                    ->color('marronClaro')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('cantidad')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('responsable')
+                    ->icon('heroicon-c-user-circle')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label('Fecha de Registro')
+                    ->dateTime('d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->dateTime('d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
@@ -95,7 +104,7 @@ class InventarioResource extends Resource
                         ->schema([
                             Grid::make()
                             ->schema([
-                                
+
                                 Forms\Components\TextInput::make('nro_factura')
                                     ->label('Nro. Factura/Nota de Entrega')
                                     ->prefixIcon('heroicon-c-tag')
