@@ -2,16 +2,22 @@
 
 namespace App\Filament\Resources;
 
+use Carbon\Carbon;
+use Filament\Forms;
+use Filament\Tables;
+use Filament\Forms\Form;
+use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Filters\Filter;
+use App\Models\MantenimientoCorrectivo;
+use Filament\Forms\Components\DatePicker;
+use Filament\Tables\Filters\SelectFilter;
+use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Columns\Summarizers\Sum;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\MantenimientoCorrectivoResource\Pages;
 use App\Filament\Resources\MantenimientoCorrectivoResource\RelationManagers;
-use App\Models\MantenimientoCorrectivo;
-use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class MantenimientoCorrectivoResource extends Resource
 {
@@ -37,6 +43,10 @@ class MantenimientoCorrectivoResource extends Resource
                 Tables\Columns\TextColumn::make('agencia.nombre')
                     ->searchable()
                     ->icon('heroicon-s-home'),
+                
+                Tables\Columns\TextColumn::make('detalles'),
+                Tables\Columns\TextColumn::make('doc_pdf')
+                    ->label('Doc PDF'),
                 Tables\Columns\TextColumn::make('nro_presupuesto')
                     ->searchable()
                     ->label('Nro. Presupuesto')
@@ -49,17 +59,52 @@ class MantenimientoCorrectivoResource extends Resource
                     ->badge()
                     ->color('success')
                     ->searchable()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('detalles'),
-                Tables\Columns\TextColumn::make('doc_pdf')
-                    ->label('Doc PDF'),
-                Tables\Columns\TextColumn::make('responsable')
-                    ->searchable()
-                    ->icon('heroicon-c-user-circle'),
+                    ->sortable()
+                    ->summarize(Sum::make()
+                        ->money('USD')
+                        ->label('Total(USD)')
+                        ->label('Total(Bs.)'))
             ])
             ->filters([
-                //
+                Filter::make('created_at')
+                    ->form([
+                        DatePicker::make('desde'),
+                        DatePicker::make('hasta'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['desde'] ?? null,
+                                fn(Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+                            )
+                            ->when(
+                                $data['hasta'] ?? null,
+                                fn(Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+                            );
+                    })
+                    ->indicateUsing(function (array $data): array {
+                        $indicators = [];
+                        if ($data['desde'] ?? null) {
+                            $indicators['desde'] = 'Venta desde ' . Carbon::parse($data['desde'])->toFormattedDateString();
+                        }
+                        if ($data['hasta'] ?? null) {
+                            $indicators['hasta'] = 'Venta hasta ' . Carbon::parse($data['hasta'])->toFormattedDateString();
+                        }
+
+                        return $indicators;
+                    }),
+                SelectFilter::make('agencia')
+                    ->relationship('agencia', 'nombre')
+                    ->searchable()
+                    ->preload()
+                    ->attribute('agencia_id'),
+
             ])
+            ->filtersTriggerAction(
+                fn(Action $action) => $action
+                    ->button()
+                    ->label('Filtros'),
+            )
             ->actions([
                 // Tables\Actions\EditAction::make(),
             ])
