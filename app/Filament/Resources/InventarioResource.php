@@ -178,7 +178,45 @@ class InventarioResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                    Action::make('reposicion')
+                        ->label('Reposicion')
+                        ->color('negro')
+                        ->icon('iconsax-lin-arrow-2')
+                        ->model(Inventario::class)
+                        ->form([
+                            Section::make('Entrada de Inventario')
+                                ->description('Debe llenar los campos de forma correcta. Campos Requeridos(*)')
+                                ->icon('iconsax-lin-arrow-2')
+                                ->schema([
+                                    Grid::make()
+                                        ->schema([
+
+                                            Forms\Components\TextInput::make('nro_factura')
+                                                ->label('Nro. Factura/Nota de Entrega')
+                                                ->prefixIcon('heroicon-c-tag')
+                                                ->helperText('Es deto sera utilizado al momento de realizar auditorias de gastos contra los movimientos del inventario.'),
+                                            Forms\Components\TextInput::make('cantidad')
+                                                ->label('Cantida entrante')
+                                                ->prefixIcon('heroicon-c-tag')
+                                                ->required(),
+                                            Forms\Components\TextInput::make('responsable')
+                                                ->prefixIcon('heroicon-s-home')
+                                                ->label('Cargado por:')
+                                                ->disabled()
+                                                ->dehydrated()
+                                                ->default(Auth::user()->name),
+
+                                        ])->columns(3),
+                                ]),
+                        ])
+                        ->action(function (Inventario $record, array $data) {
+                            //entrada al inventario
+                            $entrada = InventarioController::reposicion($data, $record);
+
+                            //carga del asiento para el movimiento del inventario
+                        }),
+
+            ]),
             ]);
     }
 
