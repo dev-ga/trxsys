@@ -20,7 +20,7 @@ class ContratoResource extends Resource
 {
     protected static ?string $model = Contrato::class;
 
-    protected static ?string $navigationIcon = 'heroicon-c-document-currency-dollar';
+    protected static ?string $navigationIcon = 'heroicon-o-document-currency-dollar';
 
     public static function form(Form $form): Form
     {
@@ -28,7 +28,7 @@ class ContratoResource extends Resource
             ->schema([
                 Section::make('Contrato')
                 ->description('Formulario para la carga de contratos. Campos Requeridos(*)')
-                ->icon('heroicon-c-document-currency-dollar')
+                ->icon('heroicon-o-document-currency-dollar')
                 ->schema([
                     Forms\Components\Select::make('empresa_contratante_id')
                         ->prefixIcon('heroicon-m-list-bullet')
@@ -37,6 +37,7 @@ class ContratoResource extends Resource
                         ->preload()
                         ->createOptionForm([
                             Forms\Components\TextInput::make('codigo')
+                                ->label('Código')
                                 ->default(function () {
                                     if (EmpresaContratante::max('id') == null) {
                                         $parte_entera = 0;
@@ -61,7 +62,7 @@ class ContratoResource extends Resource
                                 ->default(Auth::user()->name),
                         ]),
                     Forms\Components\TextInput::make('nro_contrato')
-                    ->label('Nro. Contrato')
+                        ->label('Nro. Contrato')
                         ->prefixIcon('heroicon-s-pencil')
                         ->required()
                         ->maxLength(255),
@@ -90,7 +91,7 @@ class ContratoResource extends Resource
                         ->dehydrated()
                         ->default(Auth::user()->name),
                 ])->columns(3),
-                
+
             ]);
     }
 
@@ -100,31 +101,45 @@ class ContratoResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('empresaContratante.nombre')
                     ->label('Empresa Contratante')
+                    ->badge()
+                    ->color('marronClaro')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nro_contrato')
                     ->label('Nro. Contrato')
+                    ->badge()
+                    ->color('naranja')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('mant_prev_usd')
                     ->label('Mant. Prev. USD')
-                    ->numeric()
+                    ->money('USD')
+                    ->badge()
+                    ->color('success')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('mant_correc_usd')
                     ->label('Mant. Correc. USD')
-                    ->numeric()
+                    ->money('USD')
+                    ->badge()
+                    ->color('success')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('monto_total_usd')
-                    ->label('Monto Total USD')    
-                    ->numeric()
+                    ->label('Monto Total USD')
+                    ->money('USD')
+                    ->searchable()
+                    ->badge()
+                    ->color('success')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('responsable')
                     ->label('Cargado por:')
+                    ->icon('heroicon-c-user-circle')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Fecha de Registro')
-                    ->dateTime()
+                    ->dateTime('d-m-Y')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->dateTime('d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

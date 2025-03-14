@@ -18,7 +18,7 @@ class MantenimientoResource extends Resource
 {
     protected static ?string $model = Mantenimiento::class;
 
-    protected static ?string $navigationIcon = 'heroicon-c-wrench-screwdriver';
+    protected static ?string $navigationIcon = 'heroicon-o-wrench-screwdriver';
 
     public static function form(Form $form): Form
     {
@@ -26,12 +26,12 @@ class MantenimientoResource extends Resource
             ->schema([
                 Section::make('Mantenimiento')
                 ->description('Formulario para la carga de mantenimientos. Campos Requeridos(*)')
-                ->icon('heroicon-c-wrench-screwdriver')
+                ->icon('heroicon-o-wrench-screwdriver')
                 ->schema([
                     Forms\Components\TextInput::make('descripcion')
                         ->required()
                         ->maxLength(255),
-                    
+
                 ])
             ]);
     }

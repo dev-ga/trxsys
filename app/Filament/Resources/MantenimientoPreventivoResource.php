@@ -17,7 +17,7 @@ class MantenimientoPreventivoResource extends Resource
 {
     protected static ?string $model = MantenimientoPreventivo::class;
 
-    protected static ?string $navigationIcon = 'heroicon-m-shield-exclamation';
+    protected static ?string $navigationIcon = 'heroicon-o-shield-exclamation';
 
     public static function table(Table $table): Table
     {
@@ -29,10 +29,12 @@ class MantenimientoPreventivoResource extends Resource
                     ->color('naranja')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('codigo_equipo')
-                        ->badge()
-                        ->color('marronClaro')
-                        ->searchable(),
+                    ->searchable()
+                    ->badge()
+                    ->color('marronClaro')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('agencia.nombre')
+                    ->icon('heroicon-s-home')
                     ->searchable()
                     ->label('Agencia'),
                 Tables\Columns\TextColumn::make('toneladas')
@@ -46,15 +48,19 @@ class MantenimientoPreventivoResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('fecha_ejecucion')
                     ->label('Fecha Mantenimiento')
+                    ->searchable()
                     ->badge()
                     ->color('marronClaro')
                     ->dateTime('d-m-Y'),
                 Tables\Columns\TextColumn::make('fecha_prox_ejecucion')
+                    ->searchable()
                     ->badge()
                     ->color('negro')
                     ->label('Proximo Mantenimiento')
                     ->dateTime('d-m-Y'),
-                Tables\Columns\TextColumn::make('responsable'),
+                Tables\Columns\TextColumn::make('responsable')
+                    ->searchable()
+                    ->icon('heroicon-c-user-circle'),
             ])
             ->filters([
                 //

@@ -17,7 +17,7 @@ class MantenimientoCorrectivoResource extends Resource
 {
     protected static ?string $model = MantenimientoCorrectivo::class;
 
-    protected static ?string $navigationIcon = 'heroicon-m-shield-check';
+    protected static ?string $navigationIcon = 'heroicon-o-shield-check';
 
 
     public static function table(Table $table): Table
@@ -29,23 +29,30 @@ class MantenimientoCorrectivoResource extends Resource
                     ->badge()
                     ->color('naranja')
                     ->sortable(),
-                    Tables\Columns\TextColumn::make('codigo_equipo')
-                        ->badge()
-                        ->color('marronClaro'),
-                Tables\Columns\TextColumn::make('agencia.nombre'),
+                Tables\Columns\TextColumn::make('codigo_equipo')
+                    ->searchable()
+                    ->badge()
+                    ->color('marronClaro'),
+                Tables\Columns\TextColumn::make('agencia.nombre')
+                    ->searchable()
+                    ->icon('heroicon-s-home'),
                 Tables\Columns\TextColumn::make('nro_presupuesto')
+                    ->searchable()
                     ->label('Nro. Presupuesto')
                     ->badge()
                     ->color('marronClaro')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('monto_presupuesto_usd')
-                    ->badge()
+                    ->numeric()
                     ->money('USD')
+                    ->badge()
                     ->color('success')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('detalles'),
                 Tables\Columns\TextColumn::make('doc_pdf'),
-                Tables\Columns\TextColumn::make('responsable'),
+                Tables\Columns\TextColumn::make('responsable')
+                    ->searchable()
+                    ->icon('heroicon-c-user-circle'),
             ])
             ->filters([
                 //

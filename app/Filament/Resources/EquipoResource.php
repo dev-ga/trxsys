@@ -22,7 +22,7 @@ class EquipoResource extends Resource
 {
     protected static ?string $model = Equipo::class;
 
-    protected static ?string $navigationIcon = 'heroicon-m-server-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-server-stack';
 
     public static function form(Form $form): Form
     {
@@ -30,7 +30,7 @@ class EquipoResource extends Resource
             ->schema([
                 Section::make('Equipo')
                 ->description('Formulario para la carga de equipos. Campos Requeridos(*)')
-                ->icon('heroicon-m-server-stack')
+                ->icon('heroicon-o-server-stack')
                 ->schema([
                     Forms\Components\Select::make('agencia_id')
                         ->label('Agencia')
@@ -47,10 +47,10 @@ class EquipoResource extends Resource
 
                     Forms\Components\TextInput::make('codigo')
                         ->prefixIcon('heroicon-s-pencil')
-                        ->label('Codigo')
+                        ->label('Código de equipo')
                         ->disabled()
                         ->dehydrated(),
-                        
+
                     Forms\Components\TextInput::make('toneladas')
                         ->required()
                         ->numeric()
@@ -81,7 +81,7 @@ class EquipoResource extends Resource
                     Forms\Components\TextInput::make('area_suministro')
                         ->prefixIcon('heroicon-s-pencil')
                         ->label('Area de Suministro'),
-                        
+
                     Forms\Components\Select::make('voltaje')
                         ->required()
                         ->label('Voltaje')
@@ -107,16 +107,21 @@ class EquipoResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('codigo')
+                    ->label('Código de equipo')
                     ->badge()
                     ->color('naranja')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('agencia.nombre')
+                    ->icon('heroicon-s-home')
                     ->numeric()
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('toneladas')
                     ->numeric()
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('PH')
+                    ->label('PH')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('refrigerante')
                     ->searchable(),
@@ -128,10 +133,10 @@ class EquipoResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Fecha de Registro')
-                    ->dateTime()
+                    ->dateTime('d-m-Y')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->dateTime('d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

@@ -19,7 +19,9 @@ class ProveedorResource extends Resource
 {
     protected static ?string $model = Proveedor::class;
 
-    protected static ?string $navigationIcon = 'heroicon-m-truck';
+    protected static ?string $navigationLabel = 'Proveedores';
+
+    protected static ?string $navigationIcon = 'heroicon-o-truck';
 
     public static function form(Form $form): Form
     {
@@ -27,7 +29,7 @@ class ProveedorResource extends Resource
             ->schema([
                 Section::make('Proveedor')
                 ->description('Formulario para la carga de proveedores. Campos Requeridos(*)')
-                ->icon('heroicon-m-truck')
+                ->icon('heroicon-o-truck')
                 ->schema([
                     Forms\Components\TextInput::make('codigo')
                         ->default(function () {
@@ -38,6 +40,7 @@ class ProveedorResource extends Resource
                             }
                             return '000' . $parte_entera + 1;
                         })
+                        ->label('Código')
                         ->required()
                         ->maxLength(255),
                     Forms\Components\TextInput::make('ci_rif')
@@ -46,27 +49,27 @@ class ProveedorResource extends Resource
                         ->required()
                         ->maxLength(255),
                     Forms\Components\TextInput::make('nombre')
-                        ->prefixIcon('heroicon-s-pencil')
                         ->label('Nombre/Razón Social')
+                        ->prefixIcon('heroicon-s-pencil')
                         ->required()
                         ->maxLength(255),
                     Forms\Components\TextInput::make('direccion')
-                        ->prefixIcon('heroicon-s-pencil')
                         ->label('Dirección')
+                        ->prefixIcon('heroicon-s-pencil')
                         ->maxLength(255),
                     Forms\Components\TextInput::make('telefono_local')
-                        ->prefixIcon('heroicon-s-pencil')
                         ->label('Tel. Local')
+                        ->prefixIcon('heroicon-s-pencil')
                         ->tel()
                         ->maxLength(255),
                     Forms\Components\TextInput::make('telefono_cel')
-                        ->prefixIcon('heroicon-s-pencil')
                         ->label('Tel. Celular')
+                        ->prefixIcon('heroicon-s-pencil')
                         ->tel()
                         ->maxLength(255),
                     Forms\Components\TextInput::make('email')
-                        ->prefixIcon('heroicon-s-pencil')
                         ->label('Correo')
+                        ->prefixIcon('heroicon-s-pencil')
                         ->email()
                         ->required()
                         ->maxLength(255),
@@ -77,7 +80,7 @@ class ProveedorResource extends Resource
                         ->dehydrated()
                         ->default(Auth::user()->name),
                 ])->columns(3),
-                
+
             ]);
     }
 
@@ -86,17 +89,17 @@ class ProveedorResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('codigo')
-                    ->label('Codigo')
+                    ->label('Código')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('ci_rif')
+                    ->label('CI/RIF')
                     ->badge()
                     ->color('naranja')
-                    ->label('CI/RIF')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nombre')
+                    ->label('Nombre/Razón Social')
                     ->badge()
                     ->color('naranja')
-                    ->label('Nombre/Razón Social')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('direccion')
                     ->label('Dirección')
@@ -115,6 +118,7 @@ class ProveedorResource extends Resource
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('responsable')
+                    ->icon('heroicon-c-user-circle')
                     ->label('Cargado por:')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')

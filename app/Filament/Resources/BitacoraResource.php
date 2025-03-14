@@ -23,36 +23,36 @@ class BitacoraResource extends Resource
 {
     protected static ?string $model = Bitacora::class;
 
-    protected static ?string $navigationIcon = 'heroicon-c-chat-bubble-bottom-center-text';
+    protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-bottom-center-text';
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('agencia.nombre')
-                ->searchable()
-                ->label('Agencia'),
+                    ->searchable()
+                    ->icon('heroicon-s-home')
+                    ->label('Agencia'),
                 Tables\Columns\TextColumn::make('empresaContratante.nombre')
-                ->searchable()
-                ->badge()
-                ->color('marronClaro')
-                ->label('Empresa'),
-                Tables\Columns\TextColumn::make('nro_contrato')
-                ->searchable()
-                ->badge()
-                ->color('marronClaro')
-                ->label('Nro Contrato'),
-                Tables\Columns\TextColumn::make('image')
-                ->label('Imagen')
-                ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('doc_pdf')
-                ->label('PDF')
-                ->toggleable(isToggledHiddenByDefault: true),
-
-                Tables\Columns\TextColumn::make('valuacion.descripcion')
-                ->searchable()
+                    ->searchable()
                     ->badge()
                     ->color('marronClaro')
+                    ->label('Empresa'),
+                Tables\Columns\TextColumn::make('nro_contrato')
+                    ->searchable()
+                    ->badge()
+                    ->color('naranja')
+                    ->label('Nro Contrato'),
+                Tables\Columns\TextColumn::make('image')
+                    ->label('Imagen')
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('doc_pdf')
+                    ->label('PDF')
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('valuacion.descripcion')
+                    ->searchable()
+                    ->badge()
+                    ->color('azul')
                     ->label('Valuacion'),
                 Tables\Columns\TextColumn::make('mantenimiento.descripcion')
                     ->searchable()
@@ -60,9 +60,9 @@ class BitacoraResource extends Resource
                     ->badge()
                     ->color(function ($state) {
                         return match ($state) {
-                            'preventivo' => 'marronClaro',
+                            'preventivo' => 'naranja',
                             'correctivo' => 'success',
-                            default      => 'marronClaro',
+                            default      => 'naranja',
                         };
                     })
                     ->icon(function ($state) {
@@ -72,16 +72,16 @@ class BitacoraResource extends Resource
                             default      => 'heroicon-s-wrench',
                         };
                     }),
-
                 Tables\Columns\TextColumn::make('responsable')
-                ->label('Responsable')
-                ->toggleable(isToggledHiddenByDefault: true),
+                    ->label('Responsable')
+                    ->icon('heroicon-c-user-circle')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('trabajo_realizado')
-                ->searchable()
-                ->label('Trabajo Realizado'),
+                    ->searchable()
+                    ->label('Trabajo Realizado'),
                 Tables\Columns\TextColumn::make('created_at')
-                ->label('Fecha')
-                    ->dateTime(),
+                    ->label('Fecha')
+                    ->dateTime('d-m-Y'),
             ])
             ->filters([
                 Filter::make('created_at')
