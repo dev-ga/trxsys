@@ -56,11 +56,11 @@ class AdminPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
-            ->plugins([
-                FilamentThemeInspectorPlugin::make()
-                    ->disabled(fn() => ! app()->hasDebugModeEnabled())
-                    ->toggle()
-            ])
+            // ->plugins([
+            //     FilamentThemeInspectorPlugin::make()
+            //         ->disabled(fn() => ! app()->hasDebugModeEnabled())
+            //         ->toggle()
+            // ])
             ->authMiddleware([
                 Authenticate::class,
             ])

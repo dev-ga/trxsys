@@ -1,0 +1,200 @@
+<?php
+
+namespace App\Filament\Resources;
+
+use Filament\Forms;
+use Filament\Tables;
+use App\Models\Almacen;
+use Filament\Forms\Form;
+use App\Models\Inventario;
+use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\Grid;
+use Filament\Tables\Actions\Action;
+use App\Models\InventarioMovimiento;
+use Illuminate\Support\Facades\Auth;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Section;
+use Filament\Support\Enums\ActionSize;
+use Filament\Tables\Actions\ActionGroup;
+use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Enums\ActionsPosition;
+use App\Http\Controllers\InventarioController;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\InventarioResource\Pages;
+use App\Filament\Resources\InventarioResource\RelationManagers;
+
+class InventarioResource extends Resource
+{
+    protected static ?string $model = Inventario::class;
+
+    protected static ?string $navigationIcon = 'gmdi-add-chart-o';
+
+    public static function form(Form $form): Form
+    {
+        return $form
+            ->schema([
+                Forms\Components\TextInput::make('codigo')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('articulo_id')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('almacen_id')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('cantidad')
+                    ->required()
+                    ->numeric()
+                    ->default(0.00),
+                Forms\Components\TextInput::make('responsable')
+                    ->required()
+                    ->maxLength(255),
+            ]);
+    }
+
+    public static function table(Table $table): Table
+    {
+        return $table
+            ->columns([
+                Tables\Columns\TextColumn::make('codigo')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('articulo.descripcion')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('almacen.descripcion')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('cantidad')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('responsable')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+            ])
+            ->filters([
+                //
+            ])
+            ->actions([
+            ActionGroup::make([
+
+                Action::make('reposicion')
+                    ->label('Reposicion')
+                    ->color('negro')
+                    ->icon('iconsax-lin-arrow-2')
+                    ->model(Inventario::class)
+                    ->form([
+                        Section::make('Entrada de Inventario')
+                        ->description('Debe llenar los campos de forma correcta. Campos Requeridos(*)')
+                        ->icon('iconsax-lin-arrow-2')
+                        ->schema([
+                            Grid::make()
+                            ->schema([
+                                
+                                Forms\Components\TextInput::make('nro_factura')
+                                    ->label('Nro. Factura/Nota de Entrega')
+                                    ->prefixIcon('heroicon-c-tag')
+                                    ->helperText('Es deto sera utilizado al momento de realizar auditorias de gastos contra los movimientos del inventario.'),
+                                Forms\Components\TextInput::make('cantidad')
+                                    ->label('Cantida entrante')
+                                    ->prefixIcon('heroicon-c-tag')
+                                    ->required(),
+                                Forms\Components\TextInput::make('responsable')
+                                        ->prefixIcon('heroicon-s-home')
+                                        ->label('Cargado por:')
+                                        ->disabled()
+                                        ->dehydrated()
+                                        ->default(Auth::user()->name),
+
+                            ])->columns(3),
+                        ]),
+                    ])
+                    ->action(function (Inventario $record, array $data) {
+                        //entrada al inventario
+                        $entrada = InventarioController::reposicion($data, $record);
+
+                        //carga del asiento para el movimiento del inventario
+                    }),
+
+                Action::make('salida')
+                    ->label('Salida')
+                    ->color('negro')
+                    ->icon('solar-cart-plus-line-duotone')
+                    ->model(Inventario::class)
+                    ->form([
+                        Section::make('Entrada de Inventario')
+                            ->description('Debe llenar los campos de forma correcta. Campos Requeridos(*)')
+                            ->icon('solar-cart-plus-line-duotone')
+                            ->schema([
+                                Grid::make()
+                                    ->schema([
+
+                                        Select::make('almacen_id')
+                                            ->label('Almacen')
+                                            ->prefixIcon('heroicon-m-list-bullet')
+                                            ->options(Almacen::all()->pluck('descripcion', 'id'))
+                                            ->searchable()
+                                            ->live()
+                                            ->required(),
+
+                                        Grid::make(3)->schema([
+                                            Forms\Components\TextInput::make('cantidad')
+                                                ->label('Cantida entrante')
+                                                ->prefixIcon('heroicon-c-tag')
+                                                ->required(),
+
+                                            Forms\Components\TextInput::make('nro_factura')
+                                                ->label('Nro. Factura/Nota de Entrega')
+                                                ->prefixIcon('heroicon-c-tag'),
+
+                                            Forms\Components\TextInput::make('responsable')
+                                                ->prefixIcon('heroicon-s-home')
+                                                ->label('Cargado por:')
+                                                ->disabled()
+                                                ->dehydrated()
+                                                ->default(Auth::user()->name),
+
+                                        ])
+
+
+                                    ])->columns(2),
+                            ]),
+                    ])
+                    ->action(function (Inventario $record, array $data) {
+                        //entrada al inventario
+                        $entrada = InventarioController::entrada($data, $record);
+
+                        //carga del asiento para el movimiento del inventario
+                    }),
+
+            ])->dropdownPlacement('bottom-start')
+                ->size(ActionSize::Small)
+        ], position: ActionsPosition::BeforeCells)
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
+            ]);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            //
+        ];
+    }
+
+    public static function getPages(): array
+    {
+        return [
+            'index' => Pages\ListInventarios::route('/'),
+            'create' => Pages\CreateInventario::route('/create'),
+            'edit' => Pages\EditInventario::route('/{record}/edit'),
+        ];
+    }
+}
