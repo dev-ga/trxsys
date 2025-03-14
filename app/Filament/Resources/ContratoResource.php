@@ -37,6 +37,7 @@ class ContratoResource extends Resource
                         ->preload()
                         ->createOptionForm([
                             Forms\Components\TextInput::make('codigo')
+                                ->label('Código')
                                 ->default(function () {
                                     if (EmpresaContratante::max('id') == null) {
                                         $parte_entera = 0;
@@ -61,7 +62,7 @@ class ContratoResource extends Resource
                                 ->default(Auth::user()->name),
                         ]),
                     Forms\Components\TextInput::make('nro_contrato')
-                    ->label('Nro. Contrato')
+                        ->label('Nro. Contrato')
                         ->prefixIcon('heroicon-s-pencil')
                         ->required()
                         ->maxLength(255),
@@ -106,38 +107,39 @@ class ContratoResource extends Resource
                 Tables\Columns\TextColumn::make('nro_contrato')
                     ->label('Nro. Contrato')
                     ->badge()
-                    ->color('marronClaro')
+                    ->color('naranja')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('mant_prev_usd')
                     ->label('Mant. Prev. USD')
-                    ->numeric()
+                    ->money('USD')
                     ->badge()
                     ->color('success')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('mant_correc_usd')
                     ->label('Mant. Correc. USD')
-                    ->numeric()
+                    ->money('USD')
                     ->badge()
                     ->color('success')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('monto_total_usd')
                     ->label('Monto Total USD')
-                    ->numeric()
+                    ->money('USD')
                     ->searchable()
                     ->badge()
                     ->color('success')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('responsable')
                     ->label('Cargado por:')
+                    ->icon('heroicon-c-user-circle')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Fecha de Registro')
-                    ->dateTime()
+                    ->dateTime('d-m-Y')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->dateTime('d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

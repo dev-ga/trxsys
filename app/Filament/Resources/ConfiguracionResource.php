@@ -26,7 +26,7 @@ class ConfiguracionResource extends Resource
             ->schema([
 
                 Section::make('Configuraciones')
-                ->description('Canfiguracion y valores del sistema. Campos Requeridos(*)')
+                ->description('Canfiguración y valores del sistema. Campos Requeridos(*)')
                 ->icon('heroicon-o-cog-8-tooth')
                 ->schema([
                     Forms\Components\TextInput::make('iva')
@@ -34,7 +34,7 @@ class ConfiguracionResource extends Resource
                         ->numeric()
                         ->default(0.00),
                     Forms\Components\TextInput::make('iva_nomina')
-                    ->label('IVA Nomina')
+                        ->label('IVA Nómina')
                         ->numeric()
                         ->default(0.00),
                     Forms\Components\TextInput::make('isrl')
@@ -47,8 +47,7 @@ class ConfiguracionResource extends Resource
                         ->default(0.00),
                     Forms\Components\TextInput::make('anio_curso')
                     ->label('Año Curso')
-                        ->numeric()
-                        ->default(0.00),
+                        ->numeric(),
 
                 ])->columns(5)
             ]);
@@ -76,7 +75,8 @@ class ConfiguracionResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('anio_curso')
                     ->label('Año Curso')
-                    ->numeric()
+                    ->badge()
+                    ->color('naranja')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

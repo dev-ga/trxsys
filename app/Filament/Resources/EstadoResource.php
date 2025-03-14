@@ -48,7 +48,7 @@ class EstadoResource extends Resource
                     ->color('naranja')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->dateTime('d-m-Y')
                     ->sortable(),
             ])
             ->filters([

@@ -33,7 +33,7 @@ class EmpresaContratanteResource extends Resource
                 ->schema([
 
                     Forms\Components\TextInput::make('codigo')
-                        ->label('Codigo')
+                        ->label('Código')
                         ->prefixIcon('heroicon-c-tag')
                         ->default(function () {
                             if (EmpresaContratante::max('id') == null) {
@@ -72,7 +72,7 @@ class EmpresaContratanteResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('codigo')
-                    ->label('Codigo')
+                    ->label('Código')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nombre')
                     ->badge()
@@ -84,13 +84,14 @@ class EmpresaContratanteResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('responsable')
                     ->label('Cargado por:')
+                    ->icon('heroicon-c-user-circle')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Fecha de Registro')
-                    ->dateTime()
+                    ->dateTime('d-m-Y')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->dateTime('d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

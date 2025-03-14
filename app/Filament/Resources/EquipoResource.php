@@ -47,7 +47,7 @@ class EquipoResource extends Resource
 
                     Forms\Components\TextInput::make('codigo')
                         ->prefixIcon('heroicon-s-pencil')
-                        ->label('Codigo')
+                        ->label('Código de equipo')
                         ->disabled()
                         ->dehydrated(),
 
@@ -107,6 +107,7 @@ class EquipoResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('codigo')
+                    ->label('Código de equipo')
                     ->badge()
                     ->color('naranja')
                     ->searchable(),
@@ -132,10 +133,10 @@ class EquipoResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Fecha de Registro')
-                    ->dateTime()
+                    ->dateTime('d-m-Y')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->dateTime('d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

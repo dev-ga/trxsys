@@ -128,7 +128,7 @@ class ValuacionResource extends Resource
                 Tables\Columns\TextColumn::make('nro_contrato')
                     ->label('Nro Contrato')
                     ->badge()
-                    ->color('marronClaro')
+                    ->color('naranja')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('doc_pdf')
                     ->searchable(),

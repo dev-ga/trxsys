@@ -322,8 +322,10 @@ class GastoResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('codigo')
+                    ->label('Código')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('descripcion')
+                    ->label('Descripción')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('tipo_gasto.descripcion')
                     ->badge()
@@ -348,7 +350,7 @@ class GastoResource extends Resource
                 Tables\Columns\TextColumn::make('nro_contrato')
                     ->label('Nro Contrato')
                     ->badge()
-                    ->color('marronClaro')
+                    ->color('naranja')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('proveedor.nombre')
                     ->numeric()
@@ -373,7 +375,7 @@ class GastoResource extends Resource
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('conversion_a_usd')
-                    ->numeric()
+                    ->money('USD')
                     ->alignRight()
                     ->badge()
                     ->color('success')
@@ -393,17 +395,19 @@ class GastoResource extends Resource
                 Tables\Columns\TextColumn::make('monto_usd')
                     ->label('Monto USD($)')
                     ->alignRight()
-                    ->numeric()
+                    ->money('USD')
                     ->badge()
                     ->color('success')
                     ->sortable()
                     ->searchable()
                     ->summarize(Sum::make()
-                        ->label('Total(USD)')),
+                    ->label('Total(USD)')),
                 Tables\Columns\TextColumn::make('tasa_bcv')
                     ->numeric()
                     ->alignRight()
                     ->sortable()
+                    ->badge()
+                    ->color('success')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('observaciones')
