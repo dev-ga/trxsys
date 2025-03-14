@@ -18,6 +18,8 @@ class ConfiguracionResource extends Resource
 {
     protected static ?string $model = Configuracion::class;
 
+    protected static ?string $navigationLabel = 'Configuración';
+
     protected static ?string $navigationIcon = 'heroicon-o-cog-8-tooth';
 
     public static function form(Form $form): Form
@@ -79,7 +81,8 @@ class ConfiguracionResource extends Resource
                     ->color('naranja')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label('Fecha de Registro')
+                    ->dateTime('d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')

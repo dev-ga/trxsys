@@ -50,13 +50,15 @@ class InventarioMovimientoResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('inventario_id')
-                ->label('Inventario ID')
+                    ->label('Inventario ID')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('articulo.descripcion')
-                ->label('Articulo')
+                    ->label('Articulo')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('almacen.descripcion')
                     ->label('Almacen')
+                    ->badge()
+                    ->color('marronClaro')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('tipo_movimiento')
                     ->label('Movimiento')
@@ -68,13 +70,14 @@ class InventarioMovimientoResource extends Resource
                     ->label('Nro. Factura')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('responsable')
+                    ->icon('heroicon-c-user-circle')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Realizado el:')
-                    ->dateTime()
+                    ->dateTime('d-m-Y')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->dateTime('d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

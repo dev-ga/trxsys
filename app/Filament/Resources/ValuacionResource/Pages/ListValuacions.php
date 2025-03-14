@@ -10,6 +10,8 @@ class ListValuacions extends ListRecords
 {
     protected static string $resource = ValuacionResource::class;
 
+    protected ?string $heading = 'Valuaciones';
+
     protected function getHeaderActions(): array
     {
         return [

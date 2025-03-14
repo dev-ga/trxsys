@@ -19,6 +19,8 @@ class AlmacenResource extends Resource
 {
     protected static ?string $model = Almacen::class;
 
+    protected static ?string $navigationLabel = 'Almacenes';
+
     protected static ?string $navigationIcon = 'heroicon-o-building-office';
 
     public static function form(Form $form): Form
@@ -48,12 +50,12 @@ class AlmacenResource extends Resource
                         ->required()
                         ->maxLength(255),
                     Forms\Components\TextInput::make('responsable')
-                        ->prefixIcon('heroicon-s-home')
+                        ->prefixIcon('heroicon-c-user-circle')
                         ->label('Cargado por:')
                         ->disabled()
                         ->dehydrated()
                         ->default(Auth::user()->name),
-                    
+
                 ])->columns(3)
             ]);
     }
@@ -63,19 +65,23 @@ class AlmacenResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('codigo')
+                    ->label('Código')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('descripcion')
-                ->badge()
-                ->color('marronClaro')
-                ->searchable(),
+                    ->label('Descripción')
+                    ->badge()
+                    ->color('marronClaro')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('responsable')
+                    ->icon('heroicon-c-user-circle')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label('Fecha de Registro')
+                    ->dateTime('d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->dateTime('d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

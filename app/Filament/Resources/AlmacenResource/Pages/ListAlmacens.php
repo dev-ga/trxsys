@@ -10,6 +10,8 @@ class ListAlmacens extends ListRecords
 {
     protected static string $resource = AlmacenResource::class;
 
+    protected ?string $heading = 'Almacenes';
+
     protected function getHeaderActions(): array
     {
         return [

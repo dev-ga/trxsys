@@ -33,40 +33,40 @@ class DetalleGastosRelationManager extends RelationManager
             ->description('Detalle de Gasto asociado a la factura')
             ->columns([
                 Tables\Columns\TextColumn::make('gasto_id')
-                ->label('ID')
-                ->badge()
-                ->color('naranja')
-                ->searchable(),
+                    ->label('ID')
+                    ->badge()
+                    ->color('naranja')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('codigo_gasto')
-                ->label('Codigo')
-                ->toggleable(isToggledHiddenByDefault: true),
+                    ->label('Codigo')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('empresaContratante.nombre')
-                ->label('Empresa'),
+                    ->label('Empresa'),
                 Tables\Columns\TextColumn::make('nro_contrato')
-                ->badge()
-                ->color('marronClaro'),
+                    ->badge()
+                    ->color('marronClaro'),
                 Tables\Columns\TextColumn::make('valuacion_id')
-                ->label('Valuacion')
-                ->badge()
-                ->color('marronClaro'),
+                    ->label('Valuacion')
+                    ->badge()
+                    ->color('marronClaro'),
                 Tables\Columns\TextColumn::make('agencia.nombre'),
-                
                 Tables\Columns\TextColumn::make('monto_bsd')
-                ->label('Monto(Bs.)')
-                ->toggleable(isToggledHiddenByDefault: true),
+                    ->label('Monto(Bs.)')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('tasa_bcv')
-                ->label('Tasa BCV')
-                ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('responsable'),
+                    ->label('Tasa BCV')
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('responsable')
+                    ->icon('heroicon-c-user-circle'),
                 Tables\Columns\TextColumn::make('created_at')
-                ->label('Fecha')
-                ->dateTime()
-                ->sortable(),
+                    ->label('Fecha')
+                    ->dateTime()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('monto_usd')
                     ->label('Monto(USD)')
                     ->summarize(Sum::make()
                         ->label('Total(USD)'))
-                    
+
             ])
             ->filters([
                 //
