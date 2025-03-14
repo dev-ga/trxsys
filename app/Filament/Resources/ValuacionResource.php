@@ -83,8 +83,7 @@ class ValuacionResource extends Resource
                         ->hint('separador decimal (.)')
                         ->numeric()
                         ->prefixIcon('heroicon-s-pencil')
-                        ->required()
-                        ->maxLength(255),
+                        ->required(),
 
                         Forms\Components\Select::make('mantenimiento_id')
                         ->label('Tipo de Mantenimiento')
