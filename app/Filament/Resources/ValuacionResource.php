@@ -15,6 +15,7 @@ use App\Models\EmpresaContratante;
 use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
+use Filament\Tables\Actions\ActionGroup;
 use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\ValuacionResource\Pages;
@@ -132,8 +133,6 @@ class ValuacionResource extends Resource
                     ->badge()
                     ->color('naranja')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('doc_pdf')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('monto_usd')
                     ->badge()
                     ->color('success')
@@ -158,7 +157,7 @@ class ValuacionResource extends Resource
                 Tables\Columns\TextColumn::make('responsable')
                     ->icon('heroicon-c-user-circle')
                     ->searchable()
-                    ->searchable(),
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Fecha de Registro')
                     ->dateTime('d-m-Y')
@@ -173,15 +172,20 @@ class ValuacionResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make()
-                ->color('naranja'),
-                Tables\Actions\Action::make('ver_pdf')
-                ->label('Ver PDF')
-                ->icon('heroicon-s-eye')
-                ->color('naranja')
-                ->url(function ($record) {
-                    return asset('storage/' . $record->doc_pdf);
-                }),
+                ActionGroup::make([
+                    Tables\Actions\EditAction::make()
+                    ->color('naranja'),
+                    Tables\Actions\DeleteAction::make()
+                    ->color('danger'),
+                    Tables\Actions\Action::make('ver_pdf')
+                    ->label('Ver PDF')
+                    ->icon('heroicon-s-eye')
+                    ->color('naranja')
+                    ->url(function ($record) {
+                        return asset('storage/' . $record->doc_pdf);
+                    }),
+                    
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
