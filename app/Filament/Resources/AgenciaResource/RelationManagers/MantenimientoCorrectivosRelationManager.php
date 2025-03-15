@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Actions\ActionGroup;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Resources\RelationManagers\RelationManager;
 
@@ -135,10 +136,10 @@ class MantenimientoCorrectivosRelationManager extends RelationManager
                     ->color('success')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('detalles'),
-                Tables\Columns\TextColumn::make('doc_pdf'),
-                Tables\Columns\TextColumn::make('responsable')
-                ->icon('heroicon-c-user-circle')
-                ->label('Cargado por:'),
+                // Tables\Columns\TextColumn::make('doc_pdf'),
+                // Tables\Columns\TextColumn::make('responsable')
+                // ->icon('heroicon-c-user-circle')
+                // ->label('Cargado por:'),
             ])
             ->filters([
                 //
@@ -147,6 +148,18 @@ class MantenimientoCorrectivosRelationManager extends RelationManager
                 Tables\Actions\CreateAction::make(),
             ])
             ->actions([
+
+                ActionGroup::make([
+                    Tables\Actions\DeleteAction::make()
+                        ->color('danger'),
+                    Tables\Actions\Action::make('ver_pdf')
+                        ->label('Ver PDF/Doc/Imagen')
+                        ->icon('heroicon-s-eye')
+                        ->color('naranja')
+                        ->url(function ($record) {
+                            return asset('storage/' . $record->doc_pdf);
+                        }),
+                ]),
                 // Tables\Actions\EditAction::make(),
                 // Tables\Actions\DeleteAction::make(),
             ])

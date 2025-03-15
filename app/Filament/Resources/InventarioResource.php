@@ -28,7 +28,7 @@ class InventarioResource extends Resource
 {
     protected static ?string $model = Inventario::class;
 
-    protected static ?string $navigationIcon = 'gmdi-add-chart-o';
+    protected static ?string $navigationIcon = 'heroicon-o-queue-list';
 
     public static function form(Form $form): Form
     {

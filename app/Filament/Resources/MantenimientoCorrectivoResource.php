@@ -11,6 +11,7 @@ use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\Filter;
 use App\Models\MantenimientoCorrectivo;
+use Filament\Tables\Actions\ActionGroup;
 use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
@@ -45,8 +46,6 @@ class MantenimientoCorrectivoResource extends Resource
                     ->icon('heroicon-s-home'),
                 
                 Tables\Columns\TextColumn::make('detalles'),
-                Tables\Columns\TextColumn::make('doc_pdf')
-                    ->label('Doc PDF'),
                 Tables\Columns\TextColumn::make('nro_presupuesto')
                     ->searchable()
                     ->label('Nro. Presupuesto')
@@ -106,7 +105,19 @@ class MantenimientoCorrectivoResource extends Resource
                     ->label('Filtros'),
             )
             ->actions([
-                // Tables\Actions\EditAction::make(),
+                ActionGroup::make([
+                    Tables\Actions\EditAction::make()
+                        ->color('naranja'),
+                    Tables\Actions\DeleteAction::make()
+                        ->color('danger'),
+                    Tables\Actions\Action::make('ver_pdf')
+                        ->label('Ver PDF')
+                        ->icon('heroicon-s-eye')
+                        ->color('naranja')
+                        ->url(function ($record) {
+                            return asset('storage/' . $record->doc_pdf);
+                        }),
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
