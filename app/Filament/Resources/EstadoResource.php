@@ -24,6 +24,7 @@ class EstadoResource extends Resource
     {
         return $form
             ->schema([
+                
                 Section::make('Estado')
                 ->description('Formulario para la carga de los estados. Campos Requeridos(*)')
                 ->icon('heroicon-o-globe-americas')
