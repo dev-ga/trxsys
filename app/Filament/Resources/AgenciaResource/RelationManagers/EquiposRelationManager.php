@@ -39,7 +39,7 @@ class EquiposRelationManager extends RelationManager
                         ->label('Codigo')
                         ->default(function (RelationManager $livewire) {
                             $codigo = 'TRX-' . $livewire->ownerRecord->codigo . '-' . rand(11111, 99999);
-                            return $codigo;    
+                            return $codigo;
                         })
                         ->disabled()
                         ->dehydrated(),
@@ -57,7 +57,7 @@ class EquiposRelationManager extends RelationManager
                             '3' => '3',
                         ])
                         ->searchable(),
- 
+
                     Forms\Components\Select::make('refrigerante')
                         ->label('Refrigerante')
                         ->prefixIcon('heroicon-m-list-bullet')
@@ -107,6 +107,7 @@ class EquiposRelationManager extends RelationManager
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('PH')
+                    ->label('PH(Phase)')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('refrigerante')
                     ->searchable(),
@@ -115,11 +116,11 @@ class EquiposRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('voltaje')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('responsable')
-                ->icon('heroicon-c-user-circle')
-                ->label('Cargado por:'),
+                    ->icon('heroicon-c-user-circle')
+                    ->label('Cargado por:'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Fecha de Registro')
-                    ->dateTime()
+                    ->dateTime('d-m-Y')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
@@ -152,7 +153,7 @@ class EquiposRelationManager extends RelationManager
                             ->schema([
                                 Grid::make()
                                     ->schema([
-                                        
+
                                         Forms\Components\DatePicker::make('fecha_ejecucion')
                                             ->prefixIcon('heroicon-c-calendar-date-range')
                                             ->label('Fecha Mantenimiento')
@@ -173,7 +174,7 @@ class EquiposRelationManager extends RelationManager
                             ])
                     ])
                     ->action(function (Collection $records, array $data) {
-                        
+
                         foreach ($records as $record) {
                             //hacemos el registro en la tabla de mantenimiento_preventivos
                             $mantenimiento = new \App\Models\MantenimientoPreventivo();
