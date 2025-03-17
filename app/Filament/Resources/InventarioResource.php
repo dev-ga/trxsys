@@ -30,6 +30,8 @@ class InventarioResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-queue-list';
 
+    protected static ?string $recordTitleAttribute = 'articulo.descripcion';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -95,12 +97,12 @@ class InventarioResource extends Resource
                 Action::make('reposicion')
                     ->label('Reposicion')
                     ->color('negro')
-                    ->icon('iconsax-lin-arrow-2')
+                    ->icon('heroicon-m-arrows-right-left')
                     ->model(Inventario::class)
                     ->form([
                         Section::make('Entrada de Inventario')
                         ->description('Debe llenar los campos de forma correcta. Campos Requeridos(*)')
-                        ->icon('iconsax-lin-arrow-2')
+                        ->icon('heroicon-m-arrows-right-left')
                         ->schema([
                             Grid::make()
                             ->schema([
@@ -108,7 +110,7 @@ class InventarioResource extends Resource
                                 Forms\Components\TextInput::make('nro_factura')
                                     ->label('Nro. Factura/Nota de Entrega')
                                     ->prefixIcon('heroicon-c-tag')
-                                    ->helperText('Es deto sera utilizado al momento de realizar auditorias de gastos contra los movimientos del inventario.'),
+                                    ->helperText('Este dato sera utilizado al momento de realizar auditorias de gastos contra los movimientos del inventario.'),
                                 Forms\Components\TextInput::make('cantidad')
                                     ->label('Cantida entrante')
                                     ->prefixIcon('heroicon-c-tag')
@@ -133,12 +135,12 @@ class InventarioResource extends Resource
                 Action::make('salida')
                     ->label('Salida')
                     ->color('negro')
-                    ->icon('solar-cart-plus-line-duotone')
+                    ->icon('heroicon-c-inbox-arrow-down')
                     ->model(Inventario::class)
                     ->form([
                         Section::make('Entrada de Inventario')
                             ->description('Debe llenar los campos de forma correcta. Campos Requeridos(*)')
-                            ->icon('solar-cart-plus-line-duotone')
+                            ->icon('heroicon-c-inbox-arrow-down')
                             ->schema([
                                 Grid::make()
                                     ->schema([
@@ -190,12 +192,12 @@ class InventarioResource extends Resource
                     Action::make('reposicion')
                         ->label('Reposicion')
                         ->color('negro')
-                        ->icon('iconsax-lin-arrow-2')
+                        ->icon('heroicon-m-arrows-right-left')
                         ->model(Inventario::class)
                         ->form([
                             Section::make('Entrada de Inventario')
                                 ->description('Debe llenar los campos de forma correcta. Campos Requeridos(*)')
-                                ->icon('iconsax-lin-arrow-2')
+                                ->icon('heroicon-m-arrows-right-left')
                                 ->schema([
                                     Grid::make()
                                         ->schema([
@@ -227,6 +229,11 @@ class InventarioResource extends Resource
 
             ]),
             ]);
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['codigo', 'articulo.descripcion', 'almacen.descripcion', 'nro_factura', 'responsable'];
     }
 
     public static function getRelations(): array

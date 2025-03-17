@@ -32,6 +32,8 @@ class ArticuloResource extends Resource
 {
     protected static ?string $model = Articulo::class;
 
+    protected static ?string $recordTitleAttribute = 'descripcion';
+
     protected static ?string $navigationIcon = 'heroicon-o-view-columns';
 
     public static function form(Form $form): Form
@@ -325,6 +327,11 @@ class ArticuloResource extends Resource
         return [
             //
         ];
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+            return ['codigo', 'descripcion'];
     }
 
     public static function getPages(): array

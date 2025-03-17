@@ -32,7 +32,7 @@ class StatsGeneral extends BaseWidget
 
         // $start = $this->filters['startDate'] == null ? now()->startOfDay() : $this->filters['startDate'].' 05:00:00';
         // $end = $this->filters['endDate'] == null ? now()->endOfDay() : $this->filters['endDate'].' 23:59:59';
-        // $sucursal_id = $this->filters['sucursal_id'] == null ? null : $this->filters['sucursal_id'];
+        // $agencia_id = $this->filters['agencia_id'] == null ? null : $this->filters['agencia_id'];
 
         // $servicios              = StatController::servicios_facturados($start, $end, $sucursal_id =  null);
         // $servicios_usd          = StatController::total_servicios_usd($start, $end, $sucursal_id =  null);
@@ -51,19 +51,19 @@ class StatsGeneral extends BaseWidget
 
             //Stat Servicios -----------------------------------------------------------------------------------------------
             //--------------------------------------------------------------------------------------------------------------
-            Stat::make('SERVICIOS', 12)
+            Stat::make('SEDES ATENDIDAS', 12)
                 ->description(round(12) . '%')
                 // ->descriptionIcon($servicios['icon'])
                 // ->color($servicios['color'])
                 ->extraAttributes(['class' => 'col-span-2 row-span-1 rounded-md text-center content-center']),
 
-            Stat::make('TOTAL SERVICIOS($)', 12 . 12)
+            Stat::make('TONELADAS EN PREVENTIVO', 12 . 12)
                 ->description(round(12) . '%')
                 // ->descriptionIcon('servicios_usd'['icon'])
                 // ->color('servicios_usd'['color'])
                 ->extraAttributes(['class' => 'col-span-2 row-span-1 rounded-md text-center content-center']),
 
-            Stat::make('PROMEDIO SERVICIO/CLIENTE', round(12, 2))
+            Stat::make('TOTAL DE VALUACIONES', round(12, 2))
                 ->description(12 . '% ')
                 // ->descriptionIcon('servicios_usd'['icon'])
                 // ->color('servicios_usd'['color'])
@@ -72,7 +72,7 @@ class StatsGeneral extends BaseWidget
 
             //Stat Productos -----------------------------------------------------------------------------------------------
             //--------------------------------------------------------------------------------------------------------------
-            Stat::make('PRODUCTOS VENDIDOS', 12)
+            Stat::make('INGRESOS/EGRESOS', 12)
                 ->description(round(12) . '%')
                 // ->descriptionIcon('label'['icon'])
                 // ->color('red')

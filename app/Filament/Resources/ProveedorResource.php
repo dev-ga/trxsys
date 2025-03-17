@@ -23,6 +23,8 @@ class ProveedorResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-truck';
 
+    protected static ?string $recordTitleAttribute = 'nombre';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -149,6 +151,11 @@ class ProveedorResource extends Resource
         return [
             //
         ];
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['nombre', 'ci_rif', 'codigo'];
     }
 
     public static function getPages(): array

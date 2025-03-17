@@ -24,6 +24,8 @@ class EquipoResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-server-stack';
 
+    protected static ?string $recordTitleAttribute = 'codigo';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -160,6 +162,11 @@ class EquipoResource extends Resource
             RelationManagers\MantenimientoPreventivosRelationManager::class,
             RelationManagers\MantenimientoCorrectivosRelationManager::class,
         ];
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+            return ['codigo', 'agencia.nombre', 'toneladas', 'PH', 'refrigerante', 'area_suministro', 'voltaje'];
     }
 
     public static function getPages(): array

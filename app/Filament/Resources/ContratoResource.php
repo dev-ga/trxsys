@@ -22,6 +22,8 @@ class ContratoResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-document-currency-dollar';
 
+    protected static ?string $recordTitleAttribute = 'nro_contrato';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -161,6 +163,11 @@ class ContratoResource extends Resource
         return [
             //
         ];
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+            return ['nro_contrato', 'mant_correc_usd', 'empresaContratante.nombre', 'monto_total_usd', 'mant_prev_usd'];
     }
 
     public static function getPages(): array

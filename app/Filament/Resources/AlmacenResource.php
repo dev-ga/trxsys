@@ -21,6 +21,8 @@ class AlmacenResource extends Resource
 
     protected static ?string $navigationLabel = 'Almacenes';
 
+    protected static ?string $recordTitleAttribute = 'descripcion';
+
     protected static ?string $navigationIcon = 'heroicon-o-building-office';
 
     public static function form(Form $form): Form

@@ -19,7 +19,7 @@ class AvancesDashChart extends ChartWidget
 {
     use InteractsWithPageFilters;
 
-    protected static ?string $heading = 'Avances';
+    protected static ?string $heading = '% de Avances';
 
     protected static ?string $maxHeight = '180px';
 
@@ -55,8 +55,8 @@ class AvancesDashChart extends ChartWidget
         // ];
 
         $labels = [
-            '1',
-            '2',
+            'Correctivos',
+            'Preventivos',
         ];
 
         // dd($array, $labels);
@@ -72,33 +72,12 @@ class AvancesDashChart extends ChartWidget
             'datasets' => [
                 [
                     'label' => '',
-                    'data' => [2, 5, 10],
+                    'data' => [2, 5],
                     'backgroundColor' => [
-                        '#a16d69',
-                        '#99bcbf',
-                        '#bf99a9',
-                        '#bfaf99',
-                        '#99a9bf',
-                        '#99bfaf',
-                        '#9c99bf',
-                        '#99bf9c',
-                        '#bf9c99',
-                        '#bf99bc',
-                        '#c7a8a5',
-                        '#ab7e7a',
-                        '#7ba69d',
-                        '#7b9aa6',
-                        '#a6877b',
-                        '#7b85a6',
-                        '#a69d7b',
-                        '#a67b85',
-                        '#9aa67b',
-                        '#7ba687',
-                        '#a67b9a',
-                        '#56737f'
+                        '#42708C',
+                        '#8C4014',
                     ],
                     'borderColor' => '#ffff',
-                    // 'fill' => true,
                 ],
 
             ],
@@ -109,7 +88,7 @@ class AvancesDashChart extends ChartWidget
 
     public function getDescription(): ?string
     {
-        return 'aaaa';
+        return 'Correctivos/Preventivos';
     }
 
     protected static ?array $options = [
