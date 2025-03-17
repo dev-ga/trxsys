@@ -5,6 +5,8 @@ namespace App\Providers;
 use Filament\Support\Colors\Color;
 use Illuminate\Support\ServiceProvider;
 use Filament\Support\Facades\FilamentColor;
+use Filament\Support\Facades\FilamentView;
+use Filament\View\PanelsRenderHook;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -29,5 +31,13 @@ class AppServiceProvider extends ServiceProvider
             'negro'         => Color::hex('#0D0D0D'),
             'disabilitado'  => Color::hex('#A9A9A9'),
         ]);
+
+        //RenderHook
+        FilamentView::registerRenderHook(
+            PanelsRenderHook::FOOTER,
+            function () {
+                return view('footer');
+            }
+        );
     }
 }
