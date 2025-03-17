@@ -17,7 +17,7 @@ class InventarioMovimientoResource extends Resource
 {
     protected static ?string $model = InventarioMovimiento::class;
 
-    protected static ?string $navigationIcon = 'fluentui-clipboard-text-edit-20-o';
+    protected static ?string $navigationIcon = 'heroicon-m-arrows-right-left';
 
     public static function form(Form $form): Form
     {

@@ -12,6 +12,7 @@ use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\Filter;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
@@ -78,7 +79,18 @@ class BitacoraResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('trabajo_realizado')
                     ->searchable()
-                    ->label('Trabajo Realizado'),
+                    ->label('Trabajo Realizado')
+                    ->limit(20)
+                    ->tooltip(function (TextColumn $column): ?string {
+                        $state = $column->getState();
+
+                        if (strlen($state) <= $column->getCharacterLimit()) {
+                            return null;
+                        }
+
+                        // Only render the tooltip if the column content exceeds the length limit.
+                        return $state;
+                    }),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Fecha')
                     ->dateTime('d-m-Y'),

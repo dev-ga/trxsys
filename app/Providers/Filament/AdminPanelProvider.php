@@ -65,6 +65,8 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             //logo
+            ->spa()
+            ->sidebarCollapsibleOnDesktop()
             ->favicon('/images/logo-trx.png')
             ->brandLogo('/images/logo-trx.png')
             ->viteTheme('resources/css/filament/admin/theme.css');

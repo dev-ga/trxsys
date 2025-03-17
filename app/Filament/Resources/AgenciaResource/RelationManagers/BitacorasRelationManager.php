@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Components\Select;
 use App\Models\MantenimientoCorrectivo;
 use App\Models\MantenimientoPreventivo;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -203,7 +204,18 @@ class BitacorasRelationManager extends RelationManager
                 }),
                 Tables\Columns\TextColumn::make('valuacion.descripcion'),
                 Tables\Columns\TextColumn::make('responsable'),
-                Tables\Columns\TextColumn::make('trabajo_realizado'),
+                Tables\Columns\TextColumn::make('trabajo_realizado')
+                ->limit(20)
+                ->tooltip(function (TextColumn $column): ?string {
+                    $state = $column->getState();
+
+                    if (strlen($state) <= $column->getCharacterLimit()) {
+                        return null;
+                    }
+
+                    // Only render the tooltip if the column content exceeds the length limit.
+                    return $state;
+                }),
                 Tables\Columns\TextColumn::make('nro_presupuesto')
                     ->label('Nro. Presupuesto')
                     ->badge()
