@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Database\Eloquent\Model;
 
 class InventarioMovimientoResource extends Resource
 {
@@ -99,6 +100,19 @@ class InventarioMovimientoResource extends Resource
     public static function getGloballySearchableAttributes(): array
     {
         return ['articulo.descripcion', 'almacen_id', 'codigo_articulo', 'tipo_movimiento', 'nro_factura', 'responsable', 'inventario_id', 'articulo_id', 'almacen.descripcion'];
+    }
+    
+
+    public static function getGlobalSearchEloquentQuery(): Builder
+    {
+        return parent::getGlobalSearchEloquentQuery()->with(['articulo']);
+    }
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'Artículo' => $record->articulo->descripcion,
+        ];
     }
 
     public static function getRelations(): array

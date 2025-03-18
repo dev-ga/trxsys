@@ -12,13 +12,14 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use App\Models\EmpresaContratante;
-use Illuminate\Support\HtmlString;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Support\Htmlable;
 use App\Filament\Resources\AgenciaResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\AgenciaResource\RelationManagers;
+use Illuminate\Support\HtmlString;
+use Illuminate\Database\Eloquent\Model;
 
 class AgenciaResource extends Resource
 {
@@ -163,6 +164,18 @@ class AgenciaResource extends Resource
     public static function getGloballySearchableAttributes(): array
     {
             return ['codigo', 'nombre', 'estado.descripcion', 'empresaContratante.nombre'];
+    }
+
+    public static function getGlobalSearchEloquentQuery(): Builder
+    {
+        return parent::getGlobalSearchEloquentQuery()->with(['EmpresaContratante']);
+    }
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'Empresa Contratante' => $record->empresaContratante->nombre,
+        ];
     }
 
     public static function getPages(): array

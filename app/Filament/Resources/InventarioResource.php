@@ -23,6 +23,7 @@ use App\Http\Controllers\InventarioController;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\InventarioResource\Pages;
 use App\Filament\Resources\InventarioResource\RelationManagers;
+use Illuminate\Database\Eloquent\Model;
 
 class InventarioResource extends Resource
 {
@@ -234,6 +235,18 @@ class InventarioResource extends Resource
     public static function getGloballySearchableAttributes(): array
     {
         return ['codigo', 'articulo.descripcion', 'almacen.descripcion', 'nro_factura', 'responsable'];
+    }
+
+    public static function getGlobalSearchEloquentQuery(): Builder
+    {
+        return parent::getGlobalSearchEloquentQuery()->with(['articulo']);
+    }
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'Artículo' => $record->articulo->descripcion,
+        ];
     }
 
     public static function getRelations(): array
