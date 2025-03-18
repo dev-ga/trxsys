@@ -13,7 +13,7 @@ class CreateEquipo extends CreateRecord
     //after create
     protected function afterCreate(): void
     {
-        dd($this->data);
+        // dd($this->data);
         
     }
 }
