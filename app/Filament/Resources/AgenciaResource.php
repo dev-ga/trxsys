@@ -15,10 +15,14 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\AgenciaResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\AgenciaResource\RelationManagers;
+use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Support\HtmlString;
 
 class AgenciaResource extends Resource
 {
     protected static ?string $model = Agencia::class;
+
+    protected static ?string $recordTitleAttribute = 'nombre';
 
     protected static ?string $navigationIcon = 'heroicon-o-home'; //heroicon-s-home
 
@@ -142,6 +146,11 @@ class AgenciaResource extends Resource
             RelationManagers\MantenimientoCorrectivosRelationManager::class,
             RelationManagers\BitacorasRelationManager::class,
         ];
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+            return ['codigo', 'nombre', 'estado.descripcion', 'empresaContratante.nombre'];
     }
 
     public static function getPages(): array

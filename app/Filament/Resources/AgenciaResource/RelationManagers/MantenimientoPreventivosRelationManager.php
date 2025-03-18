@@ -12,6 +12,7 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use App\Models\Configuracion;
 use Illuminate\Support\Collection;
+use App\Models\ValuacionPreventivo;
 use Filament\Forms\Components\Grid;
 use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Components\Section;
@@ -79,6 +80,15 @@ class MantenimientoPreventivosRelationManager extends RelationManager
                             ->prefixIcon('heroicon-s-pencil')
                             ->label('Codigo'),
 
+                        Forms\Components\Select::make('valuacion_preventivo_id')
+                            ->label('Valuacion')
+                            ->options(function (RelationManager $livewire) {
+                                return ValuacionPreventivo::all()->pluck('descripcion', 'id');
+                            })
+                            ->searchable()
+                            ->required()
+                            ->preload(),
+
                         Forms\Components\TextInput::make('toneladas')
                             ->prefixIcon('heroicon-s-pencil')
                             ->label('Toneladas')
@@ -128,15 +138,18 @@ class MantenimientoPreventivosRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('agencia_id')
             ->columns([
-            Tables\Columns\TextColumn::make('equipo_id')
-                ->label('ID')
+            // Tables\Columns\TextColumn::make('equipo_id')
+            //     ->label('ID')
+            //     ->badge()
+            //     ->color('naranja')
+            //     ->sortable(),
+            // Tables\Columns\TextColumn::make('agencia.nombre')
+            //     ->searchable()
+            //     ->icon('heroicon-s-home')
+            //     ->label('Agencia'),
+            Tables\Columns\TextColumn::make('valuacion_preventivo_id')
                 ->badge()
-                ->color('naranja')
-                ->sortable(),
-            Tables\Columns\TextColumn::make('agencia.nombre')
-                ->searchable()
-                ->icon('heroicon-s-home')
-                ->label('Agencia'),
+                ->color('marronClaro'),
             Tables\Columns\TextColumn::make('codigo_equipo')
                 ->badge()
                 ->color('marronClaro')
@@ -152,15 +165,19 @@ class MantenimientoPreventivosRelationManager extends RelationManager
                 ->searchable(),
             Tables\Columns\TextColumn::make('fecha_ejecucion')
                 ->label('Fecha Mantenimiento')
+                ->icon('heroicon-s-calendar-date-range')
                 ->badge()
                 ->color('marronClaro')
                 ->dateTime('d-m-Y'),
             Tables\Columns\TextColumn::make('fecha_prox_ejecucion')
                 ->label('Proximo Mantenimiento')
+                ->icon('heroicon-m-wrench')
+                ->badge()
+                ->color('naranja')
                 ->dateTime('d-m-Y'),
-            Tables\Columns\TextColumn::make('responsable')
-                ->icon('heroicon-c-user-circle')
-                ->label('Cargado por:'),
+            // Tables\Columns\TextColumn::make('responsable')
+            //     ->icon('heroicon-c-user-circle')
+            //     ->label('Cargado por:'),
             ])
             ->filters([
                 //

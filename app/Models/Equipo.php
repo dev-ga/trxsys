@@ -29,8 +29,13 @@ class Equipo extends Model
         'area_suministro',
         'voltaje',
         'responsable',
-        'codigo', 
-            
+        'codigo',
+        'image_placa_condensadora',
+        'image_placa_ventilador',
+        'motor_ventilador_hp',
+        'motor_ventilador_eje',
+        'tipo_correa',
+
     ];
 
     /**

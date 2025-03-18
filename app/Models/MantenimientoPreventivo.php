@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -21,6 +22,7 @@ class MantenimientoPreventivo extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'valuacion_preventivo_id',
         'agencia_id',
         'equipo_id',
         'codigo_equipo',
@@ -49,5 +51,15 @@ class MantenimientoPreventivo extends Model
     public function equipo(): BelongsTo
     {
         return $this->belongsTo(Equipo::class, 'equipo_id', 'id');
+    }
+
+    /**
+     * Get the user associated with the MantenimientoCorrectivo
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function valuacionPreventivo(): HasOne
+    {
+        return $this->hasOne(ValuacionPreventivo::class, 'id', 'valuacion_preventivo_id');
     }
 }

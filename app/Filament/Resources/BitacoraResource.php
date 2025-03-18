@@ -24,6 +24,8 @@ class BitacoraResource extends Resource
 {
     protected static ?string $model = Bitacora::class;
 
+    protected static ?string $recordTitleAttribute = 'trabajo_realizado';
+
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-bottom-center-text';
 
     public static function table(Table $table): Table
@@ -150,6 +152,11 @@ class BitacoraResource extends Resource
         return [
             //
         ];
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+            return ['trabajo_realizado', 'nro_contrato', 'nro_presupuesto', 'mantenimiento.descripcion', 'valuacion.descripcion', 'empresaContratante.nombre', 'agencia.nombre'];
     }
 
     public static function getPages(): array

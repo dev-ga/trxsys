@@ -23,6 +23,8 @@ class EmpresaContratanteResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-building-library';
 
+    protected static ?string $recordTitleAttribute = 'nombre';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -113,6 +115,11 @@ class EmpresaContratanteResource extends Resource
         return [
             //
         ];
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+            return ['nombre', 'ci_rif'];
     }
 
     public static function getPages(): array

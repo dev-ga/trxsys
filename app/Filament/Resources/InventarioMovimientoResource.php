@@ -19,6 +19,8 @@ class InventarioMovimientoResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-m-arrows-right-left';
 
+    protected static ?string $recordTitleAttribute = 'articulo.descripcion';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -92,6 +94,11 @@ class InventarioMovimientoResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['articulo.descripcion', 'almacen_id', 'codigo_articulo', 'tipo_movimiento', 'nro_factura', 'responsable', 'inventario_id', 'articulo_id', 'almacen.descripcion'];
     }
 
     public static function getRelations(): array

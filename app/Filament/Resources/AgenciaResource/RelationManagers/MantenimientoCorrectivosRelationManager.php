@@ -9,12 +9,13 @@ use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use App\Models\ValuacionCorrectivo;
 use Filament\Forms\Components\Grid;
 use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Components\Section;
+use Filament\Tables\Actions\ActionGroup;
 use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Builder;
-use Filament\Tables\Actions\ActionGroup;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Resources\RelationManagers\RelationManager;
 
@@ -70,6 +71,15 @@ class MantenimientoCorrectivosRelationManager extends RelationManager
                         ->prefixIcon('heroicon-s-pencil')
                         ->label('Codigo'),
 
+                Forms\Components\Select::make('valuacion_correctivo_id')
+                    ->label('Valuacion')
+                    ->options(function (RelationManager $livewire) {
+                        return ValuacionCorrectivo::all()->pluck('descripcion', 'id');
+                    })
+                    ->searchable()
+                    ->required()
+                    ->preload(),
+
                         Forms\Components\TextInput::make('nro_presupuesto')
                             ->prefixIcon('heroicon-s-pencil')
                             ->label('Nro. Presupuesto')
@@ -113,15 +123,24 @@ class MantenimientoCorrectivosRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('agencia_id')
             ->columns([
-                Tables\Columns\TextColumn::make('equipo_id')
-                    ->label('ID')
+            // Tables\Columns\TextColumn::make('equipo_id')
+            //     ->label('ID')
+            //     ->badge()
+            //     ->color('naranja')
+            //     ->sortable(),
+            // Tables\Columns\TextColumn::make('agencia.nombre')
+            // ->label('Agencia')
+            // ->icon('heroicon-s-home')
+            // ->searchable(),
+                Tables\Columns\TextColumn::make('valuacion_correctivo_id')
                     ->badge()
-                    ->color('naranja')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('agencia.nombre')
-                ->label('Agencia')
-                ->icon('heroicon-s-home')
-                ->searchable(),
+                    ->color('marronClaro'),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Fecha Ejecucion')
+                    ->dateTime('d-m-Y')
+                    ->icon('heroicon-s-check')
+                    ->badge()
+                    ->color('success'),
                 Tables\Columns\TextColumn::make('codigo_equipo')
                     ->badge()
                     ->color('marronClaro'),
@@ -131,6 +150,7 @@ class MantenimientoCorrectivosRelationManager extends RelationManager
                     ->color('marronClaro')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('monto_presupuesto_usd')
+                ->label('Monto Ejecutado(USD)')
                     ->badge()
                     ->money('USD')
                     ->color('success')

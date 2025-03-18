@@ -30,6 +30,8 @@ class ValuacionResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-document-currency-dollar';
 
+    protected static ?string $recordTitleAttribute = 'descripcion';
+
 
     public static function form(Form $form): Form
     {
@@ -184,7 +186,7 @@ class ValuacionResource extends Resource
                     ->url(function ($record) {
                         return asset('storage/' . $record->doc_pdf);
                     }),
-                    
+
                 ])
             ])
             ->bulkActions([
@@ -199,6 +201,11 @@ class ValuacionResource extends Resource
         return [
             //
         ];
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['nro_contrato', 'codigo', 'mantenimiento_id', 'responsable', 'descripcion', 'empresaContratante.nombre', 'mantenimiento.descripcion'];
     }
 
     public static function getPages(): array

@@ -25,6 +25,8 @@ class MantenimientoPreventivoResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-shield-exclamation';
 
+    protected static ?string $recordTitleAttribute = 'codigo_equipo';
+
     public static function table(Table $table): Table
     {
         return $table
@@ -43,8 +45,8 @@ class MantenimientoPreventivoResource extends Resource
                     ->icon('heroicon-s-home')
                     ->searchable()
                     ->label('Agencia'),
-                
-                
+
+
                 Tables\Columns\TextColumn::make('fecha_ejecucion')
                     ->label('Fecha Mantenimiento')
                     ->searchable()
@@ -123,6 +125,11 @@ class MantenimientoPreventivoResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['codigo_equipo', 'responsable', 'agencia.nombre'];
     }
 
     public static function getRelations(): array

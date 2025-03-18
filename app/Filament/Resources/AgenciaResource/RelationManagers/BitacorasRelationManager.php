@@ -35,7 +35,7 @@ class BitacorasRelationManager extends RelationManager
                 ->icon('heroicon-m-arrow-trending-down')
                 ->schema([
                     Grid::make(2)->schema([
-                        
+
                         Select::make('empresa_contratante_id')
                             ->label('Empresa Contratante')
                             ->prefixIcon('heroicon-m-list-bullet')
@@ -63,7 +63,7 @@ class BitacorasRelationManager extends RelationManager
                             ->label('Nro. Valuacion')
                             ->hint('Numero enteros')
                             ->placeholder('Ejemplo: 1, 2, 3'),
-                            
+
                         Forms\Components\Select::make('mantenimiento_id')
                             ->label('Tipo de Mantenimiento')
                             ->prefixIcon('heroicon-m-list-bullet')
@@ -79,15 +79,15 @@ class BitacorasRelationManager extends RelationManager
                             ->label('Tipo de Mantenimiento')
                             ->prefixIcon('heroicon-m-list-bullet')
                             ->options(function (Get $get,RelationManager $livewire) {
-                                
+
                                 $mantenimiento = Mantenimiento::where('id', $get('mantenimiento_id'))->first();
-                                
+
                                 if (isset($mantenimiento) && $mantenimiento->descripcion == 'correctivo') {
                                     return MantenimientoCorrectivo::where('agencia_id', $livewire->ownerRecord->id)->pluck('codigo_equipo', 'codigo_equipo');
                                 }
 
                                 return [];
-                                
+
                             })
                             ->afterStateUpdated(function (Get $get, Set $set, $state, RelationManager $livewire) {
                                 $info = MantenimientoCorrectivo::where('codigo_equipo', $state)->first();
@@ -95,7 +95,7 @@ class BitacorasRelationManager extends RelationManager
                                 $set('monto_presupuesto_usd', $info->monto_presupuesto_usd);
                             })
                             ->searchable()
-                            ->live()    
+                            ->live()
                             ->required(),
 
                         Forms\Components\TextInput::make('nro_presupuesto')
@@ -112,10 +112,10 @@ class BitacorasRelationManager extends RelationManager
                             ->disabled()
                             ->dehydrated()
                             ->required(),
-                        
+
                     ])
                     ->hidden(function (Get $get) {
-                        
+
                         $mantenimiento = Mantenimiento::where('id', $get('mantenimiento_id'))->first();
 
                         if (isset($mantenimiento) && $mantenimiento->descripcion == 'correctivo') {
@@ -136,7 +136,7 @@ class BitacorasRelationManager extends RelationManager
                             ->acceptedFileTypes(['application/pdf']),
                     ]),
 
-                
+
 
                     Forms\Components\TextInput::make('responsable')
                         ->prefixIcon('heroicon-s-home')
@@ -168,31 +168,21 @@ class BitacorasRelationManager extends RelationManager
             ->recordTitleAttribute('agencia_id')
             ->columns([
 
-                Tables\Columns\TextColumn::make('agencia.nombre')
-                ->searchable()
-                ->icon('heroicon-s-home')
-                ->label('Agencia'),
-                Tables\Columns\TextColumn::make('empresaContratante.nombre')
-                ->searchable()
-                ->label('Empresa Contratante')
-                ->badge()
-                ->color('marronClaro'),
-                Tables\Columns\TextColumn::make('nro_contrato')
-                ->searchable()
-                ->label('Nro. Contrato')
-                ->badge()
-                ->color('marronClaro'),
-                // Tables\Columns\TextColumn::make('image'),
-                // Tables\Columns\TextColumn::make('doc_pdf'),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Fecha Ejecucion')
+                    ->dateTime('d-m-Y')
+                    ->icon('heroicon-s-check')
+                    ->badge()
+                    ->color('success'),
                 Tables\Columns\TextColumn::make('mantenimiento.descripcion')
                 ->searchable()
                 ->label('Tipo de Mantenimiento')
                 ->badge()
                 ->color(function ($state) {
                     return match ($state) {
-                        'preventivo' => 'marronClaro',
+                        'preventivo' => 'naranja',
                         'correctivo' => 'success',
-                        default      => 'marronClaro',
+                        default      => 'naranja',
                     };
                 })
                 ->icon(function ($state) {
@@ -202,25 +192,22 @@ class BitacorasRelationManager extends RelationManager
                         default      => 'heroicon-s-wrench',
                     };
                 }),
-                Tables\Columns\TextColumn::make('valuacion.descripcion'),
-                Tables\Columns\TextColumn::make('responsable'),
-                Tables\Columns\TextColumn::make('trabajo_realizado')
-                ->limit(20)
-                ->tooltip(function (TextColumn $column): ?string {
-                    $state = $column->getState();
-
-                    if (strlen($state) <= $column->getCharacterLimit()) {
-                        return null;
-                    }
-
-                    // Only render the tooltip if the column content exceeds the length limit.
-                    return $state;
-                }),
-                Tables\Columns\TextColumn::make('nro_presupuesto')
-                    ->label('Nro. Presupuesto')
+                Tables\Columns\TextColumn::make('valuacion.descripcion')
                     ->badge()
-                    ->color('marronClaro')
-                    ->sortable(),
+                    ->color('azul'),
+
+                Tables\Columns\TextColumn::make('trabajo_realizado')
+                    ->limit(20)
+                    ->tooltip(function (TextColumn $column): ?string {
+                        $state = $column->getState();
+
+                        if (strlen($state) <= $column->getCharacterLimit()) {
+                            return null;
+                        }
+
+                        // Only render the tooltip if the column content exceeds the length limit.
+                        return $state;
+                    }),
                 Tables\Columns\TextColumn::make('monto_presupuesto_usd')
                     ->label('Monto Presupuesto(USD)')
                     ->badge()

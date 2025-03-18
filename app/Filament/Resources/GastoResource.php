@@ -45,6 +45,8 @@ class GastoResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-c-arrow-trending-down';
 
+    protected static ?string $recordTitleAttribute = 'descripcion';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -584,6 +586,22 @@ class GastoResource extends Resource
             'edit' => Pages\EditGasto::route('/{record}/edit'),
         ];
     }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['descripcion',
+                'tipo_gasto.descripcion',
+                'metodo_pago.descripcion',
+                'nro_factura',
+                'nro_control',
+                'nro_contrato',
+                'responsable',
+                'empresaContratante.nombre',
+                'proveedor.nombre',
+            ];
+    }
+
+
 
     public static function updateTotales(Get $get, Set $set): void
     {
