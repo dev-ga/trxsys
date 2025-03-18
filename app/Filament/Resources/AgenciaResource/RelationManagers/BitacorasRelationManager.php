@@ -168,22 +168,12 @@ class BitacorasRelationManager extends RelationManager
             ->recordTitleAttribute('agencia_id')
             ->columns([
 
-                Tables\Columns\TextColumn::make('agencia.nombre')
-                ->searchable()
-                ->icon('heroicon-s-home')
-                ->label('Agencia'),
-                Tables\Columns\TextColumn::make('empresaContratante.nombre')
-                ->searchable()
-                ->label('Empresa Contratante')
-                ->badge()
-                ->color('marronClaro'),
-                Tables\Columns\TextColumn::make('nro_contrato')
-                ->searchable()
-                ->label('Nro. Contrato')
-                ->badge()
-                ->color('naranja'),
-                // Tables\Columns\TextColumn::make('image'),
-                // Tables\Columns\TextColumn::make('doc_pdf'),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Fecha Ejecucion')
+                    ->dateTime('d-m-Y')
+                    ->icon('heroicon-s-check')
+                    ->badge()
+                    ->color('success'),
                 Tables\Columns\TextColumn::make('mantenimiento.descripcion')
                 ->searchable()
                 ->label('Tipo de Mantenimiento')
@@ -205,8 +195,7 @@ class BitacorasRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('valuacion.descripcion')
                     ->badge()
                     ->color('azul'),
-                Tables\Columns\TextColumn::make('responsable')
-                    ->icon('heroicon-c-user-circle'),
+
                 Tables\Columns\TextColumn::make('trabajo_realizado')
                     ->limit(20)
                     ->tooltip(function (TextColumn $column): ?string {
@@ -219,11 +208,6 @@ class BitacorasRelationManager extends RelationManager
                         // Only render the tooltip if the column content exceeds the length limit.
                         return $state;
                     }),
-                Tables\Columns\TextColumn::make('nro_presupuesto')
-                    ->label('Nro. Presupuesto')
-                    ->badge()
-                    ->color('marronClaro')
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('monto_presupuesto_usd')
                     ->label('Monto Presupuesto(USD)')
                     ->badge()
