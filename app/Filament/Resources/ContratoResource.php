@@ -22,7 +22,16 @@ class ContratoResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-document-currency-dollar';
 
+    protected static ?string $activeNavigationIcon = 'heroicon-s-document-currency-dollar';
+
     protected static ?string $recordTitleAttribute = 'nro_contrato';
+
+    protected static ?string $navigationGroup = 'Gestion de Proyectos';
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 
     public static function form(Form $form): Form
     {

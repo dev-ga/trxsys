@@ -23,7 +23,11 @@ class AlmacenResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'descripcion';
 
-    protected static ?string $navigationIcon = 'heroicon-o-building-office';
+    protected static ?string $navigationIcon = 'heroicon-o-building-office'; //building
+
+    protected static ?string $activeNavigationIcon = 'heroicon-s-building-office';
+
+    protected static ?string $navigationGroup = 'Manejo de Inventario';
 
     public static function form(Form $form): Form
     {

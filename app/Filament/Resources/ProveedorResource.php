@@ -23,7 +23,12 @@ class ProveedorResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-truck';
 
+    protected static ?string $activeNavigationIcon = 'heroicon-s-truck';
+
+    protected static ?string $navigationGroup = 'Sistema';
+
     protected static ?string $recordTitleAttribute = 'nombre';
+
 
     public static function form(Form $form): Form
     {

@@ -20,6 +20,10 @@ class TipoGastoResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-swatch';
 
+    protected static ?string $activeNavigationIcon = 'heroicon-s-swatch';
+
+    protected static ?string $navigationGroup = 'Sistema';
+
     public static function form(Form $form): Form
     {
         return $form

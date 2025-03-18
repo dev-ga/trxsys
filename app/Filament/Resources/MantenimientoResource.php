@@ -20,6 +20,10 @@ class MantenimientoResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-wrench-screwdriver';
 
+    protected static ?string $activeNavigationIcon = 'heroicon-s-wrench-screwdriver';
+
+    protected static ?string $navigationGroup = 'Sistema';
+
     public static function form(Form $form): Form
     {
         return $form

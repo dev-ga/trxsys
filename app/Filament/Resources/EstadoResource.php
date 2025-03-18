@@ -20,6 +20,10 @@ class EstadoResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-globe-americas';
 
+    protected static ?string $activeNavigationIcon = 'heroicon-s-globe-americas';
+
+    protected static ?string $navigationGroup = 'Sistema';
+
     public static function form(Form $form): Form
     {
         return $form

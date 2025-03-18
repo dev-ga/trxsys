@@ -26,7 +26,11 @@ class MantenimientoCorrectivoResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-shield-check';
 
+    protected static ?string $activeNavigationIcon = 'heroicon-s-shield-check';
+
     protected static ?string $recordTitleAttribute = 'codigo_equipo';
+
+    protected static ?string $navigationGroup = 'Gestion de Proyectos';
 
     public static function table(Table $table): Table
     {

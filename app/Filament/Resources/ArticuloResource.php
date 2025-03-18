@@ -36,6 +36,15 @@ class ArticuloResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-view-columns';
 
+    protected static ?string $activeNavigationIcon = 'heroicon-s-view-columns';
+
+    protected static ?string $navigationGroup = 'Manejo de Inventario';
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
     public static function form(Form $form): Form
     {
         return $form

@@ -22,6 +22,8 @@ class InventarioMovimientoResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'articulo.descripcion';
 
+    protected static ?string $navigationGroup = 'Manejo de Inventario';
+
     public static function form(Form $form): Form
     {
         return $form

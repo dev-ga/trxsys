@@ -23,7 +23,11 @@ class EmpresaContratanteResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-building-library';
 
+    protected static ?string $activeNavigationIcon = 'heroicon-s-building-library';
+
     protected static ?string $recordTitleAttribute = 'nombre';
+
+    protected static ?string $navigationGroup = 'Gestion de Proyectos';
 
     public static function form(Form $form): Form
     {

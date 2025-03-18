@@ -31,7 +31,11 @@ class InventarioResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-queue-list';
 
+    protected static ?string $activeNavigationIcon = 'heroicon-s-queue-list';
+    
     protected static ?string $recordTitleAttribute = 'articulo.descripcion';
+
+    protected static ?string $navigationGroup = 'Manejo de Inventario';
 
     public static function form(Form $form): Form
     {

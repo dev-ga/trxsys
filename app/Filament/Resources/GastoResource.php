@@ -47,6 +47,8 @@ class GastoResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'descripcion';
 
+    protected static ?string $navigationGroup = 'Gestion de Proyectos';
+
     public static function form(Form $form): Form
     {
         return $form

@@ -25,7 +25,11 @@ class MantenimientoPreventivoResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-shield-exclamation';
 
+    protected static ?string $activeNavigationIcon = 'heroicon-s-shield-exclamation';
+
     protected static ?string $recordTitleAttribute = 'codigo_equipo';
+
+    protected static ?string $navigationGroup = 'Gestion de Proyectos';
 
     public static function table(Table $table): Table
     {

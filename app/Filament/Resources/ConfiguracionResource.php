@@ -21,6 +21,11 @@ class ConfiguracionResource extends Resource
     protected static ?string $navigationLabel = 'Configuración';
 
     protected static ?string $navigationIcon = 'heroicon-o-cog-8-tooth';
+    
+    protected static ?string $activeNavigationIcon = 'heroicon-s-cog-8-tooth';
+
+    protected static ?string $navigationGroup = 'Sistema';
+
 
     public static function form(Form $form): Form
     {

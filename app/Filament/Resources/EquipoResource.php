@@ -29,7 +29,16 @@ class EquipoResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-server-stack';
 
+    protected static ?string $activeNavigationIcon = 'heroicon-s-server-stack';
+
     protected static ?string $recordTitleAttribute = 'codigo';
+
+    protected static ?string $navigationGroup = 'Gestion de Proyectos';
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 
     public static function form(Form $form): Form
     {
@@ -211,14 +220,14 @@ class EquipoResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                ActionGroup::make([
-                    Tables\Actions\EditAction::make()
-                    ->color('naranja'),
-                    Tables\Actions\DeleteAction::make(),
-                ])->dropdownPlacement('bottom-start')
-                ->size(ActionSize::Small) 
-            ], position: ActionsPosition::BeforeCells)
+            // ->actions([
+            //     ActionGroup::make([
+            //         Tables\Actions\EditAction::make()
+            //         ->color('naranja'),
+            //         Tables\Actions\DeleteAction::make(),
+            //     ])->dropdownPlacement('bottom-start')
+            //     ->size(ActionSize::Small) 
+            // ], position: ActionsPosition::BeforeCells)
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),

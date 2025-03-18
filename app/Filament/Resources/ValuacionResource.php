@@ -29,9 +29,18 @@ class ValuacionResource extends Resource
 
     protected static ?string $navigationLabel = 'Valuaciones';
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-currency-dollar';
+    protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
+
+    protected static ?string $activeNavigationIcon = 'heroicon-m-currency-dollar';
 
     protected static ?string $recordTitleAttribute = 'descripcion';
+
+    protected static ?string $navigationGroup = 'Gestion de Proyectos';
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 
 
     public static function form(Form $form): Form

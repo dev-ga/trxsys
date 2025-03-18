@@ -29,9 +29,13 @@ class BitacoraResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-bottom-center-text';
 
-    public static function getGlobalSearchResultTitle(Model $record): string
+    protected static ?string $activeNavigationIcon = 'heroicon-s-chat-bubble-bottom-center-text';
+
+    protected static ?string $navigationGroup = 'Gestion de Proyectos';
+
+    public static function getNavigationBadge(): ?string
     {
-        return$record->valuacion->descripcion;
+        return static::getModel()::count();
     }
 
     public static function table(Table $table): Table
