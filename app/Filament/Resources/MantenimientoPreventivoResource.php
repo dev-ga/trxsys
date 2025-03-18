@@ -45,8 +45,6 @@ class MantenimientoPreventivoResource extends Resource
                     ->icon('heroicon-s-home')
                     ->searchable()
                     ->label('Agencia'),
-
-
                 Tables\Columns\TextColumn::make('fecha_ejecucion')
                     ->label('Fecha Mantenimiento')
                     ->searchable()
@@ -59,7 +57,6 @@ class MantenimientoPreventivoResource extends Resource
                     ->color('negro')
                     ->label('Proximo Mantenimiento')
                     ->dateTime('d-m-Y'),
-
                 Tables\Columns\TextColumn::make('toneladas')
                     ->label('Toneladas')
                     ->searchable(),

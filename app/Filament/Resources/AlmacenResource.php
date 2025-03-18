@@ -76,6 +76,7 @@ class AlmacenResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('responsable')
                     ->icon('heroicon-c-user-circle')
+                    ->extraAttributes(['style' => 'text-transform: capitalize;'])
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Fecha de Registro')

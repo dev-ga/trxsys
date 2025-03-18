@@ -22,6 +22,7 @@ use App\Filament\Resources\ValuacionResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\ValuacionResource\RelationManagers;
 
+
 class ValuacionResource extends Resource
 {
     protected static ?string $model = Valuacion::class;

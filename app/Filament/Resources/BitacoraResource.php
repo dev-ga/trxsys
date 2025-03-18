@@ -19,14 +19,20 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\BitacoraResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\BitacoraResource\RelationManagers;
+use Illuminate\Database\Eloquent\Model;
 
 class BitacoraResource extends Resource
 {
     protected static ?string $model = Bitacora::class;
 
-    protected static ?string $recordTitleAttribute = 'trabajo_realizado';
+    protected static ?string $recordTitleAttribute = 'valuacion.descripcion';
 
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-bottom-center-text';
+
+    public static function getGlobalSearchResultTitle(Model $record): string
+    {
+        return$record->valuacion->descripcion;
+    }
 
     public static function table(Table $table): Table
     {
@@ -157,6 +163,19 @@ class BitacoraResource extends Resource
     public static function getGloballySearchableAttributes(): array
     {
             return ['trabajo_realizado', 'nro_contrato', 'nro_presupuesto', 'mantenimiento.descripcion', 'valuacion.descripcion', 'empresaContratante.nombre', 'agencia.nombre'];
+    }
+
+    public static function getGlobalSearchEloquentQuery(): Builder
+    {
+        return parent::getGlobalSearchEloquentQuery()->with(['agencia']);
+    }
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'Agencia' => $record->agencia->nombre,
+            'Mantenimiento' => $record->mantenimiento->descripcion,
+        ];
     }
 
     public static function getPages(): array
