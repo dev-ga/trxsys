@@ -63,35 +63,41 @@ class ContratoResource extends Resource
                                 ->dehydrated()
                                 ->default(Auth::user()->name),
                         ]),
-                    Forms\Components\TextInput::make('nro_contrato')
-                        ->label('Nro. Contrato')
-                        ->prefixIcon('heroicon-s-pencil')
-                        ->required()
-                        ->maxLength(255),
-                    Forms\Components\TextInput::make('mant_prev_usd')
-                        ->label('Monto Mantenimiento Preventivo(USD)')
-                        ->prefixIcon('heroicon-s-pencil')
-                        ->required()
-                        ->numeric()
-                        ->default(0.00),
-                    Forms\Components\TextInput::make('mant_correc_usd')
-                        ->label('Monto Mantenimiento Correctivo(USD)')
-                        ->prefixIcon('heroicon-s-pencil')
-                        ->required()
-                        ->numeric()
-                        ->default(0.00),
-                    Forms\Components\TextInput::make('monto_total_usd')
-                        ->label('Monto Total(USD)')
-                        ->prefixIcon('heroicon-s-pencil')
-                        ->required()
-                        ->numeric()
-                        ->default(0.00),
-                    Forms\Components\TextInput::make('responsable')
-                        ->prefixIcon('heroicon-c-user-circle')
-                        ->label('Cargado por:')
-                        ->disabled()
-                        ->dehydrated()
-                        ->default(Auth::user()->name),
+
+                        Forms\Components\TextInput::make('nro_contrato')
+                            ->label('Nro. Contrato')
+                            ->prefixIcon('heroicon-s-pencil')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('denominacion')
+                            ->label('Definición')
+                            ->prefixIcon('heroicon-s-pencil')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('mant_prev_usd')
+                            ->label('Monto Mantenimiento Preventivo(USD)')
+                            ->prefixIcon('heroicon-s-pencil')
+                            ->required()
+                            ->numeric()
+                            ->default(0.00),
+                        Forms\Components\TextInput::make('mant_correc_usd')
+                            ->label('Monto Mantenimiento Correctivo(USD)')
+                            ->prefixIcon('heroicon-s-pencil')
+                            ->required()
+                            ->numeric()
+                            ->default(0.00),
+                        Forms\Components\TextInput::make('monto_total_usd')
+                            ->label('Monto Total(USD)')
+                            ->prefixIcon('heroicon-s-pencil')
+                            ->required()
+                            ->numeric()
+                            ->default(0.00),
+                        Forms\Components\TextInput::make('responsable')
+                            ->prefixIcon('heroicon-c-user-circle')
+                            ->label('Cargado por:')
+                            ->disabled()
+                            ->dehydrated()
+                            ->default(Auth::user()->name),
                 ])->columns(3),
 
             ]);
@@ -103,6 +109,11 @@ class ContratoResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('empresaContratante.nombre')
                     ->label('Empresa Contratante')
+                    ->badge()
+                    ->color('marronClaro')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('denominacion')
+                    ->label('Definición')
                     ->badge()
                     ->color('marronClaro')
                     ->searchable(),
@@ -161,7 +172,12 @@ class ContratoResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\ValuacionesRelationManager::class,
+            RelationManagers\AgenciasRelationManager::class,
+            RelationManagers\EquiposRelationManager::class,
+            RelationManagers\MantenimientoPreventivosRelationManager::class,
+            RelationManagers\MantenimientoCorrectivosRelationManager::class,
+            RelationManagers\BitacorasRelationManager::class,
         ];
     }
 

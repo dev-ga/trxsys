@@ -13,6 +13,7 @@ class Bitacora extends Model
 
     protected $fillable = [
         'empresa_contratante_id',
+        'contrato_id',
         'nro_contrato',
         'image',
         'doc_pdf',
@@ -64,5 +65,15 @@ class Bitacora extends Model
     public function valuacion(): HasOne
     {
         return $this->hasOne(Valuacion::class, 'id', 'valuacion_id');
+    }
+
+    /**
+     * Get the user that owns the Bitacora
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function contrato(): BelongsTo
+    {
+        return $this->belongsTo(Contrato::class, 'contrato_id', 'id');
     }
 }

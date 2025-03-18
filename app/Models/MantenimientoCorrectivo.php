@@ -22,7 +22,8 @@ class MantenimientoCorrectivo extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'valuacion_correctivo_id',
+        'valuacion_id',
+        'contrato_id',
         'agencia_id',
         'equipo_id',
         'codigo_equipo',
@@ -61,5 +62,15 @@ class MantenimientoCorrectivo extends Model
     public function valuacionCorrectivo(): HasOne
     {
         return $this->hasOne(ValuacionCorrectivo::class, 'id', 'valuacion_correctivo_id');
+    }
+
+    /**
+     * Get the user that owns the Bitacora
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function contrato(): BelongsTo
+    {
+        return $this->belongsTo(Contrato::class, 'contrato_id', 'id');
     }
 }

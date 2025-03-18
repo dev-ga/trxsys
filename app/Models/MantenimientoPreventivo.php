@@ -22,7 +22,8 @@ class MantenimientoPreventivo extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'valuacion_preventivo_id',
+        'valuacion_id',
+        'contrato_id',
         'agencia_id',
         'equipo_id',
         'codigo_equipo',
@@ -61,5 +62,15 @@ class MantenimientoPreventivo extends Model
     public function valuacionPreventivo(): HasOne
     {
         return $this->hasOne(ValuacionPreventivo::class, 'id', 'valuacion_preventivo_id');
+    }
+
+    /**
+     * Get the user that owns the Bitacora
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function contrato(): BelongsTo
+    {
+        return $this->belongsTo(Contrato::class, 'contrato_id', 'id');
     }
 }

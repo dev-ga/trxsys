@@ -14,6 +14,7 @@ class Agencia extends Model
     protected $fillable = [
         'ci_rif',
         'estado_id',
+        'contrato_id',
         'codigo',
         'nombre',
         'direccion',
@@ -94,5 +95,15 @@ class Agencia extends Model
     public function MantenimientoCorrectivos(): HasMany
     {
         return $this->hasMany(MantenimientoCorrectivo::class, 'agencia_id', 'id');
+    }
+
+    /**
+     * Get the user that owns the Bitacora
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function contrato(): BelongsTo
+    {
+        return $this->belongsTo(Contrato::class, 'contrato_id', 'id');
     }
 }

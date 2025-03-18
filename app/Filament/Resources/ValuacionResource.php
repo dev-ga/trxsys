@@ -70,15 +70,25 @@ class ValuacionResource extends Resource
                         ->required()
                         ->live(),
 
-                        Forms\Components\Select::make('nro_contrato')
-                        ->label('Nro. Contrato')
-                        ->prefixIcon('heroicon-m-list-bullet')
-                        ->options(function (Get $get) {
-                            return Contrato::where('empresa_contratante_id', $get('empresa_contratante_id'))->pluck('nro_contrato', 'nro_contrato');
-                        })
-                        ->required()
-                        ->searchable()
-                        ->live(),
+                        Forms\Components\Select::make('contrato_id')
+                            ->label('Contrato asociado')
+                            ->prefixIcon('heroicon-m-list-bullet')
+                            ->options(function (Get $get) {
+                                return Contrato::where('empresa_contratante_id', $get('empresa_contratante_id'))->pluck('denominacion', 'id');
+                            })
+                            ->searchable()
+                            ->required()
+                            ->live(),
+
+                            Forms\Components\Select::make('nro_contrato')
+                            ->label('Nro. Contrato')
+                            ->prefixIcon('heroicon-m-list-bullet')
+                            ->options(function (Get $get) {
+                                return Contrato::where('id', $get('contrato_id'))->pluck('nro_contrato', 'nro_contrato');
+                            })
+                            ->required()
+                            ->searchable()
+                            ->live(),
 
                         Forms\Components\TextInput::make('monto_usd')
                         ->label('Monto USD')
@@ -127,6 +137,11 @@ class ValuacionResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('empresaContratante.nombre')
                     ->label('Empresa')
+                    ->badge()
+                    ->color('marronClaro')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('contrato.denominacion')
+                    ->label('Contrato')
                     ->badge()
                     ->color('marronClaro')
                     ->searchable(),
