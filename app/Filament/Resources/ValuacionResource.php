@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\ValuacionResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\ValuacionResource\RelationManagers;
+use Illuminate\Database\Eloquent\Model;
 
 
 class ValuacionResource extends Resource
@@ -165,7 +166,7 @@ class ValuacionResource extends Resource
 
                 Tables\Columns\TextColumn::make('descripcion')
                     ->searchable(),
-                
+
                 Tables\Columns\TextColumn::make('monto_bsd')
                     ->badge()
                     ->color('success')
@@ -223,6 +224,19 @@ class ValuacionResource extends Resource
             ]);
     }
 
+    public static function getGlobalSearchEloquentQuery(): Builder
+    {
+        return parent::getGlobalSearchEloquentQuery()->with(['contrato']);
+    }
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'Contrato' => $record->contrato->denominacion,
+            'Mantenimiento' => $record->mantenimiento->descripcion,
+        ];
+    }
+
     public static function getRelations(): array
     {
         return [
@@ -232,7 +246,7 @@ class ValuacionResource extends Resource
 
     public static function getGloballySearchableAttributes(): array
     {
-        return ['nro_contrato', 'codigo', 'mantenimiento_id', 'responsable', 'descripcion', 'empresaContratante.nombre', 'mantenimiento.descripcion'];
+        return ['nro_contrato', 'codigo', 'mantenimiento_id', 'responsable', 'descripcion', 'empresaContratante.nombre', 'mantenimiento.descripcion', 'contrato.denominacion'];
     }
 
     public static function getPages(): array

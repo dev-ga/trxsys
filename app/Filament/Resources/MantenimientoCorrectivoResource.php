@@ -20,6 +20,7 @@ use Filament\Tables\Columns\Summarizers\Sum;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\MantenimientoCorrectivoResource\Pages;
 use App\Filament\Resources\MantenimientoCorrectivoResource\RelationManagers;
+use Illuminate\Database\Eloquent\Model;
 
 class MantenimientoCorrectivoResource extends Resource
 {
@@ -84,7 +85,7 @@ class MantenimientoCorrectivoResource extends Resource
                         ->money('USD')
                         ->label('Total(USD)')
                         ->label('Total(Bs.)')),
-                
+
             ])
             ->filters([
                 Filter::make('created_at')
@@ -151,6 +152,18 @@ class MantenimientoCorrectivoResource extends Resource
     public static function getGloballySearchableAttributes(): array
     {
         return ['nro_presupuesto', 'detalles', 'agencia.nombre', 'responsable', 'codigo_equipo'];
+    }
+
+    public static function getGlobalSearchEloquentQuery(): Builder
+    {
+        return parent::getGlobalSearchEloquentQuery()->with(['agencia']);
+    }
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'Agencia' => $record->agencia->nombre,
+        ];
     }
 
     public static function getRelations(): array

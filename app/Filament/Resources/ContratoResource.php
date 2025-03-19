@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\ContratoResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\ContratoResource\RelationManagers;
+use Illuminate\Database\Eloquent\Model;
 
 class ContratoResource extends Resource
 {
@@ -27,6 +28,11 @@ class ContratoResource extends Resource
     protected static ?string $recordTitleAttribute = 'nro_contrato';
 
     protected static ?string $navigationGroup = 'Gestion de Proyectos';
+
+    public static function getGlobalSearchResultTitle (Model $record): string
+    {
+        return $record->denominacion;
+    }
 
     public static function getNavigationBadge(): ?string
     {
@@ -125,7 +131,7 @@ class ContratoResource extends Resource
                 Tables\Columns\TextColumn::make('denominacion')
                     ->label('Definición')
                     ->badge()
-                    ->color('marronClaro')
+                    ->color('azul')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nro_contrato')
                     ->label('Nro. Contrato')
@@ -197,7 +203,7 @@ class ContratoResource extends Resource
 
     public static function getGloballySearchableAttributes(): array
     {
-            return ['nro_contrato', 'mant_correc_usd', 'empresaContratante.nombre', 'monto_total_usd', 'mant_prev_usd'];
+            return ['nro_contrato', 'mant_correc_usd', 'empresaContratante.nombre', 'monto_total_usd', 'mant_prev_usd', 'denominacion'];
     }
 
     public static function getPages(): array

@@ -56,6 +56,7 @@ class ValuacionesRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('mantenimiento.descripcion')
                     ->badge()
                     ->color('naranja')
+                    ->extraAttributes(['style' => 'text-transform: capitalize;'])
                     ->sortable(),
                 Tables\Columns\TextColumn::make('responsable')
                     ->icon('heroicon-c-user-circle')

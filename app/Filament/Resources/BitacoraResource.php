@@ -33,6 +33,11 @@ class BitacoraResource extends Resource
 
     protected static ?string $navigationGroup = 'Gestion de Proyectos';
 
+    public static function getGlobalSearchResultTitle(Model $record): string
+    {
+        return $record->valuacion->descripcion;
+    }
+
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();
