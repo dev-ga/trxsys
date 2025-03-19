@@ -46,7 +46,7 @@ class Gasto extends Model
         'created_at',
         'tipo_gasto_id',
         'empresa_contratante_id',
-        'nro_contrato',
+        'contrato_id',
     ];
 
     /**
@@ -107,6 +107,16 @@ class Gasto extends Model
     public function detalleGastos(): HasMany
     {
         return $this->hasMany(GastoDetalle::class, 'gasto_id', 'id');
+    }
+
+    /**
+     * Get the user that owns the Gasto
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function contrato(): BelongsTo
+    {
+        return $this->belongsTo(Contrato::class, 'contrato_id', 'id');
     }
 
     

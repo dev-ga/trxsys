@@ -106,7 +106,7 @@ class ValuacionResource extends Resource
                         ->hint('separador decimal (.)')
                         ->numeric()
                         ->prefixIcon('heroicon-s-pencil')
-                        ->required(),
+                        ->default(0.00),
 
                         Forms\Components\Select::make('mantenimiento_id')
                         ->label('Tipo de Mantenimiento')
@@ -118,8 +118,7 @@ class ValuacionResource extends Resource
 
                         FileUpload::make('doc_pdf')
                         ->label('Valuacion(.pdf)')
-                        ->acceptedFileTypes(['application/pdf'])
-                        ->required(),
+                        ->acceptedFileTypes(['application/pdf']),
 
 
                         Forms\Components\TextInput::make('responsable')
