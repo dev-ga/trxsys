@@ -16,6 +16,9 @@ use App\Models\Configuracion;
 use App\Models\ValuacionPreventivo;
 use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Components\Section;
+use App\Models\MantenimientoPreventivo;
+use Filament\Notifications\Notification;
+use Filament\Tables\Actions\CreateAction;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -178,7 +181,44 @@ class MantenimientoPreventivosRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make()
+                ->model(MantenimientoPreventivo::class)
+                ->after(function (MantenimientoPreventivo $record) {
+
+                    try {
+
+                    //aumentamos el valor de la valuacion
+                        $valuacion = Valuacion::where('id', $record->valuacion_id)
+                            ->where('contrato_id', $record->contrato_id)
+                            ->first();
+
+                        $valuacion->monto_usd = $valuacion->monto_usd + $record->calculo_x_tonelada;
+                        $valuacion->save();
+
+                        if ($valuacion->save()) {
+
+                            Notification::make()
+                                ->title('Notificacion')
+                                ->color('success')
+                                ->icon('heroicon-o-shield-check')
+                                ->iconColor('danger')
+                                ->body('Valuacion Actualizada de forma correcta')
+                                ->send();
+                        }
+                    
+                    } catch (\Throwable $th) {
+                        Notification::make()
+                            ->title('Notificacion')
+                            ->color('danger')
+                            ->icon('heroicon-o-shield-check')
+                            ->iconColor('danger')
+                            ->body($th->getMessage())
+                            ->send();
+
+                    }
+                    
+                })
+                ->createAnother(false),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
