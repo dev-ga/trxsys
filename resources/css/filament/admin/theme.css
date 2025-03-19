@@ -63,3 +63,7 @@
 .fi-ta-header button:nth-child(1) {
     @apply bg-[#42708C] !important;
 }
+
+.fi-wi-stats-overview-stat .flex {
+    justify-content: center;
+}
