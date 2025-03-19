@@ -2,17 +2,18 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\Bitacora;
-use App\Models\Order;
-use Carbon\Carbon;
 use Closure;
-use Filament\Actions\Action;
-use Filament\Forms\Components\DatePicker;
+use Carbon\Carbon;
 use Filament\Tables;
+use App\Models\Order;
+use App\Models\Bitacora;
+use Filament\Actions\Action;
 use Filament\Tables\Filters\Filter;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Filters\SelectFilter;
-use Filament\Widgets\TableWidget as BaseWidget;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Widgets\TableWidget as BaseWidget;
 
 class BitacoraTable extends BaseWidget
 {
@@ -80,7 +81,17 @@ class BitacoraTable extends BaseWidget
                 ->toggleable(isToggledHiddenByDefault: true),
             Tables\Columns\TextColumn::make('trabajo_realizado')
                 ->searchable()
-                ->label('Trabajo Realizado'),
+                ->label('Trabajo Realizado')
+                ->tooltip(function (TextColumn $column): ?string {
+                    $state = $column->getState();
+
+                    if (strlen($state) <= $column->getCharacterLimit()) {
+                        return null;
+                    }
+
+                    // Only render the tooltip if the column content exceeds the length limit.
+                    return $state;
+                }),
             Tables\Columns\TextColumn::make('created_at')
                 ->label('Fecha')
                 ->dateTime('d-m-Y'),
