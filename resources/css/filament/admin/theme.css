@@ -59,3 +59,7 @@
     --tw-ring-opacity: 1;
     --tw-ring-color: #8C4014;
 }
+
+.fi-ta-header button:nth-child(1) {
+    @apply bg-[#42708C] !important;
+}
