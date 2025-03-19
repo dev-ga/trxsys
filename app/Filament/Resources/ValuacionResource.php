@@ -42,7 +42,6 @@ class ValuacionResource extends Resource
         return static::getModel()::count();
     }
 
-
     public static function form(Form $form): Form
     {
         return $form
@@ -137,14 +136,17 @@ class ValuacionResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc')
             ->columns([
-                Tables\Columns\TextColumn::make('id')
-                    ->label('ID')
+
+                Tables\Columns\TextColumn::make('created_at')
                     ->badge()
+                    ->icon('heroicon-c-calendar')
                     ->color('naranja')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('descripcion')
-                    ->searchable(),
+                    ->label('Fecha de Registro')
+                    ->dateTime('d-m-Y')
+                    ->sortable(),
+
                 Tables\Columns\TextColumn::make('empresaContratante.nombre')
                     ->label('Empresa')
                     ->badge()
@@ -160,12 +162,10 @@ class ValuacionResource extends Resource
                     ->badge()
                     ->color('naranja')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('monto_usd')
-                    ->badge()
-                    ->color('success')
-                    ->money('USD')
-                    ->searchable()
-                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('descripcion')
+                    ->searchable(),
+                
                 Tables\Columns\TextColumn::make('monto_bsd')
                     ->badge()
                     ->color('success')
@@ -185,15 +185,17 @@ class ValuacionResource extends Resource
                     ->icon('heroicon-c-user-circle')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->label('Fecha de Registro')
-                    ->dateTime('d-m-Y')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime('d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
+                Tables\Columns\TextColumn::make('monto_usd')
+                    ->badge()
+                    ->color('success')
+                    ->money('USD')
+                    ->searchable()
+                    ->sortable(),
             ])
             ->filters([
                 //
