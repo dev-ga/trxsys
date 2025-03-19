@@ -115,6 +115,7 @@ class ContratoResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('empresaContratante.nombre')
                     ->label('Empresa Contratante')
@@ -155,8 +156,12 @@ class ContratoResource extends Resource
                 Tables\Columns\TextColumn::make('responsable')
                     ->label('Cargado por:')
                     ->icon('heroicon-c-user-circle')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->badge()
+                    ->icon('heroicon-c-calendar')
+                    ->color('naranja')
                     ->label('Fecha de Registro')
                     ->dateTime('d-m-Y')
                     ->sortable(),
@@ -169,7 +174,7 @@ class ContratoResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

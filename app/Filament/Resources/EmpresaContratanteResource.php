@@ -93,6 +93,9 @@ class EmpresaContratanteResource extends Resource
                     ->icon('heroicon-c-user-circle')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->badge()
+                    ->icon('heroicon-c-calendar')
+                    ->color('naranja')
                     ->label('Fecha de Registro')
                     ->dateTime('d-m-Y')
                     ->sortable(),

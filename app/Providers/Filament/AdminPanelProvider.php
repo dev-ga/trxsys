@@ -111,11 +111,11 @@ class AdminPanelProvider extends PanelProvider
                 return Blade::render('<div style="padding: 2px; font-size: 10px;">{{ $text }}</div>', [
                         'text' => 'Versión: 1.0'
                     ]);
-            })
-            ->renderHook(PanelsRenderHook::TOPBAR_END, function () {
-                    return Blade::render('<div style="padding: 2px; font-size: 20px;">{{ $text }}</div>', [
-                        'text' => '52.000.000'
-                    ]);
             });
+            // ->renderHook(PanelsRenderHook::TOPBAR_END, function () {
+            //         return Blade::render('<div style="padding: 2px; font-size: 20px;">{{ $text }}</div>', [
+            //             'text' => '52.000.000'
+            //         ]);
+            // });
     }
 }

@@ -41,7 +41,14 @@ class BitacoraResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc')
             ->columns([
+                Tables\Columns\TextColumn::make('created_at')
+                    ->badge()
+                    ->icon('heroicon-c-calendar')
+                    ->color('naranja')
+                    ->label('Fecha')
+                    ->dateTime('d-m-Y'),
                 Tables\Columns\TextColumn::make('agencia.nombre')
                     ->searchable()
                     ->icon('heroicon-s-home')
@@ -103,9 +110,7 @@ class BitacoraResource extends Resource
                         // Only render the tooltip if the column content exceeds the length limit.
                         return $state;
                     }),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->label('Fecha')
-                    ->dateTime('d-m-Y'),
+
             ])
             ->filters([
                 Filter::make('created_at')

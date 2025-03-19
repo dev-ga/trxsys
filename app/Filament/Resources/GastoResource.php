@@ -324,6 +324,7 @@ class GastoResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('codigo')
                     ->label('Código')
@@ -351,7 +352,8 @@ class GastoResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('empresaContratante.nombre')
                     ->icon('heroicon-s-home')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('nro_contrato')
                     ->label('Nro Contrato')
                     ->badge()
@@ -362,7 +364,8 @@ class GastoResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('responsable')
                     ->icon('heroicon-c-user-circle')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('monto_bsd')
                     ->label('Monto Bs.')
                     ->alignRight()

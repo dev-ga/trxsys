@@ -11,6 +11,7 @@ use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\Filter;
 use App\Models\MantenimientoCorrectivo;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Filters\SelectFilter;
@@ -35,29 +36,44 @@ class MantenimientoCorrectivoResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc')
             ->columns([
-                Tables\Columns\TextColumn::make('equipo_id')
-                    ->label('ID')
+                Tables\Columns\TextColumn::make('created_at')
                     ->badge()
+                    ->icon('heroicon-c-calendar')
                     ->color('naranja')
+                    ->label('Fecha de Registro')
+                    ->dateTime('d-m-Y')
                     ->sortable(),
+                Tables\Columns\TextColumn::make('agencia.nombre')
+                    ->searchable()
+                    ->icon('heroicon-s-home'),
                 Tables\Columns\TextColumn::make('codigo_equipo')
                     ->label('Código de equipo')
                     ->searchable()
                     ->badge()
                     ->color('marronClaro'),
-                Tables\Columns\TextColumn::make('agencia.nombre')
-                    ->searchable()
-                    ->icon('heroicon-s-home'),
 
-                Tables\Columns\TextColumn::make('detalles'),
+                Tables\Columns\TextColumn::make('detalles')
+                ->tooltip(function (TextColumn $column): ?string {
+                    $state = $column->getState();
+
+                    if (strlen($state) <= $column->getCharacterLimit()) {
+                        return null;
+                    }
+
+                    // Only render the tooltip if the column content exceeds the length limit.
+                    return $state;
+                }),
                 Tables\Columns\TextColumn::make('nro_presupuesto')
                     ->searchable()
                     ->label('Nro. Presupuesto')
                     ->badge()
                     ->color('marronClaro')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('monto_presupuesto_usd')
+                ->label('Monto Presupuesto(USD)')
                     ->numeric()
                     ->money('USD')
                     ->badge()
@@ -67,7 +83,8 @@ class MantenimientoCorrectivoResource extends Resource
                     ->summarize(Sum::make()
                         ->money('USD')
                         ->label('Total(USD)')
-                        ->label('Total(Bs.)'))
+                        ->label('Total(Bs.)')),
+                
             ])
             ->filters([
                 Filter::make('created_at')

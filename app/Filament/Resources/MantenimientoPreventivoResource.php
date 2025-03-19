@@ -34,36 +34,43 @@ class MantenimientoPreventivoResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc')
             ->columns([
-                Tables\Columns\TextColumn::make('equipo_id')
-                    ->label('ID')
+                Tables\Columns\TextColumn::make('created_at')
                     ->badge()
+                    ->icon('heroicon-c-calendar')
                     ->color('naranja')
+                    ->label('Fecha de Registro')
+                    ->dateTime('d-m-Y')
                     ->sortable(),
+                Tables\Columns\TextColumn::make('agencia.nombre')
+                    ->icon('heroicon-s-home')
+                    ->searchable()
+                    ->label('Agencia'),
                 Tables\Columns\TextColumn::make('codigo_equipo')
                     ->searchable()
                     ->badge()
                     ->color('marronClaro')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('agencia.nombre')
-                    ->icon('heroicon-s-home')
-                    ->searchable()
-                    ->label('Agencia'),
+                Tables\Columns\TextColumn::make('toneladas')
+                    ->label('Toneladas')
+                    ->searchable(),
+
                 Tables\Columns\TextColumn::make('fecha_ejecucion')
                     ->label('Fecha Mantenimiento')
                     ->searchable()
                     ->badge()
-                    ->color('marronClaro')
+                    ->icon('heroicon-c-calendar')
+                    ->color('naranja')
                     ->dateTime('d-m-Y'),
                 Tables\Columns\TextColumn::make('fecha_prox_ejecucion')
                     ->searchable()
                     ->badge()
                     ->color('negro')
+                    ->icon('heroicon-o-wrench')
                     ->label('Proximo Mantenimiento')
                     ->dateTime('d-m-Y'),
-                Tables\Columns\TextColumn::make('toneladas')
-                    ->label('Toneladas')
-                    ->searchable(),
+
                 Tables\Columns\TextColumn::make('calculo_x_tonelada')
                     ->badge()
                     ->color('success')
@@ -73,7 +80,8 @@ class MantenimientoPreventivoResource extends Resource
                     ->summarize(Sum::make()
                     ->money('USD')
                     ->label('Total(USD)')
-                        ->label('Total(Bs.)'))
+                        ->label('Total(Bs.)')),
+                
             ])
             ->filters([
                 //
