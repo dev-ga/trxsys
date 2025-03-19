@@ -30,29 +30,23 @@ class AvancesDashChart extends ChartWidget
     protected function getData(): array
     {
 
-        $start = $this->filters['startDate'] == null ? now()->startOfDay()->format('Y-m-d') : date('Y-m-d', strtotime($this->filters['startDate']));
+        $start = $this->filters['startDate'] == null ? now()->startOfDay() : $this->filters['startDate'] . ' 05:00:00';
         $end = $this->filters['endDate'] == null ? now()->endOfDay() : $this->filters['endDate'] . ' 23:59:59';
 
+        // $data = DB::table('venta_productos')
+        //     ->select(DB::raw('SUM(cantidad) as venta, producto_id, productos.nombre_corto as descripcion'))
+        //     ->join('productos', 'venta_productos.producto_id', '=', 'productos.id')
+        //     ->whereBetween('venta_productos.created_at', [$start, $end])
+        //     ->groupBy('producto_id')
+        //     ->get();
 
-        // $citas_agendadas_bot = Cita::where('responsable', 'PiedyBot')
-        //     ->where('fecha_formateada', $start)
-        //     ->count();
+        // $labels = $data->map(fn($data) => $data->descripcion);
+        // $totalVentas = $data->sum('venta');
+        // $percentages = $data->map(fn($item) => round(($item->venta / $totalVentas) * 100, 2));
 
-        // $citas_agendadas_sistema = Cita::where('responsable', '!=', 'PiedyBot')
-        //     ->where('fecha_formateada', $start)
-        //     ->count();
-
-        // $citas_canceladas = Cita::where('responsable', '!=', 'PiedyBot')
-        //     ->where('fecha_formateada', $start)
-        //     ->where('status', 3)
-        //     ->count();
-
-
-        // $array = [
-        //     $citas_agendadas_bot,
-        //     $citas_agendadas_sistema,
-        //     $citas_canceladas
-        // ];
+        // $labelsWithPercentages = $labels->map(function ($label, $index) use ($percentages) {
+        //     return $label . ' - (' . $percentages[$index] . '%)';
+        // });
 
         $labels = [
             'Correctivos',
@@ -61,8 +55,6 @@ class AvancesDashChart extends ChartWidget
 
         // dd($array, $labels);
         // dd($data);
-
-        $labels = $labels;
 
         // $shortenedLabels = $labels->map(function($label) {
         //     return substr($label, 0, 10) . (strlen($label) > 10 ? '...' : '');
@@ -82,6 +74,8 @@ class AvancesDashChart extends ChartWidget
 
             ],
             'labels' => $labels,
+            // 'labels' => $labelsWithPercentages->toArray(),
+            // 'percentages' => $percentages,
 
         ];
     }
@@ -94,25 +88,22 @@ class AvancesDashChart extends ChartWidget
     protected static ?array $options = [
         'scales' => [
             'x' => [
-                'display' => true,
-
-                'ticks' => [
-                    'stepSize' => 1
-                ],
+                'display' => false,
             ],
             'y' => [
-                'display' => true,
+                'display' => false,
             ],
         ],
         'plugins' => [
             'legend' => [
-                'display' => false,
-            ]
-        ]
+                'position' => 'left',
+                'align' => 'start',
+            ],
+        ],
     ];
 
     protected function getType(): string
     {
-        return 'bar';
+        return 'pie';
     }
 }

@@ -39,11 +39,5 @@ class AppServiceProvider extends ServiceProvider
                 return view('footer');
             }
         );
-        // FilamentView::registerRenderHook(
-        //     PanelsRenderHook::TOPBAR_START,
-        //     function () {
-        //         return view('search');
-        //     }
-        // );
     }
 }

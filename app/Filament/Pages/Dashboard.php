@@ -75,24 +75,11 @@ class Dashboard extends \Filament\Pages\Dashboard
         //     ->groupBy('producto_id')
         //     ->get();
 
-        // if(count($data) == 0){
-        //     $widgets = [
-        //         StatsGeneral::class,
-        //         ClientesDashChart::class,
-        //         ServiciosDashChart::class,
-        //         ClienteNuevoChart::class,
-
-        //     ];
-        // }else{
             $widgets = [
                 StatsGeneral::class,
                 AvancesDashChart::class,
                 BitacoraTable::class,
-                // ServiciosDashChart::class,
-                // ProductosDashChart::class,
-
             ];
-        // }
 
         return $widgets;
     }
