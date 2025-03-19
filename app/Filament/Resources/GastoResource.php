@@ -481,13 +481,14 @@ class GastoResource extends Resource
 
                         return $indicators;
                     }),
-                // SelectFilter::make('agencia')
-                //     ->relationship('agencia', 'nombre')
-                //     ->searchable()
-                //     ->preload()
-                //     ->attribute('agencia_id'),
+                SelectFilter::make('contrado')
+                    ->relationship('contrato', 'nro_contrato')
+                    ->searchable()
+                    ->preload()
+                    ->attribute('contrato_id'),
 
-            ])
+
+        ])
             ->filtersTriggerAction(
                 fn(Action $action) => $action
                     ->button()
@@ -499,19 +500,19 @@ class GastoResource extends Resource
 
                     Action::make('Agregar Detalle')
                         ->color('negro')
-                        ->icon('heroicon-m-eye')
+                        ->icon('heroicon-s-calculator')
                         ->model(Gasto::class)
                         ->form([
                             Section::make('Detalle de Gasto')
                                 ->description('Debe llenar los campos de forma correcta. Campos Requeridos(*)')
-                                ->icon('heroicon-c-users')
+                                ->icon('heroicon-s-calculator')
                                 ->schema([
                                     Grid::make()
                                         ->schema([
 
                                             TextInput::make('nro_factura')
                                                 ->label('Nro. Factura')
-                                                ->prefixIcon('heroicon-c-users')
+                                                ->prefixIcon('heroicon-s-pencil')
                                                 ->readOnly()
                                                 ->default(function (Gasto $record) {
                                                     return $record->nro_factura;
@@ -521,7 +522,7 @@ class GastoResource extends Resource
                                             //codigo de requisicion
                                             TextInput::make('empresa_contratante_id')
                                                 ->label('Empresa Contratante')
-                                                ->prefixIcon('heroicon-c-users')
+                                                ->prefixIcon('heroicon-s-pencil')
                                                 ->readOnly()
                                                 ->default(function (Gasto $record) {
                                                     return $record->empresaContratante->nombre;
@@ -531,7 +532,7 @@ class GastoResource extends Resource
 
                                             TextInput::make('nro_contrato')
                                                 ->label('Nro. Contrato')
-                                                ->prefixIcon('heroicon-c-users')
+                                                ->prefixIcon('heroicon-s-pencil')
                                                 ->readOnly()
                                                 ->default(function (Gasto $record) {
                                                     return $record->contrato->nro_contrato;
@@ -608,7 +609,7 @@ class GastoResource extends Resource
                         ])
                         ->action(function (Gasto $record, array $data) {
                             $detalle = GastoDetalleController::crear_detalle($data, $record);
-                            dd($detalle);
+
                             if ($detalle['success'] == false) {
                                 Notification::make()
                                     ->title('Notificacion')

@@ -15,6 +15,8 @@ use App\Models\Configuracion;
 use Filament\Forms\Components\Grid;
 use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Components\Section;
+use App\Models\MantenimientoCorrectivo;
+use Filament\Notifications\Notification;
 use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -78,10 +80,11 @@ class MantenimientoCorrectivosRelationManager extends RelationManager
                             ->label('Valuacion')
                             ->options(function (RelationManager $livewire) {
                                 return Valuacion::where('contrato_id', $livewire->ownerRecord->id)
-                                    ->where('mantenimiento_id', 2)
+                                    ->where('mantenimiento_id', 1)
                                     ->get()->pluck('descripcion', 'id');
                             })
                             ->searchable()
+                            ->required()
                             ->preload(),
 
 
@@ -165,7 +168,40 @@ class MantenimientoCorrectivosRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make()
+                ->after(function (MantenimientoCorrectivo $record) {
+
+                    try {
+
+                        //aumentamos el valor de la valuacion
+                        $valuacion = Valuacion::where('id', $record->valuacion_id)
+                            ->where('contrato_id', $record->contrato_id)
+                            ->first();
+
+                        $valuacion->monto_usd = $valuacion->monto_usd + $record->monto_presupuesto_usd;
+                        $valuacion->save();
+
+                        if ($valuacion->save()) {
+
+                            Notification::make()
+                                ->title('Notificacion')
+                                ->color('success')
+                                ->icon('heroicon-o-shield-check')
+                                ->iconColor('danger')
+                                ->body('Valuacion Actualizada de forma correcta')
+                                ->send();
+                        }
+                    } catch (\Throwable $th) {
+                        Notification::make()
+                            ->title('Notificacion')
+                            ->color('danger')
+                            ->icon('heroicon-o-shield-check')
+                            ->iconColor('danger')
+                            ->body($th->getMessage())
+                            ->send();
+                    }
+                })
+                ->createAnother(false),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
