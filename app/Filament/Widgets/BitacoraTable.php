@@ -82,6 +82,7 @@ class BitacoraTable extends BaseWidget
             Tables\Columns\TextColumn::make('trabajo_realizado')
                 ->searchable()
                 ->label('Trabajo Realizado')
+                ->limit(20)
                 ->tooltip(function (TextColumn $column): ?string {
                     $state = $column->getState();
 
