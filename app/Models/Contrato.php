@@ -100,4 +100,14 @@ class Contrato extends Model
     {
         return $this->hasMany(Valuacion::class, 'contrato_id', 'id');
     }
+
+    /**
+     * Get all of the comments for the Contrato
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function gastos(): HasMany
+    {
+        return $this->hasMany(Gasto::class, 'contrato_id', 'id');
+    }
 }
