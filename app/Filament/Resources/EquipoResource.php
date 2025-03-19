@@ -22,6 +22,7 @@ use Filament\Tables\Enums\ActionsPosition;
 use App\Filament\Resources\EquipoResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\EquipoResource\RelationManagers;
+use Illuminate\Database\Eloquent\Model;
 
 class EquipoResource extends Resource
 {
@@ -78,7 +79,7 @@ class EquipoResource extends Resource
                             ->dehydrated()
                             ->default(Auth::user()->name),
                     ])->columns(4),
-                    
+
                     Section::make('Caracteristicas')
                     ->description('Caracteristicas del equipo. Campos Requeridos(*)')
                     ->schema([
@@ -227,7 +228,7 @@ class EquipoResource extends Resource
             //         ->color('naranja'),
             //         Tables\Actions\DeleteAction::make(),
             //     ])->dropdownPlacement('bottom-start')
-            //     ->size(ActionSize::Small) 
+            //     ->size(ActionSize::Small)
             // ], position: ActionsPosition::BeforeCells)
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -248,6 +249,18 @@ class EquipoResource extends Resource
     public static function getGloballySearchableAttributes(): array
     {
             return ['codigo', 'agencia.nombre', 'toneladas', 'PH', 'refrigerante', 'area_suministro', 'voltaje'];
+    }
+
+    public static function getGlobalSearchEloquentQuery(): Builder
+    {
+        return parent::getGlobalSearchEloquentQuery()->with(['agencia']);
+    }
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'Agencia' => $record->agencia->nombre,
+        ];
     }
 
     public static function getPages(): array

@@ -24,6 +24,11 @@ class InventarioMovimientoResource extends Resource
 
     protected static ?string $navigationGroup = 'Manejo de Inventario';
 
+    public static function getGlobalSearchResultTitle(Model $record): string
+    {
+        return $record->articulo->descripcion;
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -67,6 +72,9 @@ class InventarioMovimientoResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('tipo_movimiento')
                     ->label('Movimiento')
+                    ->badge()
+                    ->color('naranja')
+                    ->extraAttributes(['style' => 'text-transform: capitalize;'])
                     ->searchable(),
                 Tables\Columns\TextColumn::make('cantidad')
                     ->numeric()
@@ -103,19 +111,19 @@ class InventarioMovimientoResource extends Resource
     {
         return ['articulo.descripcion', 'almacen_id', 'codigo_articulo', 'tipo_movimiento', 'nro_factura', 'responsable', 'inventario_id', 'articulo_id', 'almacen.descripcion'];
     }
-    
 
-    public static function getGlobalSearchEloquentQuery(): Builder
-    {
-        return parent::getGlobalSearchEloquentQuery()->with(['articulo']);
-    }
 
-    public static function getGlobalSearchResultDetails(Model $record): array
-    {
-        return [
-            'Artículo' => $record->articulo->descripcion,
-        ];
-    }
+    // public static function getGlobalSearchEloquentQuery(): Builder
+    // {
+    //     return parent::getGlobalSearchEloquentQuery()->with(['articulo']);
+    // }
+
+    // public static function getGlobalSearchResultDetails(Model $record): array
+    // {
+    //     return [
+    //         'Artículo' => $record->articulo->descripcion,
+    //     ];
+    // }
 
     public static function getRelations(): array
     {

@@ -32,10 +32,15 @@ class InventarioResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-queue-list';
 
     protected static ?string $activeNavigationIcon = 'heroicon-s-queue-list';
-    
+
     protected static ?string $recordTitleAttribute = 'articulo.descripcion';
 
     protected static ?string $navigationGroup = 'Manejo de Inventario';
+
+    public static function getGlobalSearchResultTitle(Model $record): string
+    {
+        return $record->articulo->descripcion;
+    }
 
     public static function form(Form $form): Form
     {
@@ -241,17 +246,17 @@ class InventarioResource extends Resource
         return ['codigo', 'articulo.descripcion', 'almacen.descripcion', 'nro_factura', 'responsable'];
     }
 
-    public static function getGlobalSearchEloquentQuery(): Builder
-    {
-        return parent::getGlobalSearchEloquentQuery()->with(['articulo']);
-    }
+    // public static function getGlobalSearchEloquentQuery(): Builder
+    // {
+    //     return parent::getGlobalSearchEloquentQuery()->with(['articulo']);
+    // }
 
-    public static function getGlobalSearchResultDetails(Model $record): array
-    {
-        return [
-            'Artículo' => $record->articulo->descripcion,
-        ];
-    }
+    // public static function getGlobalSearchResultDetails(Model $record): array
+    // {
+    //     return [
+    //         'Artículo' => $record->articulo->descripcion,
+    //     ];
+    // }
 
     public static function getRelations(): array
     {

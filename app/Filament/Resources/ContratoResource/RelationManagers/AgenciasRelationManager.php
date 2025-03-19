@@ -14,12 +14,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Resources\RelationManagers\RelationManager;
+use Illuminate\Database\Eloquent\Model;
 
 class AgenciasRelationManager extends RelationManager
 {
     protected static string $relationship = 'agencias';
-
-
 
     protected static ?string $label = 'Agencias';
 
