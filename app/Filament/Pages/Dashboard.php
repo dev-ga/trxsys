@@ -2,40 +2,43 @@
 
 namespace App\Filament\Pages;
 
+use App\Models\Agencia;
 use Filament\Forms\Get;
 use App\Models\Sucursal;
 use Filament\Forms\Form;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Toggle;
 
+use Filament\Forms\Components\Toggle;
 use App\Filament\Widgets\StatsGeneral;
 use Filament\Forms\Components\Section;
+use App\Filament\Widgets\BitacoraTable;
 use Filament\Forms\Components\DatePicker;
+use App\Filament\Widgets\AvancesDashChart;
 use App\Filament\Widgets\ClienteNuevoChart;
 use App\Filament\Widgets\ClientesDashChart;
 use App\Filament\Widgets\ProductosDashChart;
 use App\Filament\Widgets\ServiciosDashChart;
 use Filament\Pages\Dashboard as BaseDashboard;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use App\Filament\Resources\VentaResource\Widgets\VentasNetasChart;
-use App\Filament\Widgets\AvancesDashChart;
-use App\Filament\Widgets\BitacoraTable;
-use App\Models\Agencia;
 
 class Dashboard extends \Filament\Pages\Dashboard
 {
+    use HasPageShield;
+    
     use BaseDashboard\Concerns\HasFiltersForm;
 
 
     protected static ?string $title = 'Dashboard';
 
-    public function getTitle(): string
-    {
-        $user = Auth::user();
+    // public function getTitle(): string
+    // {
+    //     $user = Auth::user();
 
-        return 'Hola, ' . ($user ? $user->name : 'Invitado') . '.';
-    }
+    //     return 'Hola, ' . ($user ? $user->name : 'Invitado') . '.';
+    // }
 
     protected static ?string $navigationIcon = 'heroicon-c-presentation-chart-bar';
 

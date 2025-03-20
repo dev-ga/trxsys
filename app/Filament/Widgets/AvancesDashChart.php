@@ -13,11 +13,14 @@ use Illuminate\Support\Carbon;
 use Flowframe\Trend\TrendValue;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Facades\DB;
+use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
 use Filament\Widgets\Concerns\InteractsWithPageFilters;
 
 class AvancesDashChart extends ChartWidget
 {
     use InteractsWithPageFilters;
+
+    use HasWidgetShield;
 
     protected static ?string $heading = '% de Avances';
 

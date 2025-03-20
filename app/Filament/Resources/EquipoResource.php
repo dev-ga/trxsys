@@ -264,14 +264,6 @@ class EquipoResource extends Resource
                     ->button()
                     ->label('Filtros'),
             )
-            // ->actions([
-            //     ActionGroup::make([
-            //         Tables\Actions\EditAction::make()
-            //         ->color('naranja'),
-            //         Tables\Actions\DeleteAction::make(),
-            //     ])->dropdownPlacement('bottom-start')
-            //     ->size(ActionSize::Small)
-            // ], position: ActionsPosition::BeforeCells)
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),

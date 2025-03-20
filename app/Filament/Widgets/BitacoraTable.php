@@ -14,9 +14,12 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Widgets\TableWidget as BaseWidget;
+use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
 
 class BitacoraTable extends BaseWidget
 {
+    use HasWidgetShield;
+    
     protected int | string | array $columnSpan = 'full';
 
     // protected static ?int $sort = 3;

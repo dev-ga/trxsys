@@ -3,19 +3,22 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Frecuencia;
-use App\Models\VentaServicio;
+use Flowframe\Trend\Trend;
 use App\Models\VentaProducto;
 
 // use Carbon\Carbon;
+use App\Models\VentaServicio;
 use Illuminate\Support\Carbon;
-use Filament\Widgets\ChartWidget;
-use Filament\Widgets\Concerns\InteractsWithPageFilters;
-use Flowframe\Trend\Trend;
 use Flowframe\Trend\TrendValue;
+use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Facades\DB;
+use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
+use Filament\Widgets\Concerns\InteractsWithPageFilters;
 
 class ProductosDashChart extends ChartWidget
 {
+    use HasWidgetShield;
+    
     use InteractsWithPageFilters;
 
     protected static ?string $heading = 'Productos';

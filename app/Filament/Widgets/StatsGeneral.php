@@ -15,6 +15,7 @@ use App\Models\VentaServicio;
 use App\Models\DetalleAsignacion;
 use App\Http\Controllers\StatController;
 use Filament\Widgets\StatsOverviewWidget\Stat;
+use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
 use Filament\Widgets\Concerns\InteractsWithPageFilters;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 
@@ -22,6 +23,8 @@ use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 class StatsGeneral extends BaseWidget
 {
     use InteractsWithPageFilters;
+
+    use HasWidgetShield;
 
     protected static ?int $sort = 1;
 
