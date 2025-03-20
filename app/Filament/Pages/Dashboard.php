@@ -27,7 +27,7 @@ use App\Filament\Resources\VentaResource\Widgets\VentasNetasChart;
 class Dashboard extends \Filament\Pages\Dashboard
 {
     use HasPageShield;
-    
+
     use BaseDashboard\Concerns\HasFiltersForm;
 
 
@@ -81,7 +81,7 @@ class Dashboard extends \Filament\Pages\Dashboard
             $widgets = [
                 StatsGeneral::class,
                 AvancesDashChart::class,
-                BitacoraTable::class,
+                // BitacoraTable::class, 
             ];
 
         return $widgets;
