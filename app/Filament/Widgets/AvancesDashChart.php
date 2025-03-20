@@ -52,8 +52,8 @@ class AvancesDashChart extends ChartWidget
         // });
 
         $labels = [
-            'Correctivos',
-            'Preventivos',
+            'Avance',
+            'Restante',
         ];
 
         // dd($array, $labels);
@@ -85,7 +85,7 @@ class AvancesDashChart extends ChartWidget
 
     public function getDescription(): ?string
     {
-        return 'Correctivos/Preventivos';
+        return ' ';
     }
 
     protected static ?array $options = [

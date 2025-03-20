@@ -60,13 +60,13 @@ class StatsGeneral extends BaseWidget
                 // ->color($servicios['color'])
                 ->extraAttributes(['class' => 'col-span-2 row-span-1 rounded-md text-center content-center']),
 
-            Stat::make('TONELADAS EN PREVENTIVO', 12 . 12)
+            Stat::make('TOTAL DE VALUACIONES', 12 . 12)
                 ->description(round(12) . '%')
                 // ->descriptionIcon('servicios_usd'['icon'])
                 // ->color('servicios_usd'['color'])
                 ->extraAttributes(['class' => 'col-span-2 row-span-1 rounded-md text-center content-center']),
 
-            Stat::make('TOTAL DE VALUACIONES', round(12, 2))
+            Stat::make('INGRESOS', round(12, 2))
                 ->description(12 . '% ')
                 // ->descriptionIcon('servicios_usd'['icon'])
                 // ->color('servicios_usd'['color'])
@@ -75,7 +75,7 @@ class StatsGeneral extends BaseWidget
 
             //Stat Productos -----------------------------------------------------------------------------------------------
             //--------------------------------------------------------------------------------------------------------------
-            Stat::make('INGRESOS/EGRESOS', 12)
+            Stat::make('EGRESOS', 12)
                 ->description(round(12) . '%')
                 // ->descriptionIcon('label'['icon'])
                 // ->color('red')
