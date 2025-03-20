@@ -85,8 +85,8 @@ class EquipoResource extends Resource
                             ->default(Auth::user()->name),
                     ])->columns(4),
 
-                    Section::make('Caracteristicas')
-                    ->description('Caracteristicas del equipo. Campos Requeridos(*)')
+                    Section::make('CONDENSADORA')
+                    ->description('Caracteristicas de la condensadora. Campos Requeridos(*)')
                     ->schema([
                         Forms\Components\TextInput::make('toneladas')
                             ->required()
@@ -140,7 +140,70 @@ class EquipoResource extends Resource
                         Forms\Components\TextInput::make('tipo_correa')
                             ->prefixIcon('heroicon-s-pencil')
                             ->label('Tipo de correa'),
+                        Forms\Components\TextInput::make('rpm')
+                            ->prefixIcon('heroicon-s-pencil')
+                            ->label('RPM'),
                     ])->columns(4),
+
+                    Section::make('EVAPORADORA')
+                        ->description('Caracteristicas de la evaporadora. Campos Requeridos(*)')
+                        ->schema([
+                            Forms\Components\TextInput::make('toneladas_eva')
+                                ->required()
+                                ->numeric()
+                                ->live()
+                                ->prefixIcon('heroicon-s-pencil')
+                                ->label('Toneladas'),
+
+                            Forms\Components\Select::make('ph_eva')
+                                ->required()
+                                ->label('PH(Phase)')
+                                ->prefixIcon('heroicon-m-list-bullet')
+                                ->options([
+                                    '1' => '1',
+                                    '2' => '2',
+                                    '3' => '3',
+                                ])
+                                ->searchable(),
+
+                            Forms\Components\Select::make('refrigerante_eva')
+                                ->required()
+                                ->label('Refrigerante')
+                                ->prefixIcon('heroicon-m-list-bullet')
+                                ->options([
+                                    'R-22'  => 'R-22',
+                                    'R-410' => 'R-410',
+                                ])
+                                ->searchable(),
+
+
+                            Forms\Components\Select::make('voltaje_eva')
+                                ->required()
+                                ->label('Voltaje')
+                                ->prefixIcon('heroicon-m-list-bullet')
+                                ->options([
+                                    '110v'  => '110v',
+                                    '220v'  => '220v',
+                                    '440v'  => '440v',
+                                ])
+                                ->searchable(),
+                            Forms\Components\TextInput::make('motor_ventilador_hp_eva')
+                                ->required()
+                                ->prefixIcon('heroicon-s-pencil')
+                                ->label('Motor Ventilador(Hp)'),
+
+                            Forms\Components\TextInput::make('motor_ventilador_eje_eva')
+                                ->required()
+                                ->prefixIcon('heroicon-s-pencil')
+                                ->label('Motor Ventilador(Eje)'),
+
+                            Forms\Components\TextInput::make('tipo_correa_eva')
+                                ->prefixIcon('heroicon-s-pencil')
+                                ->label('Tipo de correa'),
+                            Forms\Components\TextInput::make('rpm_eva')
+                                ->prefixIcon('heroicon-s-pencil')
+                                ->label('RPM'),
+                        ])->columns(4),
 
                     Section::make('Fotos')
                     ->description('Fotos del equipo')
@@ -202,6 +265,11 @@ class EquipoResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('tipo_correa')
                     ->label('Tipo Correa')
+                    ->badge()
+                    ->color('naranja')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('rpm')
+                    ->label('RPM')
                     ->badge()
                     ->color('naranja')
                     ->searchable(),

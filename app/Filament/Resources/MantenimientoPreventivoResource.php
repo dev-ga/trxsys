@@ -7,10 +7,12 @@ use Filament\Forms;
 use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use App\Models\Configuracion;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\Filter;
 use App\Models\MantenimientoPreventivo;
+use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
@@ -18,7 +20,6 @@ use Filament\Tables\Columns\Summarizers\Sum;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\MantenimientoPreventivoResource\Pages;
 use App\Filament\Resources\MantenimientoPreventivoResource\RelationManagers;
-use Illuminate\Database\Eloquent\Model;
 
 class MantenimientoPreventivoResource extends Resource
 {
@@ -36,6 +37,8 @@ class MantenimientoPreventivoResource extends Resource
     {
         return $table
             ->defaultSort('created_at', 'desc')
+            ->heading(' COSTO POR TONELADA: ' . round(Configuracion::first()->costo_tonelada_usd) . '$')
+            // ->description(' COSTO POR TONELADA: '.round(Configuracion::first()->costo_tonelada_usd) .'$')
             ->columns([
                 Tables\Columns\TextColumn::make('created_at')
                     ->badge()
@@ -73,9 +76,10 @@ class MantenimientoPreventivoResource extends Resource
                     ->dateTime('d-m-Y'),
 
                 Tables\Columns\TextColumn::make('calculo_x_tonelada')
+                    ->alignRight()
                     ->badge()
                     ->color('success')
-                    ->label('Costo por Tonelada(USD)')
+                    ->label('Costo(USD)')
                     ->money('USD')
                     ->searchable()
                     ->summarize(Sum::make()
