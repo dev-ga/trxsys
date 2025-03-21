@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\ContratoResource\RelationManagers;
 
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Equipo;
@@ -9,9 +10,14 @@ use App\Models\Agencia;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Forms\Form;
+use App\Models\Valuacion;
 use Filament\Tables\Table;
+use App\Models\Configuracion;
+use Illuminate\Support\Collection;
+use Filament\Forms\Components\Grid;
 use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Components\Section;
+use Filament\Notifications\Notification;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Builder;
@@ -289,6 +295,94 @@ class EquiposRelationManager extends RelationManager
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\BulkAction::make('masivo_mp')
+                    ->label('Crear MP')
+                    ->icon('heroicon-o-link')
+                    // ->requiresConfirmation()
+                    ->color('naranja')
+                    ->form([
+                        Section::make('Asignacion Masiva de gastos a valuacion')
+                            ->icon('heroicon-s-clipboard-document-list')
+                            ->schema([
+                                Grid::make()
+                                    ->schema([
+
+                                    Forms\Components\Select::make('valuacion_id')
+                                        ->label('Valuacion')
+                                        ->options(function (RelationManager $livewire) {
+                                            return Valuacion::where('contrato_id', $livewire->ownerRecord->id)
+                                                ->where('mantenimiento_id', 1)
+                                                ->get()->pluck('descripcion', 'id');
+                                        })
+                                        ->searchable()
+                                        ->required()
+                                        ->preload(),
+
+                                        Forms\Components\DatePicker::make('fecha_ejecucion')
+                                            ->prefixIcon('heroicon-c-calendar-date-range')
+                                            ->label('Fecha Mantenimiento')
+                                            ->displayFormat('d-m-Y')
+                                            ->afterStateUpdated(function (Get $get, Set $set) {
+                                                $tiempo_x_mantenimiento = Configuracion::all()->first()->tiempo_x_mantenimiento_prev;
+                                                $prox_fecha = Carbon::parse($get('fecha_ejecucion'))->addMonths($tiempo_x_mantenimiento)->format('d-m-Y');
+                                                $set('fecha_prox_ejecucion', $prox_fecha);
+                                            })
+                                            ->live(),
+
+                                        Forms\Components\TextInput::make('fecha_prox_ejecucion')
+                                            ->prefixIcon('heroicon-c-calendar-date-range')
+                                            ->label('Proximo Mantenimiento')
+                                            ->disabled()
+                                            ->dehydrated(),
+                                    ]),
+                            ])
+                    ])
+                    ->action(function (Collection $records, array $data) {
+
+                        try {
+
+                            // DB::transaction(function () use ($records, $data) {});
+                            // DB::rollBack();
+                            foreach ($records as $record) {
+                                //hacemos el registro en la tabla de mantenimiento_preventivos
+                                $mantenimiento = new \App\Models\MantenimientoPreventivo();
+                                $mantenimiento->equipo_id = $record->id;
+                                $mantenimiento->agencia_id = $record->agencia_id;
+                                $mantenimiento->contrato_id = $record->contrato_id;
+                                $mantenimiento->valuacion_id = $data['valuacion_id'];
+                                $mantenimiento->codigo_equipo = $record->codigo;
+                                $mantenimiento->toneladas = $record->toneladas;
+                                $mantenimiento->calculo_x_tonelada = $record->toneladas * Configuracion::all()->first()->costo_tonelada_usd;;
+                                $mantenimiento->fecha_ejecucion = $data['fecha_ejecucion'] == null ? Carbon::now()->format('d-m-Y') : $data['fecha_ejecucion'];
+                                $mantenimiento->fecha_prox_ejecucion = $data['fecha_prox_ejecucion'] == null ? Carbon::now()->addMonths(Configuracion::all()->first()->tiempo_x_mantenimiento_prev)->format('d-m-Y') : $data['fecha_prox_ejecucion'];
+                                $mantenimiento->responsable = Auth::user()->name;
+                                $mantenimiento->save();
+
+                                $valuacion = Valuacion::where('id', $data['valuacion_id'])
+                                    ->where('contrato_id', $record->contrato_id)
+                                    ->first();
+
+                                $valuacion->monto_usd = $valuacion->monto_usd + $mantenimiento->calculo_x_tonelada;
+                                $valuacion->save();
+                            }
+
+                            Notification::make()
+                                ->title('Notificacion')
+                                ->color('success')
+                                ->icon('heroicon-o-shield-check')
+                                ->iconColor('danger')
+                                ->body('Asignacion masiva de MP exitosa. Se actualizo el monto de la valuacion')
+                                ->send();
+ 
+                        } catch (\Throwable $th) {
+                            Notification::make()
+                                ->title('Notificacion')
+                                ->color('danger')
+                                ->body($th->getMessage())
+                                ->success()
+                                ->send();
+                        }
+                    }),
                 ]),
             ]);
     }
