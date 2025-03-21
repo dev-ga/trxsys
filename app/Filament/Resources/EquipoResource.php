@@ -86,64 +86,64 @@ class EquipoResource extends Resource
                     ])->columns(4),
 
                     Section::make('CONDENSADORA')
-                    ->description('Caracteristicas de la condensadora. Campos Requeridos(*)')
-                    ->schema([
-                        Forms\Components\TextInput::make('toneladas')
-                            
-                            ->numeric()
-                            ->live()
-                            ->prefixIcon('heroicon-s-pencil')
-                            ->label('Toneladas'),
+                        ->description('Caracteristicas de la condensadora. Campos Requeridos(*)')
+                        ->schema([
+                            Forms\Components\TextInput::make('toneladas')
+                                
+                                ->numeric()
+                                ->live()
+                                ->prefixIcon('heroicon-s-pencil')
+                                ->label('Toneladas'),
 
-                        Forms\Components\Select::make('PH')
-                            
-                            ->label('PH(Phase)')
-                            ->prefixIcon('heroicon-m-list-bullet')
-                            ->options([
-                                '1' => '1',
-                                '2' => '2',
-                                '3' => '3',
-                            ])
-                            ->searchable(),
+                            Forms\Components\Select::make('PH')
+                                
+                                ->label('PH(Phase)')
+                                ->prefixIcon('heroicon-m-list-bullet')
+                                ->options([
+                                    '1' => '1',
+                                    '2' => '2',
+                                    '3' => '3',
+                                ])
+                                ->searchable(),
 
-                        Forms\Components\Select::make('refrigerante')
-                            
-                            ->label('Refrigerante')
-                            ->prefixIcon('heroicon-m-list-bullet')
-                            ->options([
-                                'R-22'  => 'R-22',
-                                'R-410' => 'R-410',
-                            ])
-                            ->searchable(),
+                            Forms\Components\Select::make('refrigerante')
+                                
+                                ->label('Refrigerante')
+                                ->prefixIcon('heroicon-m-list-bullet')
+                                ->options([
+                                    'R-22'  => 'R-22',
+                                    'R-410' => 'R-410',
+                                ])
+                                ->searchable(),
 
 
-                        Forms\Components\Select::make('voltaje')
-                            
-                            ->label('Voltaje')
-                            ->prefixIcon('heroicon-m-list-bullet')
-                            ->options([
-                                '110v'  => '110v',
-                                '220v'  => '220v',
-                                '440v'  => '440v',
-                            ])
-                            ->searchable(),
-                        Forms\Components\TextInput::make('motor_ventilador_hp')
-                            
-                            ->prefixIcon('heroicon-s-pencil')
-                            ->label('Motor Ventilador(Hp)'),
+                            Forms\Components\Select::make('voltaje')
+                                
+                                ->label('Voltaje')
+                                ->prefixIcon('heroicon-m-list-bullet')
+                                ->options([
+                                    '110v'  => '110v',
+                                    '220v'  => '220v',
+                                    '440v'  => '440v',
+                                ])
+                                ->searchable(),
+                            Forms\Components\TextInput::make('motor_ventilador_hp')
+                                
+                                ->prefixIcon('heroicon-s-pencil')
+                                ->label('Motor Ventilador(Hp)'),
 
-                        Forms\Components\TextInput::make('motor_ventilador_eje')
-                            
-                            ->prefixIcon('heroicon-s-pencil')
-                            ->label('Motor Ventilador(Eje)'),
+                            Forms\Components\TextInput::make('motor_ventilador_eje')
+                                
+                                ->prefixIcon('heroicon-s-pencil')
+                                ->label('Motor Ventilador(Eje)'),
 
-                        Forms\Components\TextInput::make('tipo_correa')
-                            ->prefixIcon('heroicon-s-pencil')
-                            ->label('Tipo de correa'),
-                        Forms\Components\TextInput::make('rpm')
-                            ->prefixIcon('heroicon-s-pencil')
-                            ->label('RPM'),
-                    ])->columns(4),
+                            Forms\Components\TextInput::make('tipo_correa')
+                                ->prefixIcon('heroicon-s-pencil')
+                                ->label('Tipo de correa'),
+                            Forms\Components\TextInput::make('rpm')
+                                ->prefixIcon('heroicon-s-pencil')
+                                ->label('RPM'),
+                        ])->columns(4),
 
                     Section::make('EVAPORADORA')
                         ->description('Caracteristicas de la evaporadora. Campos Requeridos(*)')

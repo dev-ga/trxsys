@@ -42,16 +42,22 @@ class EquiposRelationManager extends RelationManager
                                     })
                                     ->preload()
                                     ->searchable()
-                                    ->live(onBlur: true)
+                                    ->live()
                                     ->afterStateUpdated(function (Get $get, Set $set) {
                                         $codigo_agencia = Agencia::where('id', $get('agencia_id'))->first()->codigo;
-                                        $codigo = 'TRX-' . $codigo_agencia . '-' . rand(11111, 99999);
-                                        $set('codigo', $codigo);
+                                        if(isset($codigo_agencia)){
+                                            $codigo = 'TRX-' . $codigo_agencia . '-' . rand(11111, 99999);
+                                            $set('codigo', $codigo);
+                                            
+                                        }else{
+                                            $set('codigo', '');
+                                        }
                                     })
                                     ->required(),
                                 Forms\Components\TextInput::make('codigo')
                                     ->prefixIcon('heroicon-s-pencil')
                                     ->label('Código de equipo')
+                                    ->live()
                                     ->disabled()
                                     ->dehydrated(),
                                 Forms\Components\TextInput::make('area_suministro')
@@ -65,62 +71,125 @@ class EquiposRelationManager extends RelationManager
                                     ->default(Auth::user()->name),
                             ])->columns(2),
 
-                        Section::make('Caracteristicas')
-                            ->description('Caracteristicas del equipo. Campos Requeridos(*)')
-                            ->schema([
-                                Forms\Components\TextInput::make('toneladas')
-                                    ->required()
-                                    ->numeric()
-                                    ->live()
-                                    ->prefixIcon('heroicon-s-pencil')
-                                    ->label('Toneladas'),
+                Section::make('CONDENSADORA')
+                    ->description('Caracteristicas de la condensadora. Campos Requeridos(*)')
+                    ->schema([
+                        Forms\Components\TextInput::make('toneladas')
 
-                                Forms\Components\Select::make('PH')
-                                    ->required()
-                                    ->label('PH(Phase)')
-                                    ->prefixIcon('heroicon-m-list-bullet')
-                                    ->options([
-                                        '1' => '1',
-                                        '2' => '2',
-                                        '3' => '3',
-                                    ])
-                                    ->searchable(),
+                            ->numeric()
+                            ->live()
+                            ->prefixIcon('heroicon-s-pencil')
+                            ->label('Toneladas'),
 
-                                Forms\Components\Select::make('refrigerante')
-                                    ->required()
-                                    ->label('Refrigerante')
-                                    ->prefixIcon('heroicon-m-list-bullet')
-                                    ->options([
-                                        'R-22'  => 'R-22',
-                                        'R-410' => 'R-410',
-                                    ])
-                                    ->searchable(),
+                        Forms\Components\Select::make('PH')
+
+                            ->label('PH(Phase)')
+                            ->prefixIcon('heroicon-m-list-bullet')
+                            ->options([
+                                '1' => '1',
+                                '2' => '2',
+                                '3' => '3',
+                            ])
+                            ->searchable(),
+
+                        Forms\Components\Select::make('refrigerante')
+
+                            ->label('Refrigerante')
+                            ->prefixIcon('heroicon-m-list-bullet')
+                            ->options([
+                                'R-22'  => 'R-22',
+                                'R-410' => 'R-410',
+                            ])
+                            ->searchable(),
 
 
-                                Forms\Components\Select::make('voltaje')
-                                    ->required()
-                                    ->label('Voltaje')
-                                    ->prefixIcon('heroicon-m-list-bullet')
-                                    ->options([
-                                        '110v'  => '110v',
-                                        '220v'  => '220v',
-                                        '440v'  => '440v',
-                                    ])
-                                    ->searchable(),
-                                Forms\Components\TextInput::make('motor_ventilador_hp')
-                                    ->required()
-                                    ->prefixIcon('heroicon-s-pencil')
-                                    ->label('Motor Ventilador(Hp)'),
+                        Forms\Components\Select::make('voltaje')
 
-                                Forms\Components\TextInput::make('motor_ventilador_eje')
-                                    ->required()
-                                    ->prefixIcon('heroicon-s-pencil')
-                                    ->label('Motor Ventilador(Eje)'),
+                            ->label('Voltaje')
+                            ->prefixIcon('heroicon-m-list-bullet')
+                            ->options([
+                                '110v'  => '110v',
+                                '220v'  => '220v',
+                                '440v'  => '440v',
+                            ])
+                            ->searchable(),
+                        Forms\Components\TextInput::make('motor_ventilador_hp')
 
-                                Forms\Components\TextInput::make('tipo_correa')
-                                    ->prefixIcon('heroicon-s-pencil')
-                                    ->label('Tipo de correa'),
-                            ])->columns(2),
+                            ->prefixIcon('heroicon-s-pencil')
+                            ->label('Motor Ventilador(Hp)'),
+
+                        Forms\Components\TextInput::make('motor_ventilador_eje')
+
+                            ->prefixIcon('heroicon-s-pencil')
+                            ->label('Motor Ventilador(Eje)'),
+
+                        Forms\Components\TextInput::make('tipo_correa')
+                            ->prefixIcon('heroicon-s-pencil')
+                            ->label('Tipo de correa'),
+                        Forms\Components\TextInput::make('rpm')
+                            ->prefixIcon('heroicon-s-pencil')
+                            ->label('RPM'),
+                    ])->columns(4),
+
+                Section::make('EVAPORADORA')
+                    ->description('Caracteristicas de la evaporadora. Campos Requeridos(*)')
+                    ->schema([
+                        Forms\Components\TextInput::make('toneladas_eva')
+
+                            ->numeric()
+                            ->live()
+                            ->prefixIcon('heroicon-s-pencil')
+                            ->label('Toneladas'),
+
+                        Forms\Components\Select::make('ph_eva')
+
+                            ->label('PH(Phase)')
+                            ->prefixIcon('heroicon-m-list-bullet')
+                            ->options([
+                                '1' => '1',
+                                '2' => '2',
+                                '3' => '3',
+                            ])
+                            ->searchable(),
+
+                        Forms\Components\Select::make('refrigerante_eva')
+
+                            ->label('Refrigerante')
+                            ->prefixIcon('heroicon-m-list-bullet')
+                            ->options([
+                                'R-22'  => 'R-22',
+                                'R-410' => 'R-410',
+                            ])
+                            ->searchable(),
+
+
+                        Forms\Components\Select::make('voltaje_eva')
+
+                            ->label('Voltaje')
+                            ->prefixIcon('heroicon-m-list-bullet')
+                            ->options([
+                                '110v'  => '110v',
+                                '220v'  => '220v',
+                                '440v'  => '440v',
+                            ])
+                            ->searchable(),
+                        Forms\Components\TextInput::make('motor_ventilador_hp_eva')
+
+                            ->prefixIcon('heroicon-s-pencil')
+                            ->label('Motor Ventilador(Hp)'),
+
+                        Forms\Components\TextInput::make('motor_ventilador_eje_eva')
+
+                            ->prefixIcon('heroicon-s-pencil')
+                            ->label('Motor Ventilador(Eje)'),
+
+                        Forms\Components\TextInput::make('tipo_correa_eva')
+                            ->prefixIcon('heroicon-s-pencil')
+                            ->label('Tipo de correa'),
+                        Forms\Components\TextInput::make('rpm_eva')
+                            ->prefixIcon('heroicon-s-pencil')
+                            ->label('RPM'),
+                    ])->columns(4),
 
                         Section::make('Fotos')
                             ->description('Fotos del equipo')

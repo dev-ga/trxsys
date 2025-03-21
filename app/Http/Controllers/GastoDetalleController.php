@@ -19,8 +19,8 @@ class GastoDetalleController extends Controller
 
                 //Restriccion para validar si ya la factura tiene detalles cargados
                 $prev_detalle = GastoDetalle::where('gasto_id', $record->id)->get('monto_usd')->sum('monto_usd');
-                // dd($prev_detalle);
-                if ($prev_detalle == $record->monto_usd) {
+
+                if ($prev_detalle > $record->monto_usd) {
                     
                     return $res = [
                         'success' => false,
@@ -75,7 +75,7 @@ class GastoDetalleController extends Controller
                 //Restriccion para validar si ya la factura tiene detalles cargados
                 $prev_detalle = GastoDetalle::where('gasto_id', $record->id)->get('monto_bsd')->sum('monto_bsd');
 
-                if ($prev_detalle == $record->monto_bsd) {
+                if ($prev_detalle > $record->monto_bsd) {
 
                     return $res = [
                         'success' => false,
