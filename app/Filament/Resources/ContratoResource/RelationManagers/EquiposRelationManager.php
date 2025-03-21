@@ -215,12 +215,15 @@ class EquiposRelationManager extends RelationManager
             ->columns([
                 Tables\Columns\TextColumn::make('codigo')
                     ->label('Equipo')
-                    ->description(function (Equipo $record): string {
-                        return 'Agencia: ' . $record->agencia->nombre;
-                    })
                     ->badge()
                     ->color('naranja')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('agencia.nombre')
+                ->searchable()
+                ->badge()
+                ->color('naranja')
+                ->icon('heroicon-s-home')
+                ->label('Agencia'),
                 Tables\Columns\TextColumn::make('toneladas')
                     ->icon('heroicon-o-clipboard-document-check')
                     ->badge()
