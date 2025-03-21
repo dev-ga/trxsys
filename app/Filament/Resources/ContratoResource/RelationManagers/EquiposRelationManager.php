@@ -46,19 +46,22 @@ class EquiposRelationManager extends RelationManager
                                     ->options(function (RelationManager $livewire) {
                                         return Agencia::where('contrato_id', $livewire->ownerRecord->id)->pluck('nombre', 'id');
                                     })
+                                    ->afterStateUpdated(function (Get $get, Set $set) {
+                                        $codigo_agencia = Agencia::where('id', $get('agencia_id'))->first();
+                                        if(!$codigo_agencia){
+                                            $set('codigo', null);
+                                            return;
+                                            
+                                        }else{
+                                            $codigo = 'TRX-' . $codigo_agencia->codigo . '-' . rand(11111, 99999);
+                                            $set('codigo', $codigo);
+                                            
+                                        }
+                                    })
                                     ->preload()
                                     ->searchable()
                                     ->live()
-                                    ->afterStateUpdated(function (Get $get, Set $set) {
-                                        $codigo_agencia = Agencia::where('id', $get('agencia_id'))->first()->codigo;
-                                        if(isset($codigo_agencia)){
-                                            $codigo = 'TRX-' . $codigo_agencia . '-' . rand(11111, 99999);
-                                            $set('codigo', $codigo);
-                                            
-                                        }else{
-                                            $set('codigo', '');
-                                        }
-                                    })
+                                    ->preload()
                                     ->required(),
                                 Forms\Components\TextInput::make('codigo')
                                     ->prefixIcon('heroicon-s-pencil')
