@@ -89,14 +89,14 @@ class EquipoResource extends Resource
                     ->description('Caracteristicas de la condensadora. Campos Requeridos(*)')
                     ->schema([
                         Forms\Components\TextInput::make('toneladas')
-                            ->required()
+                            
                             ->numeric()
                             ->live()
                             ->prefixIcon('heroicon-s-pencil')
                             ->label('Toneladas'),
 
                         Forms\Components\Select::make('PH')
-                            ->required()
+                            
                             ->label('PH(Phase)')
                             ->prefixIcon('heroicon-m-list-bullet')
                             ->options([
@@ -107,7 +107,7 @@ class EquipoResource extends Resource
                             ->searchable(),
 
                         Forms\Components\Select::make('refrigerante')
-                            ->required()
+                            
                             ->label('Refrigerante')
                             ->prefixIcon('heroicon-m-list-bullet')
                             ->options([
@@ -118,7 +118,7 @@ class EquipoResource extends Resource
 
 
                         Forms\Components\Select::make('voltaje')
-                            ->required()
+                            
                             ->label('Voltaje')
                             ->prefixIcon('heroicon-m-list-bullet')
                             ->options([
@@ -128,12 +128,12 @@ class EquipoResource extends Resource
                             ])
                             ->searchable(),
                         Forms\Components\TextInput::make('motor_ventilador_hp')
-                            ->required()
+                            
                             ->prefixIcon('heroicon-s-pencil')
                             ->label('Motor Ventilador(Hp)'),
 
                         Forms\Components\TextInput::make('motor_ventilador_eje')
-                            ->required()
+                            
                             ->prefixIcon('heroicon-s-pencil')
                             ->label('Motor Ventilador(Eje)'),
 
@@ -149,14 +149,14 @@ class EquipoResource extends Resource
                         ->description('Caracteristicas de la evaporadora. Campos Requeridos(*)')
                         ->schema([
                             Forms\Components\TextInput::make('toneladas_eva')
-                                ->required()
+                                
                                 ->numeric()
                                 ->live()
                                 ->prefixIcon('heroicon-s-pencil')
                                 ->label('Toneladas'),
 
                             Forms\Components\Select::make('ph_eva')
-                                ->required()
+                                
                                 ->label('PH(Phase)')
                                 ->prefixIcon('heroicon-m-list-bullet')
                                 ->options([
@@ -167,7 +167,7 @@ class EquipoResource extends Resource
                                 ->searchable(),
 
                             Forms\Components\Select::make('refrigerante_eva')
-                                ->required()
+                                
                                 ->label('Refrigerante')
                                 ->prefixIcon('heroicon-m-list-bullet')
                                 ->options([
@@ -178,7 +178,7 @@ class EquipoResource extends Resource
 
 
                             Forms\Components\Select::make('voltaje_eva')
-                                ->required()
+                                
                                 ->label('Voltaje')
                                 ->prefixIcon('heroicon-m-list-bullet')
                                 ->options([
@@ -188,12 +188,12 @@ class EquipoResource extends Resource
                                 ])
                                 ->searchable(),
                             Forms\Components\TextInput::make('motor_ventilador_hp_eva')
-                                ->required()
+                                
                                 ->prefixIcon('heroicon-s-pencil')
                                 ->label('Motor Ventilador(Hp)'),
 
                             Forms\Components\TextInput::make('motor_ventilador_eje_eva')
-                                ->required()
+                                
                                 ->prefixIcon('heroicon-s-pencil')
                                 ->label('Motor Ventilador(Eje)'),
 
