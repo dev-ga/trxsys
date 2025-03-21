@@ -129,7 +129,7 @@ class EquiposRelationManager extends RelationManager
                         Forms\Components\TextInput::make('rpm')
                             ->prefixIcon('heroicon-s-pencil')
                             ->label('RPM'),
-                    ])->columns(4),
+                    ])->columns(2),
 
                 Section::make('EVAPORADORA')
                     ->description('Caracteristicas de la evaporadora. Campos Requeridos(*)')
@@ -189,7 +189,7 @@ class EquiposRelationManager extends RelationManager
                         Forms\Components\TextInput::make('rpm_eva')
                             ->prefixIcon('heroicon-s-pencil')
                             ->label('RPM'),
-                    ])->columns(4),
+                    ])->columns(2),
 
                         Section::make('Fotos')
                             ->description('Fotos del equipo')
