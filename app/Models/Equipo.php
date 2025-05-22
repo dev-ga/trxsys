@@ -24,18 +24,37 @@ class Equipo extends Model
     protected $fillable = [
         'agencia_id',
         'contrato_id',
+        
         'toneladas',
-        'PH',
+        'toneladas_eva',
+
+        'ph',
+        'ph_eva',
+
         'refrigerante',
+        'refrigerante_eva',
+
         'area_suministro',
+        
         'voltaje',
+        'voltaje_eva',
+
         'responsable',
         'codigo',
         'image_placa_condensadora',
         'image_placa_ventilador',
+        
         'motor_ventilador_hp',
+        'motor_ventilador_hp_eva',
+
         'motor_ventilador_eje',
+        'motor_ventilador_eje_eva',
+
+        'rpm',
+        'rpm_eva',
+
         'tipo_correa',
+        'tipo_correa_eva',
 
     ];
 

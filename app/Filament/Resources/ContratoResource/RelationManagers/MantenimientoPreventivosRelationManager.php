@@ -13,7 +13,9 @@ use Filament\Forms\Form;
 use App\Models\Valuacion;
 use Filament\Tables\Table;
 use App\Models\Configuracion;
+use Illuminate\Support\Collection;
 use App\Models\ValuacionPreventivo;
+use Filament\Forms\Components\Grid;
 use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Components\Section;
 use App\Models\MantenimientoPreventivo;
@@ -63,12 +65,13 @@ class MantenimientoPreventivosRelationManager extends RelationManager
                                     $set('toneladas', null);
                                     $set('calculo_x_tonelada', null);
                                     return;
+                                    
                                 } else {
                                     $set('codigo_equipo', $codigo->codigo);
                                     $set('toneladas', $codigo->toneladas);
-
                                     $costo = Configuracion::all()->first()->costo_tonelada_usd;
                                     $set('calculo_x_tonelada', $codigo->toneladas * $costo);
+                                    
                                 }
                             })
                             ->preload(),
@@ -227,6 +230,7 @@ class MantenimientoPreventivosRelationManager extends RelationManager
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    
                 ]),
             ]);
     }

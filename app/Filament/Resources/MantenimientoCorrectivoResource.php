@@ -74,7 +74,8 @@ class MantenimientoCorrectivoResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('monto_presupuesto_usd')
-                ->label('Monto Presupuesto(USD)')
+                ->label('Monto(USD)')
+                ->alignRight()
                     ->numeric()
                     ->money('USD')
                     ->badge()
@@ -84,7 +85,7 @@ class MantenimientoCorrectivoResource extends Resource
                     ->summarize(Sum::make()
                         ->money('USD')
                         ->label('Total(USD)')
-                        ->label('Total(Bs.)')),
+                    ),
 
             ])
             ->filters([
